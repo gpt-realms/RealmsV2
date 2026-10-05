@@ -20,631 +20,1758 @@
 <div class="card"><div class="label">Chronicle — permanent history</div><div id="chron" class="chron"></div></div>
 </main></div>
 <script>
+<script>
+
 const REALMS_BACKEND = "https://old-meadow-9cfc.horrorhowell.workers.dev";
- const state = {
+
+/* =========================================================
+   REALMS — CORE GAME ENGINE
+   Runs entirely in the browser.
+   No OpenAI/API required.
+   ========================================================= */
+
+const state = {
   money: 120,
   health: 100,
   attack: 12,
   rep: 0,
-  location: 'Kuroda Village',
-  year: '1570',
-  realm: 'Sengoku Japan',
-  inventory: ['Torn clothes', 'Rusty Uchigatana'],
-  events: [],
+
+  realm: "Sengoku Japan",
+  year: "1570",
+  location: "Kuroda Village",
+
+  inventory: [
+    "Torn clothes",
+    "Rusty Uchigatana"
+  ],
+
+  day: 1,
+  hour: 17,
   turn: 0,
-  flags: {},
-  npcs: {
+
+  flags: {
+    metStranger: false,
+    trustedStranger: false,
+    warnedVillage: false,
+    watchedRiders: false,
+    followedRiders: false,
+    discoveredTunnel: false,
+    discoveredTraitor: false,
+    horseStolen: false,
+    masaruQuestioned: false,
+    explosionKnown: false,
+    attacked: false,
+    villageUnderAttack: false,
+    escapedVillage: false,
+    searchedShrine: false,
+    foundEvidence: false
+  },
+
+  relationships: {
     stranger: 0,
     elder: 0,
-    masaru: 0
-  }
+    masaru: 0,
+    villagers: 0
+  },
+
+  quests: [],
+
+  history: []
 };
 
-const scenes = {
 
-intro: {
-  text: 'Rain taps against the wooden roofs of Kuroda. You are Shiro, fifteen years old. A stranger stands near the village gate, watching the road instead of the houses. Nobody else seems to have noticed him.',
-  choices: [
-    ['Approach the stranger', 'approach'],
-    ['Keep your distance and watch him', 'watch'],
-    ['Ask a villager who he is', 'ask'],
-    ['Explore the village', 'explore']
-  ]
-},
+/* =========================================================
+   BASIC HELPERS
+   ========================================================= */
 
-approach: {
-  text: 'You walk toward him. He notices immediately. His hand moves close to his sleeve, but he does not draw. “You should not be standing here when the riders arrive,” he says quietly.',
-  choices: [
-    ['Ask what riders he means', 'riders'],
-    ['Ask who he works for', 'loyalty'],
-    ['Threaten him', 'threaten'],
-    ['Pretend you believe him', 'pretend']
-  ]
-},
-
-watch: {
-  text: 'You stay behind a storehouse and watch. The stranger keeps checking the eastern road. After a few minutes, you spot three distant riders. Their armour is hidden beneath travel cloaks.',
-  choices: [
-    ['Follow the stranger', 'follow'],
-    ['Warn the village elder', 'warn'],
-    ['Keep watching', 'watch2'],
-    ['Sneak toward the riders', 'scoutriders']
-  ]
-},
-
-ask: {
-  text: 'An old farmer glances toward the gate before answering. “That man? Never seen him before. And that is exactly what worries me.” He lowers his voice. “Three riders were seen on the eastern road.”',
-  choices: [
-    ['Go to the stranger', 'approach'],
-    ['Warn the elder', 'warn'],
-    ['Investigate the eastern road', 'road'],
-    ['Ask about Masaru the messenger', 'masaruinfo']
-  ]
-},
-
-riders: {
-  text: 'The stranger looks toward the hills. “Three men. Armed. They are not here to trade.” He studies your face. “Someone inside Kuroda told them when the patrol would be weakest.”',
-  choices: [
-    ['Ask who betrayed Kuroda', 'traitor'],
-    ['Warn the village', 'warn'],
-    ['Follow the stranger secretly', 'follow'],
-    ['Ask what happens after sunset', 'sunset']
-  ]
-},
-
-loyalty: {
-  text: 'He gives a humourless smile. “Names are expensive.” He reaches inside his coat and produces a black cord marked with a tiny silver knot. “If you understand that symbol, you understand who I work for.”',
-  choices: [
-    ['Take the cord', 'takecord'],
-    ['Ask where the riders are going', 'riders'],
-    ['Back away', 'back'],
-    ['Ask what the symbol means', 'symbol']
-  ]
-},
-
-threaten: {
-  text: 'Your hand moves toward your sword. The stranger freezes. “Careful.” For a heartbeat the village feels silent. He slowly raises both hands. “If I wanted you dead, you would already be dead.”',
-  choices: [
-    ['Lower your sword', 'back'],
-    ['Draw your sword', 'fight'],
-    ['Demand answers', 'riders'],
-    ['Search him', 'searchstranger']
-  ]
-},
-
-warn: {
-  text: 'You hurry to the elder’s house. He listens, then orders the village gate closed. The mood changes instantly. People begin hiding valuables and moving children indoors.',
-  choices: [
-    ['Help prepare the village', 'prepare'],
-    ['Return to the gate', 'approach'],
-    ['Search for the traitor', 'traitor'],
-    ['Check the storehouses', 'storehouses']
-  ]
-},
-
-follow: {
-  text: 'You shadow the stranger beyond the last houses. He stops beneath an old cedar. A second figure is waiting there. You cannot hear everything, but one sentence reaches you: “The explosion happens after sunset.”',
-  choices: [
-    ['Get closer', 'closer'],
-    ['Return and warn Kuroda', 'warn'],
-    ['Stay hidden and listen', 'listen'],
-    ['Follow the second figure', 'followsecond']
-  ]
-},
-
-traitor: {
-  text: 'You begin asking careful questions. One name keeps appearing: Masaru, a local messenger trusted by the elder. It is not proof. But now you have a lead.',
-  choices: [
-    ['Confront Masaru', 'masaru'],
-    ['Follow Masaru', 'followmasaru'],
-    ['Tell the elder what you learned', 'telltraitor'],
-    ['Secretly search Masaru’s room', 'searchmasaru']
-  ]
-},
-
-fight: {
-  text: 'The stranger draws. The clash is brief. You take a cut across the arm but land a hard strike. He retreats into the rain, leaving blood on the mud.',
-  choices: [
-    ['Search the ground', 'loot'],
-    ['Chase him', 'chase'],
-    ['Return to the village', 'warn'],
-    ['Examine your wound', 'healcheck']
-  ]
-},
-
-explore: {
-  text: 'You walk through Kuroda while the rain begins to weaken. The village is small, but several places catch your attention: the market, the shrine, the blacksmith and the old watchtower.',
-  choices: [
-    ['Visit the market', 'market'],
-    ['Visit the shrine', 'shrine'],
-    ['Visit the blacksmith', 'blacksmith'],
-    ['Climb the watchtower', 'tower']
-  ]
-},
-
-market: {
-  text: 'The market is unusually quiet. A travelling merchant notices your sword and gives you a suspicious look.',
-  choices: [
-    ['Ask about the riders', 'marketinfo'],
-    ['Buy supplies', 'buyfood'],
-    ['Ask about work', 'work'],
-    ['Leave', 'intro']
-  ]
-},
-
-shrine: {
-  text: 'The village shrine is almost empty. An old woman is sweeping rainwater from the stone steps. She looks at you for a long moment before saying, “Something bad is coming.”',
-  choices: [
-    ['Ask what she knows', 'shrineinfo'],
-    ['Offer a prayer', 'pray'],
-    ['Search around the shrine', 'searchshrine'],
-    ['Return to the village', 'intro']
-  ]
-},
-
-blacksmith: {
-  text: 'The blacksmith is working beside a smoking furnace. He glances at your rusty uchigatana.',
-  choices: [
-    ['Ask him to repair your sword', 'repair'],
-    ['Ask about the stranger', 'smithinfo'],
-    ['Ask if he has seen suspicious riders', 'smithriders'],
-    ['Leave', 'intro']
-  ]
-},
-
-tower: {
-  text: 'From the top of the old watchtower you can see the eastern road. Smoke rises in the distance.',
-  choices: [
-    ['Investigate the smoke', 'smoke'],
-    ['Watch the road', 'watchroad'],
-    ['Return to the village', 'intro']
-  ]
-},
-
-pretend: {
-  text: 'You relax your posture and pretend you believe everything he says. The stranger seems to lower his guard.',
-  choices: [
-    ['Ask him to trust you', 'trust'],
-    ['Ask where he is going', 'riders'],
-    ['Secretly follow him', 'follow']
-  ]
-},
-
-symbol: {
-  text: 'The silver knot is an old symbol used by a covert network of messengers and spies. The stranger watches your reaction carefully.',
-  choices: [
-    ['Take the cord', 'takecord'],
-    ['Ask why he showed you', 'trust'],
-    ['Walk away', 'back']
-  ]
-},
-
-scoutriders: {
-  text: 'You creep toward the eastern road. The riders are closer now. Their horses carry sealed wooden boxes.',
-  choices: [
-    ['Follow them', 'followriders'],
-    ['Hide and listen', 'listenriders'],
-    ['Return to Kuroda', 'warn']
-  ]
-},
-
-road: {
-  text: 'The eastern road is muddy and deserted. You find fresh horse tracks heading toward the hills.',
-  choices: [
-    ['Follow the tracks', 'followriders'],
-    ['Search the roadside', 'roadsearch'],
-    ['Return to Kuroda', 'intro']
-  ]
-},
-
-sunset: {
-  text: 'The stranger looks toward the darkening sky. “When the sun disappears, everyone will be looking at the wrong place.”',
-  choices: [
-    ['Ask what he means', 'riders'],
-    ['Warn the elder', 'warn'],
-    ['Follow him', 'follow']
-  ]
-},
-
-back: {
-  text: 'You step away. The stranger watches you for a moment before disappearing into the rain.',
-  choices: [
-    ['Return to the village', 'intro'],
-    ['Follow him from a distance', 'follow'],
-    ['Explore the village', 'explore']
-  ]
-},
-
-prepare: {
-  text: 'You help villagers move supplies and barricade the gate. Your reputation in Kuroda improves.',
-  choices: [
-    ['Return to the gate', 'approach'],
-    ['Search for the traitor', 'traitor'],
-    ['Check the watchtower', 'tower']
-  ]
-},
-
-closer: {
-  text: 'You move closer. A branch snaps beneath your foot. Both figures turn toward you.',
-  choices: [
-    ['Run', 'run'],
-    ['Fight', 'fight'],
-    ['Pretend you are lost', 'lost']
-  ]
-},
-
-listen: {
-  text: 'You remain perfectly still. The two figures discuss a hidden entrance beneath the eastern storehouse.',
-  choices: [
-    ['Return to Kuroda', 'warn'],
-    ['Investigate the storehouse', 'storehouses'],
-    ['Keep listening', 'listenmore']
-  ]
-},
-
-loot: {
-  text: 'In the mud you find a silver-stamped dagger and several coins.',
-  choices: [
-    ['Take them', 'takeLoot'],
-    ['Leave them', 'intro']
-  ]
-},
-
-chase: {
-  text: 'You chase the stranger into the rain, but he disappears among the trees. You find a torn piece of black cloth caught on a branch.',
-  choices: [
-    ['Take the cloth', 'takecloth'],
-    ['Return to Kuroda', 'warn']
-  ]
-},
-
-masaru: {
-  text: 'Masaru looks genuinely frightened when you confront him. “You have no idea what you are accusing me of.”',
-  choices: [
-    ['Believe him', 'believemasaru'],
-    ['Threaten him', 'threatenmasaru'],
-    ['Search his belongings', 'searchmasaru']
-  ]
-},
-
-telltraitor: {
-  text: 'The elder listens carefully. He does not accuse Masaru yet, but orders two guards to watch him.',
-  choices: [
-    ['Help the guards', 'followmasaru'],
-    ['Return to the gate', 'approach'],
-    ['Explore the village', 'explore']
-  ]
-},
-
-followmasaru: {
-  text: 'You secretly follow Masaru. Instead of leaving the village, he enters the old storehouse.',
-  choices: [
-    ['Follow him inside', 'storehouses'],
-    ['Get the elder', 'warn'],
-    ['Keep watching', 'watchmasaru']
-  ]
-},
-
-storehouses: {
-  text: 'The storehouse smells of grain and damp wood. Behind several barrels you discover a concealed trapdoor.',
-  choices: [
-    ['Open the trapdoor', 'trapdoor'],
-    ['Search the barrels', 'searchstore'],
-    ['Tell the elder', 'warn']
-  ]
-},
-
-trapdoor: {
-  text: 'Beneath the storehouse is a narrow tunnel leading outside the village walls. Someone has been using it recently.',
-  choices: [
-    ['Enter the tunnel', 'tunnel'],
-    ['Wait for someone to return', 'waittunnel'],
-    ['Report it', 'warn']
-  ]
-},
-
-tunnel: {
-  text: 'The tunnel leads toward the eastern road. You hear footsteps ahead.',
-  choices: [
-    ['Follow the footsteps', 'tunnelfollow'],
-    ['Hide', 'tunnelhide'],
-    ['Return to Kuroda', 'warn']
-  ]
-},
-
-marketinfo: {
-  text: 'The merchant whispers that armed men have been buying rope, oil and horses for several days.',
-  choices: [
-    ['Ask who is paying them', 'merchantpay'],
-    ['Warn the elder', 'warn'],
-    ['Return to the market', 'market']
-  ]
-},
-
-buyfood: {
-  text: 'You buy enough food to survive several days.',
-  choices: [
-    ['Return to the village', 'intro'],
-    ['Explore somewhere else', 'explore']
-  ]
-},
-
-work: {
-  text: 'The merchant offers you a small job delivering a sealed letter to the western road.',
-  choices: [
-    ['Accept', 'delivery'],
-    ['Refuse', 'market']
-  ]
-},
-
-pray: {
-  text: 'You kneel at the shrine. When you rise, you notice a small wooden token hidden beneath the offering box.',
-  choices: [
-    ['Take the token', 'taketoken'],
-    ['Leave it alone', 'intro']
-  ]
-},
-
-searchshrine: {
-  text: 'Behind the shrine you discover fresh footprints in the mud.',
-  choices: [
-    ['Follow them', 'shrinefootprints'],
-    ['Return to the village', 'intro']
-  ]
-},
-
-repair: {
-  text: 'The blacksmith repairs your uchigatana. It is still old, but the edge is much sharper.',
-  choices: [
-    ['Thank him', 'intro'],
-    ['Ask about the stranger', 'smithinfo']
-  ]
-},
-
-smithinfo: {
-  text: 'The blacksmith says the stranger visited yesterday and paid with a silver coin bearing a strange knot.',
-  choices: [
-    ['Ask where he went', 'riders'],
-    ['Show him the black cord', 'symbol'],
-    ['Leave', 'intro']
-  ]
-},
-
-smithriders: {
-  text: 'The blacksmith says three riders passed before dawn. Their horses were carrying military saddles.',
-  choices: [
-    ['Ask where they went', 'road'],
-    ['Warn the elder', 'warn']
-  ]
-},
-
-smoke: {
-  text: 'The smoke is coming from a small farm outside the village. You cannot tell whether it is an accident or something worse.',
-  choices: [
-    ['Investigate', 'farm'],
-    ['Warn Kuroda', 'warn'],
-    ['Keep watching', 'watchroad']
-  ]
-},
-
-watchroad: {
-  text: 'You watch the eastern road from the tower. A lone rider approaches Kuroda.',
-  choices: [
-    ['Signal the guards', 'signal'],
-    ['Wait and observe', 'watchrider'],
-    ['Climb down', 'intro']
-  ]
+function el(id) {
+  return document.getElementById(id);
 }
 
-};
+
+function addItem(item) {
+  if (!state.inventory.includes(item)) {
+    state.inventory.push(item);
+  }
+
+  renderInventory();
+}
+
+
+function removeItem(item) {
+  const i = state.inventory.indexOf(item);
+
+  if (i !== -1) {
+    state.inventory.splice(i, 1);
+  }
+
+  renderInventory();
+}
+
+
+function hasItem(item) {
+  return state.inventory.includes(item);
+}
+
+
+function changeRelationship(person, amount) {
+
+  if (state.relationships[person] === undefined) {
+    state.relationships[person] = 0;
+  }
+
+  state.relationships[person] += amount;
+
+  state.relationships[person] =
+    Math.max(-10, Math.min(10, state.relationships[person]));
+}
+
+
+function addQuest(text) {
+
+  if (!state.quests.includes(text)) {
+    state.quests.push(text);
+  }
+}
+
+
+function completeQuest(text) {
+
+  state.quests =
+    state.quests.filter(q => q !== text);
+}
+
+
+function random(min, max) {
+  return Math.floor(
+    Math.random() * (max - min + 1)
+  ) + min;
+}
+
+
+/* =========================================================
+   TIME
+   ========================================================= */
+
+function timeText() {
+
+  let h = state.hour;
+
+  if (h < 6) return "before dawn";
+  if (h < 12) return "morning";
+  if (h < 17) return "afternoon";
+  if (h < 20) return "evening";
+  if (h < 24) return "night";
+
+  return "night";
+}
+
+
+function advanceTime(hours = 1) {
+
+  state.hour += hours;
+
+  while (state.hour >= 24) {
+    state.hour -= 24;
+    state.day++;
+  }
+
+  updateWorld();
+}
+
+
+function updateWorld() {
+
+  if (
+    state.hour >= 20 &&
+    state.flags.explosionKnown &&
+    !state.flags.villageUnderAttack
+  ) {
+    state.flags.villageUnderAttack = true;
+  }
+
+}
+
+
+/* =========================================================
+   CHRONICLE
+   ========================================================= */
+
+function logEvent(text) {
+
+  state.history.unshift(
+    `Day ${state.day}, ${timeText()} — ${text}`
+  );
+
+  if (state.history.length > 30) {
+    state.history.pop();
+  }
+
+  renderChronicle();
+}
+
+
+function renderChronicle() {
+
+  const box = el("chron");
+
+  if (!box) return;
+
+  box.innerHTML =
+    state.history
+      .map(x => `<div class="event">${x}</div>`)
+      .join("");
+}
+
+
+/* =========================================================
+   INVENTORY / STATS
+   ========================================================= */
+
+function renderInventory() {
+
+  const box = el("inventory");
+
+  if (!box) return;
+
+  box.innerHTML =
+    state.inventory
+      .map(x => `<div class="item">${x}</div>`)
+      .join("");
+}
+
+
+function updateStats() {
+
+  ["money", "health", "attack", "rep"]
+    .forEach(key => {
+
+      const box = el(key);
+
+      if (box) {
+        box.textContent = state[key];
+      }
+
+    });
+}
+
+
+/* =========================================================
+   GAME START
+   ========================================================= */
 
 function startGame(realm, year, location) {
+
   state.realm = realm;
   state.year = year;
   state.location = location;
 
-  document.getElementById('start').classList.add('hidden');
-  document.getElementById('game').classList.remove('hidden');
+  state.turn = 0;
+  state.day = 1;
+  state.hour = 17;
 
-  document.getElementById('realm').textContent =
-    `${realm} · ${year} · ${location}`;
+  if (el("start")) {
+    el("start").classList.add("hidden");
+  }
 
+  if (el("game")) {
+    el("game").classList.remove("hidden");
+  }
+
+  if (el("realm")) {
+    el("realm").textContent =
+      `${realm} · ${year} · ${location}`;
+  }
+
+  state.history = [];
+  state.quests = [];
+
+  logEvent("You arrived in Kuroda Village.");
+
+  addQuest(
+    "Discover why the stranger is watching the eastern road."
+  );
+
+  renderWorld(`
+Rain taps against the wooden roofs of Kuroda Village.
+
+You are Shiro, fifteen years old.
+
+You have little money, a battered sword and no powerful family behind you.
+
+It is evening.
+
+Near the village gate stands a stranger you have never seen before.
+
+He isn't watching the houses.
+
+He is watching the eastern road.
+
+Then you notice something else.
+
+Three riders are approaching in the distance.
+
+What you do next is entirely up to you.
+  `);
+}
+
+
+/* =========================================================
+   WORLD RENDERING
+   ========================================================= */
+
+function renderWorld(text) {
+
+  if (el("reply")) {
+    el("reply").textContent = text;
+  }
+
+  if (el("you")) {
+    el("you").textContent = "";
+  }
+
+  renderChoices();
   renderInventory();
-  render('intro', '');
   updateStats();
+  renderChronicle();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
-function render(key, you) {
-  const s = scenes[key] || {
-    text: 'The world reacts to your choice. Your actions become part of its history.',
-    choices: [['Continue', 'intro']]
-  };
 
-  document.getElementById('you').textContent =
-    you ? `You: ${you}` : '';
+/* =========================================================
+   CHOICES
+   ========================================================= */
 
-  document.getElementById('reply').textContent = s.text;
+function renderChoices() {
 
-  document.getElementById('choices').innerHTML =
-    s.choices.map(([label, next]) =>
-      `<button onclick="act('${next}','${label.replaceAll("'", "\\'")}')">${label}</button>`
-    ).join('');
+  const box = el("choices");
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!box) return;
+
+  box.innerHTML = "";
+
+  const choices = getChoices();
+
+  choices.forEach(choice => {
+
+    const button =
+      document.createElement("button");
+
+    button.textContent = choice.text;
+
+    button.onclick = () => {
+      performAction(choice.action);
+    };
+
+    box.appendChild(button);
+
+  });
 }
 
-function act(next, label) {
+
+function getChoices() {
+
+  const choices = [];
+
+  /* Opening */
+
+  if (state.turn === 0) {
+
+    choices.push(
+      {
+        text: "Approach the stranger",
+        action: "meetStranger"
+      },
+      {
+        text: "Hide and watch the riders",
+        action: "watchRiders"
+      },
+      {
+        text: "Warn the village elder",
+        action: "warnElder"
+      },
+      {
+        text: "Head toward the eastern road",
+        action: "road"
+      },
+      {
+        text: "Ignore everything and visit the market",
+        action: "market"
+      }
+    );
+
+    return choices;
+  }
+
+
+  /* Stranger */
+
+  if (state.flags.metStranger) {
+
+    choices.push(
+      {
+        text: "Question the stranger",
+        action: "questionStranger"
+      },
+      {
+        text: "Offer to help him",
+        action: "helpStranger"
+      }
+    );
+
+  } else {
+
+    choices.push({
+      text: "Approach the stranger",
+      action: "meetStranger"
+    });
+
+  }
+
+
+  /* Village */
+
+  if (!state.flags.warnedVillage) {
+
+    choices.push({
+      text: "Warn the village elder",
+      action: "warnElder"
+    });
+
+  }
+
+
+  /* Investigation */
+
+  choices.push(
+    {
+      text: "Watch the eastern road",
+      action: "watchRiders"
+    },
+    {
+      text: "Investigate the eastern road",
+      action: "road"
+    },
+    {
+      text: "Search the village",
+      action: "searchVillage"
+    },
+    {
+      text: "Visit the market",
+      action: "market"
+    }
+  );
+
+
+  /* Masaru */
+
+  choices.push({
+    text: "Find the messenger Masaru",
+    action: "masaru"
+  });
+
+
+  /* Tunnel */
+
+  if (state.flags.discoveredTunnel) {
+
+    choices.push({
+      text: "Enter the hidden tunnel",
+      action: "tunnel"
+    });
+
+  }
+
+
+  /* Shrine */
+
+  if (state.flags.followedRiders) {
+
+    choices.push({
+      text: "Investigate the abandoned shrine",
+      action: "shrine"
+    });
+
+  }
+
+
+  /* Horse */
+
+  if (!state.flags.horseStolen) {
+
+    choices.push({
+      text: "Steal a horse and leave",
+      action: "stealHorse"
+    });
+
+  }
+
+
+  /* Attack */
+
+  if (
+    state.flags.villageUnderAttack
+  ) {
+
+    choices.push({
+      text: "Defend Kuroda",
+      action: "defendVillage"
+    });
+
+    choices.push({
+      text: "Escape while everyone is distracted",
+      action: "escape"
+    });
+
+  }
+
+
+  /* Rest */
+
+  choices.push({
+    text: "Wait and see what happens",
+    action: "wait"
+  });
+
+
+  return choices;
+}
+
+
+/* =========================================================
+   ACTION HANDLER
+   ========================================================= */
+
+function performAction(action) {
+
   state.turn++;
 
-  apply(next);
-  randomEvent();
-  addEvent(label);
-  render(next, label);
+  advanceTime(1);
+
+  switch (action) {
+
+    case "meetStranger":
+      meetStranger();
+      break;
+
+    case "questionStranger":
+      questionStranger();
+      break;
+
+    case "helpStranger":
+      helpStranger();
+      break;
+
+    case "watchRiders":
+      watchRiders();
+      break;
+
+    case "warnElder":
+      warnElder();
+      break;
+
+    case "road":
+      investigateRoad();
+      break;
+
+    case "searchVillage":
+      searchVillage();
+      break;
+
+    case "market":
+      visitMarket();
+      break;
+
+    case "masaru":
+      meetMasaru();
+      break;
+
+    case "tunnel":
+      enterTunnel();
+      break;
+
+    case "shrine":
+      investigateShrine();
+      break;
+
+    case "stealHorse":
+      stealHorse();
+      break;
+
+    case "defendVillage":
+      defendVillage();
+      break;
+
+    case "escape":
+      escapeVillage();
+      break;
+
+    case "wait":
+      waitAction();
+      break;
+
+    default:
+      renderWorld(
+        "You hesitate. The world waits for your decision."
+      );
+  }
+
   updateStats();
   renderInventory();
 }
 
-function apply(next) {
 
-  if (next === 'takecord') {
-    state.inventory.push('Black cord — unknown faction');
-    state.rep += 2;
-    state.npcs.stranger += 1;
-  }
+/* =========================================================
+   STRANGER
+   ========================================================= */
 
-  if (next === 'fight') {
-    state.health = Math.max(1, state.health - 14);
-    state.attack += 2;
-    state.rep += 3;
-  }
+function meetStranger() {
 
-  if (next === 'takeLoot') {
-    state.money += 45;
-    state.inventory.push('Silver-stamped dagger');
-  }
+  state.flags.metStranger = true;
 
-  if (next === 'takecloth') {
-    state.inventory.push('Torn black cloth');
-  }
+  changeRelationship("stranger", 1);
 
-  if (next === 'prepare') {
-    state.rep += 3;
-    state.npcs.elder += 1;
-  }
+  renderWorld(`
+You approach the stranger.
 
-  if (next === 'closer') {
-    state.health = Math.max(1, state.health - 4);
-  }
+He looks you up and down.
 
-  if (next === 'telltraitor') {
-    state.rep += 4;
-    state.npcs.elder += 1;
-  }
+"You're young."
 
-  if (next === 'masaru') {
-    state.rep -= 1;
-    state.npcs.masaru -= 1;
-  }
+His hand rests near his sleeve.
 
-  if (next === 'repair') {
-    if (state.money >= 20) {
-      state.money -= 20;
-      state.attack += 3;
-    }
-  }
+Then he glances toward the eastern road.
 
-  if (next === 'buyfood') {
-    if (state.money >= 10) {
-      state.money -= 10;
-      state.inventory.push('Travel rations');
-    }
-  }
+"Three riders."
 
-  if (next === 'delivery') {
-    state.money += 25;
-    state.rep += 2;
-  }
+He lowers his voice.
 
-  if (next === 'taketoken') {
-    state.inventory.push('Wooden shrine token');
-    state.rep += 1;
-  }
+"They aren't merchants."
 
-  if (next === 'threatenmasaru') {
-    state.rep -= 2;
-    state.npcs.masaru -= 2;
-  }
+He looks directly at you.
+
+"Someone inside Kuroda is helping them."
+
+He waits to see whether you believe him.
+  `);
+
+  addQuest(
+    "Discover who inside Kuroda is helping the riders."
+  );
+
+  logEvent("You met the mysterious stranger.");
 }
 
-function randomEvent() {
 
-  if (state.turn < 2) return;
+function questionStranger() {
+
+  changeRelationship("stranger", 1);
+
+  renderWorld(`
+You press the stranger for answers.
+
+"Who are you?"
+
+He smiles.
+
+"Someone who knows what happens tonight."
+
+He tells you the riders are looking for a particular person.
+
+Then he says something that makes your blood run cold:
+
+"Someone in this village has already betrayed Kuroda."
+
+He refuses to say who.
+
+"Find the traitor yourself."
+
+He disappears into the rain.
+  `);
+
+  addQuest(
+    "Find evidence of the traitor."
+  );
+
+  logEvent("The stranger revealed that Kuroda has a traitor.");
+}
+
+
+function helpStranger() {
+
+  state.flags.trustedStranger = true;
+
+  state.rep += 2;
+
+  changeRelationship("stranger", 3);
+
+  addItem("Black cord with silver knot");
+
+  addQuest(
+    "Meet the stranger after sunset."
+  );
+
+  renderWorld(`
+You tell the stranger you will help.
+
+For the first time, he smiles.
+
+He gives you a black cord with a tiny silver knot.
+
+"If you see this symbol again, pay attention."
+
+Then he disappears into the rain.
+
+You now have a choice:
+
+Trust him...
+
+or investigate him.
+  `);
+
+  logEvent("The stranger trusted you with a mysterious symbol.");
+}
+
+
+/* =========================================================
+   RIDERS
+   ========================================================= */
+
+function watchRiders() {
+
+  state.flags.watchedRiders = true;
 
   const chance = Math.random();
 
-  if (chance > 0.82) {
+  if (chance < 0.5) {
 
-    const events = [
-      'A sudden gust tears a roof tile loose. Villagers scatter as it crashes into the street.',
-      'You notice a hooded figure watching you from across the village.',
-      'A travelling monk passes through Kuroda and mentions seeing armed men on the eastern road.',
-      'A horse breaks loose near the market, causing panic for several minutes.',
-      'You find fresh footprints outside the village gate.',
-      'Someone has left a sealed note beside your belongings.'
-    ];
+    state.flags.followedRiders = true;
 
-    const event = events[Math.floor(Math.random() * events.length)];
+    addQuest(
+      "Discover what the riders are doing at the abandoned shrine."
+    );
 
-    state.events.unshift(
-      `Year ${state.year} · ${state.location}: ${event}`
+    renderWorld(`
+You hide behind a storehouse.
+
+The riders enter Kuroda's outskirts.
+
+They do not attack.
+
+Instead they speak with a fourth person.
+
+You cannot hear everything.
+
+But one sentence reaches you:
+
+"The explosion happens after sunset."
+
+The riders then leave toward an abandoned shrine.
+
+You have a decision to make.
+
+Follow them...
+
+or warn the village.
+    `);
+
+    logEvent(
+      "You discovered that the riders are planning an explosion."
+    );
+
+  } else {
+
+    renderWorld(`
+You watch the eastern road.
+
+The riders pass without entering the village.
+
+One of them drops something.
+
+You wait until they disappear before approaching it.
+
+It is a small metal token.
+
+A silver knot is stamped into it.
+    `);
+
+    addItem("Silver rider token");
+
+    state.flags.foundEvidence = true;
+
+    logEvent(
+      "You found a token bearing the stranger's symbol."
     );
   }
 }
 
+
+/* =========================================================
+   ELDER
+   ========================================================= */
+
+function warnElder() {
+
+  state.flags.warnedVillage = true;
+
+  state.rep += 3;
+
+  changeRelationship("elder", 3);
+  changeRelationship("villagers", 2);
+
+  addQuest(
+    "Prepare Kuroda for the coming attack."
+  );
+
+  renderWorld(`
+You hurry to the elder.
+
+You tell him about the riders.
+
+He listens carefully.
+
+Then he stands.
+
+"Close the gate."
+
+Within minutes the village changes.
+
+Doors are barred.
+
+Children are moved indoors.
+
+Weapons are brought out.
+
+The elder looks at you.
+
+"If you are wrong, you will have frightened everyone for nothing."
+
+"If you are right..."
+
+He doesn't finish the sentence.
+
+Kuroda is preparing for war.
+  `);
+
+  logEvent("You warned Kuroda about the riders.");
+}
+
+
+/* =========================================================
+   EASTERN ROAD
+   ========================================================= */
+
+function investigateRoad() {
+
+  state.health -= 4;
+
+  const roll = Math.random();
+
+  if (roll < 0.4) {
+
+    state.flags.discoveredTunnel = true;
+
+    addQuest(
+      "Explore the hidden tunnel."
+    );
+
+    renderWorld(`
+You follow the eastern road.
+
+Near an abandoned shrine you notice footprints.
+
+They lead behind a collapsed stone wall.
+
+You move the stones.
+
+There is a tunnel beneath them.
+
+Someone has been using it recently.
+
+You have discovered a secret entrance beneath Kuroda.
+    `);
+
+    logEvent("You discovered a hidden tunnel.");
+
+  } else if (roll < 0.75) {
+
+    state.flags.foundEvidence = true;
+
+    addItem("Bloodstained cloth");
+
+    renderWorld(`
+You find a piece of bloodstained cloth caught on a thorn bush.
+
+The cloth carries the same silver-knot symbol.
+
+Someone connected to the riders has been here.
+
+Recently.
+    `);
+
+    logEvent("You found evidence connected to the riders.");
+
+  } else {
+
+    renderWorld(`
+You reach the eastern road.
+
+Nothing.
+
+No riders.
+
+No stranger.
+
+Only rain.
+
+Then you notice footprints leading back toward Kuroda.
+
+Someone may have followed you.
+    `);
+
+    logEvent("Someone may have followed you.");
+  }
+}
+
+
+/* =========================================================
+   SEARCH VILLAGE
+   ========================================================= */
+
+function searchVillage() {
+
+  const roll = Math.random();
+
+  if (roll < 0.25) {
+
+    state.money += 25;
+
+    renderWorld(`
+You search an abandoned storehouse.
+
+Inside a broken chest you find 25 coins.
+
+Whoever owned them left in a hurry.
+    `);
+
+    logEvent("You found 25 coins.");
+
+  } else if (roll < 0.5) {
+
+    state.flags.discoveredTunnel = true;
+
+    renderWorld(`
+While searching beneath a storehouse, you notice scratches across the floor.
+
+You move a plank.
+
+There is a narrow passage beneath it.
+
+Someone has been secretly moving through Kuroda.
+    `);
+
+    addQuest(
+      "Explore the hidden tunnel."
+    );
+
+    logEvent("You discovered a hidden passage.");
+
+  } else if (roll < 0.75) {
+
+    state.flags.discoveredTraitor = true;
+
+    renderWorld(`
+You overhear two villagers arguing.
+
+One of them mentions Masaru.
+
+The village messenger.
+
+When they notice you, they stop talking.
+
+You now have a name.
+
+But not proof.
+    `);
+
+    addQuest(
+      "Investigate Masaru."
+    );
+
+    logEvent("Masaru's name keeps appearing in suspicious conversations.");
+
+  } else {
+
+    addItem("Old map");
+
+    renderWorld(`
+Behind a loose wallboard you discover an old map of Kuroda.
+
+Someone has marked three locations:
+
+The eastern road.
+
+The abandoned shrine.
+
+And the village well.
+
+Whatever is happening, those places are connected.
+    `);
+
+    logEvent("You discovered a mysterious map.");
+  }
+}
+
+
+/* =========================================================
+   MARKET
+   ========================================================= */
+
+function visitMarket() {
+
+  const choice = random(1, 3);
+
+  if (choice === 1) {
+
+    if (state.money >= 30) {
+
+      state.money -= 30;
+
+      addItem("Bandage");
+
+      renderWorld(`
+A travelling merchant notices your injured arm.
+
+"For thirty coins, I'll sell you something useful."
+
+You buy a bandage.
+
+It isn't much.
+
+But it may save your life.
+      `);
+
+      logEvent("You bought a bandage.");
+
+    } else {
+
+      renderWorld(`
+The merchant looks at your empty purse.
+
+"No money, no goods."
+
+He turns away.
+      `);
+    }
+
+  } else if (choice === 2) {
+
+    state.money += 10;
+
+    renderWorld(`
+You help a merchant move crates.
+
+He pays you ten coins.
+
+While working, you overhear him mention that several armed men passed through Kuroda earlier.
+
+Something is definitely happening.
+    `);
+
+    logEvent("A merchant paid you for helping.");
+
+  } else {
+
+    renderWorld(`
+The market is strangely quiet.
+
+A travelling merchant watches you carefully.
+
+"I wouldn't stay in Kuroda tonight," he says.
+
+Then he leaves before you can ask why.
+    `);
+
+    logEvent("A merchant warned you to leave Kuroda.");
+  }
+}
+
+
+/* =========================================================
+   MASARU
+   ========================================================= */
+
+function meetMasaru() {
+
+  state.flags.masaruQuestioned = true;
+
+  changeRelationship("masaru", -1);
+
+  renderWorld(`
+You find Masaru near the western houses.
+
+He smiles.
+
+"Can I help you?"
+
+You ask about the riders.
+
+His expression changes for half a second.
+
+Then he smiles again.
+
+"I know nothing."
+
+He leaves.
+
+You don't believe him.
+
+But suspicion isn't proof.
+  `);
+
+  addQuest(
+    "Find evidence against — or in favour of — Masaru."
+  );
+
+  logEvent("You questioned Masaru.");
+}
+
+
+/* =========================================================
+   TUNNEL
+   ========================================================= */
+
+function enterTunnel() {
+
+  state.flags.discoveredTunnel = true;
+
+  state.health -= 3;
+
+  const roll = Math.random();
+
+  if (roll < 0.5) {
+
+    addItem("Silver dagger");
+
+    state.money += 40;
+
+    renderWorld(`
+You crawl through the tunnel.
+
+It opens beneath an underground chamber.
+
+Weapons are stacked against the wall.
+
+Someone has been preparing for a serious conflict.
+
+You find a silver-stamped dagger and 40 coins.
+
+This is far larger than a village dispute.
+    `);
+
+    logEvent("You discovered a hidden weapons cache.");
+
+  } else {
+
+    state.flags.discoveredTraitor = true;
+
+    renderWorld(`
+You move quietly through the tunnel.
+
+Voices.
+
+You stop.
+
+Someone is speaking above you.
+
+You recognise the voice.
+
+It belongs to a person you know.
+
+You hear:
+
+"The village will be open after sunset."
+
+You now know the attack has an insider.
+    `);
+
+    addQuest(
+      "Identify the person helping the attackers."
+    );
+
+    logEvent("You overheard the traitor's conversation.");
+  }
+}
+
+
+/* =========================================================
+   SHRINE
+   ========================================================= */
+
+function investigateShrine() {
+
+  state.flags.searchedShrine = true;
+
+  const roll = Math.random();
+
+  if (roll < 0.5) {
+
+    state.flags.explosionKnown = true;
+
+    addItem("Fuse");
+
+    renderWorld(`
+You reach the abandoned shrine.
+
+The riders have left.
+
+But they have prepared something.
+
+You find a hidden explosive charge beneath the shrine floor.
+
+A fuse leads toward Kuroda.
+
+You now know exactly what they intend to destroy.
+
+The village gate.
+    `);
+
+    addQuest(
+      "Stop the attack before the village gate is destroyed."
+    );
+
+    logEvent("You discovered the attackers' plan.");
+
+  } else {
+
+    state.flags.followedRiders = true;
+
+    renderWorld(`
+The shrine is empty.
+
+But fresh footprints lead into the forest.
+
+You follow them briefly.
+
+Someone has been using this shrine as a meeting place.
+
+You don't know who yet.
+    `);
+
+    logEvent("The shrine contains evidence of secret meetings.");
+  }
+}
+
+
+/* =========================================================
+   HORSE
+   ========================================================= */
+
+function stealHorse() {
+
+  state.flags.horseStolen = true;
+
+  state.rep -= 4;
+
+  state.location = "Eastern Road";
+
+  renderWorld(`
+You make a reckless decision.
+
+A horse is tied behind the stable.
+
+You cut the rope.
+
+You climb onto its back.
+
+Someone screams.
+
+"THIEF!"
+
+You ride.
+
+Kuroda disappears behind you.
+
+You are now outside the village.
+
+Nobody knows where you are.
+
+For the first time tonight, you are completely free.
+
+And completely alone.
+  `);
+
+  addQuest(
+    "Decide what to do now that you have left Kuroda."
+  );
+
+  logEvent("You stole a horse and fled Kuroda.");
+}
+
+
+/* =========================================================
+   DEFEND VILLAGE
+   ========================================================= */
+
+function defendVillage() {
+
+  state.flags.attacked = true;
+
+  const strength =
+    state.attack +
+    state.rep +
+    random(-5, 8);
+
+  if (strength >= 15) {
+
+    state.health -= random(8, 20);
+
+    state.rep += 5;
+
+    completeQuest(
+      "Prepare Kuroda for the coming attack."
+    );
+
+    renderWorld(`
+The attack begins.
+
+Torches appear beyond the gate.
+
+Arrows fly through the rain.
+
+You fight beside the villagers.
+
+Your sword arm burns.
+
+Someone beside you falls.
+
+But Kuroda holds.
+
+The attackers retreat into the darkness.
+
+The village survives.
+
+For now.
+
+Your actions tonight have changed how the villagers see you.
+    `);
+
+    logEvent("You helped defend Kuroda.");
+
+  } else {
+
+    state.health -= random(20, 35);
+
+    renderWorld(`
+The attack begins.
+
+You fight desperately.
+
+But there are too many attackers.
+
+The eastern gate breaks.
+
+Kuroda is burning.
+
+You survive only by retreating into the rain.
+
+The village has fallen.
+    `);
+
+    logEvent("Kuroda fell during the attack.");
+  }
+
+  if (state.health < 1) {
+    state.health = 1;
+  }
+}
+
+
+/* =========================================================
+   ESCAPE
+   ========================================================= */
+
+function escapeVillage() {
+
+  state.flags.escapedVillage = true;
+
+  state.location = "Forest Road";
+
+  state.rep -= 2;
+
+  renderWorld(`
+You run.
+
+Behind you, Kuroda burns.
+
+You reach the forest.
+
+You are alive.
+
+But you left everyone behind.
+
+Perhaps that was cowardice.
+
+Perhaps it was survival.
+
+Only history will decide.
+  `);
+
+  logEvent("You abandoned Kuroda during the attack.");
+}
+
+
+/* =========================================================
+   WAIT
+   ========================================================= */
+
+function waitAction() {
+
+  advanceTime(3);
+
+  if (state.flags.villageUnderAttack) {
+
+    renderWorld(`
+You waited too long.
+
+The night erupts with screams.
+
+The attack has begun.
+
+There is no more time to prepare.
+    `);
+
+  } else {
+
+    renderWorld(`
+You wait.
+
+The rain continues.
+
+Time passes.
+
+Something in the world has changed, even though you did nothing.
+
+The night is getting closer.
+    `);
+
+    logEvent("You chose to wait.");
+  }
+}
+
+
+/* =========================================================
+   CUSTOM ACTIONS
+   ========================================================= */
+
 function customAction() {
 
-  const box = document.getElementById('custom');
+  const box = el("custom");
+
+  if (!box) return;
+
   const raw = box.value.trim();
 
   if (!raw) return;
 
-  const low = raw.toLowerCase();
+  box.value = "";
 
-  let next = 'intro';
+  state.turn++;
 
-  if (/explore|look around|wander|village|market|shop/.test(low))
-    next = 'explore';
+  advanceTime(1);
 
-  else if (/ask|what|who|why|where/.test(low))
-    next = 'riders';
+  logEvent(`You attempted: "${raw}"`);
 
-  else if (/threat|intimid|draw.*sword|attack|kill/.test(low))
-    next = 'threaten';
-
-  else if (/follow|tail|shadow/.test(low))
-    next = 'follow';
-
-  else if (/warn|elder|village/.test(low))
-    next = 'warn';
-
-  else if (/watch|hide|wait|observe/.test(low))
-    next = 'watch';
-
-  else if (/search|loot|take/.test(low))
-    next = 'loot';
-
-  else if (/run|leave|back away|escape/.test(low))
-    next = 'back';
-
-  act(next, raw);
-
-  box.value = '';
+  interpretCustomAction(raw);
 }
 
-function addEvent(text) {
 
-  state.events.unshift(
-    `Year ${state.year} · ${state.location}: ${text}`
+/* =========================================================
+   CUSTOM ACTION INTERPRETER
+   ========================================================= */
+
+function interpretCustomAction(raw) {
+
+  const text = raw.toLowerCase();
+
+  /* TALKING */
+
+  if (
+    /(talk|speak|ask|question|confront|tell)/.test(text)
+  ) {
+
+    if (/stranger|man|unknown/.test(text)) {
+      meetStranger();
+      return;
+    }
+
+    if (/elder|leader/.test(text)) {
+      warnElder();
+      return;
+    }
+
+    if (/masaru|messenger/.test(text)) {
+      meetMasaru();
+      return;
+    }
+  }
+
+
+  /* WATCHING */
+
+  if (
+    /(watch|observe|spy|listen|hide)/.test(text)
+  ) {
+
+    watchRiders();
+    return;
+  }
+
+
+  /* FOLLOWING */
+
+  if (
+    /(follow|tail|track|chase)/.test(text)
+  ) {
+
+    state.flags.followedRiders = true;
+
+    addQuest(
+      "Discover where the people you followed are going."
+    );
+
+    renderWorld(`
+You decide not to confront them.
+
+Instead, you follow.
+
+You keep your distance through the rain.
+
+The people ahead haven't noticed you.
+
+They are heading toward the abandoned shrine.
+
+You may have just discovered another route into the mystery.
+    `);
+
+    return;
+  }
+
+
+  /* SEARCHING */
+
+  if (
+    /(search|investigate|inspect|examine|look)/.test(text)
+  ) {
+
+    if (/road|east|rider/.test(text)) {
+      investigateRoad();
+    } else if (/shrine/.test(text)) {
+      investigateShrine();
+    } else if (/tunnel|underground|passage/.test(text)) {
+      enterTunnel();
+    } else {
+      searchVillage();
+    }
+
+    return;
+  }
+
+
+  /* WARNING */
+
+  if (
+    /(warn|alert|protect)/.test(text)
+  ) {
+
+    warnElder();
+    return;
+  }
+
+
+  /* HORSE */
+
+  if (
+    /(horse|steal.*animal|take.*horse)/.test(text)
+  ) {
+
+    stealHorse();
+    return;
+  }
+
+
+  /* FIGHTING */
+
+  if (
+    /(fight|attack|kill|strike|stab|draw.*sword)/.test(text)
+  ) {
+
+    state.health -= random(5, 18);
+    state.attack += 2;
+    state.rep += 2;
+
+    if (state.health < 1) {
+      state.health = 1;
+    }
+
+    renderWorld(`
+You choose violence.
+
+"${raw}"
+
+Steel flashes.
+
+You win the encounter, but not without injury.
+
+Your reputation changes because people will remember what you did.
+
+The world has reacted to your decision.
+    `);
+
+    return;
+  }
+
+
+  /* ESCAPE */
+
+  if (
+    /(run|escape|flee|leave)/.test(text)
+  ) {
+
+    escapeVillage();
+    return;
+  }
+
+
+  /* REST */
+
+  if (
+    /(wait|rest|sleep|stay)/.test(text)
+  ) {
+
+    waitAction();
+    return;
+  }
+
+
+  /* CREATIVE ACTION */
+
+  creativeAction(raw);
+}
+
+
+/* =========================================================
+   CREATIVE ACTIONS
+   ========================================================= */
+
+function creativeAction(raw) {
+
+  const roll = random(1, 4);
+
+  if (roll === 1) {
+
+    state.rep += 1;
+
+    renderWorld(`
+You attempt something unexpected:
+
+"${raw}"
+
+It doesn't go exactly as planned.
+
+But your unusual approach catches someone completely off guard.
+
+You gain a small advantage.
+
+The world has noticed that you are not following the obvious path.
+    `);
+
+  }
+
+  else if (roll === 2) {
+
+    const money = random(5, 20);
+
+    state.money += money;
+
+    renderWorld(`
+You improvise:
+
+"${raw}"
+
+Your idea leads you somewhere useful.
+
+You discover a small opportunity and gain ${money} coins.
+
+It isn't a major victory.
+
+But it is yours.
+    `);
+
+  }
+
+  else if (roll === 3) {
+
+    state.flags.foundEvidence = true;
+
+    addItem("Unidentified clue");
+
+    renderWorld(`
+You try:
+
+"${raw}"
+
+Something unexpected catches your attention.
+
+You find evidence that seems connected to the events surrounding Kuroda.
+
+You don't understand it yet.
+
+But it may become important later.
+    `);
+
+  }
+
+  else {
+
+    state.health -= 5;
+
+    if (state.health < 1) {
+      state.health = 1;
+    }
+
+    renderWorld(`
+You attempt:
+
+"${raw}"
+
+The idea is risky.
+
+You make some progress, but something goes wrong.
+
+You are hurt.
+
+Still, your decision has changed the situation.
+
+That matters.
+    `);
+  }
+
+  logEvent(
+    `Your unusual action changed the situation: ${raw}`
   );
-
-  document.getElementById('chron').innerHTML =
-    state.events.map(e =>
-      `<div class="event">${e}</div>`
-    ).join('');
 }
 
-function updateStats() {
 
-  ['money', 'health', 'attack', 'rep'].forEach(k => {
-    document.getElementById(k).textContent = state[k];
-  });
-}
+/* =========================================================
+   INITIAL UI REFRESH
+   ========================================================= */
 
-function renderInventory() {
+renderInventory();
+updateStats();
 
-  document.getElementById('inventory').innerHTML =
-    state.inventory.map(x =>
-      `<div class="item">${x}</div>`
-    ).join('');
-} 
 </script>
