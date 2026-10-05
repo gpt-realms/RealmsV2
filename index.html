@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -75,7 +74,7 @@ button,input,textarea{font:inherit}
 }
 
 .response{
-  min-height:190px
+  min-height:240px
 }
 
 .label{
@@ -123,6 +122,12 @@ button,input,textarea{font:inherit}
 .restartButton:hover{
   background:#283142;
   transform:translateY(-1px)
+}
+
+.choices button:disabled{
+  opacity:.45;
+  cursor:default;
+  transform:none
 }
 
 .custom{
@@ -216,6 +221,16 @@ button,input,textarea{font:inherit}
   transform:translateY(-2px)
 }
 
+.era.inprogress{
+  opacity:.55;
+  cursor:not-allowed
+}
+
+.era.inprogress:hover{
+  background:#171c25;
+  transform:none
+}
+
 .era small{
   display:block;
   color:#8e96a3;
@@ -280,6 +295,24 @@ button,input,textarea{font:inherit}
   font-size:12px
 }
 
+.sceneTitle{
+  font-size:13px;
+  color:#cbd2dc;
+  font-weight:700;
+  margin-bottom:10px;
+  letter-spacing:.5px
+}
+
+.endingTag{
+  display:inline-block;
+  margin-top:14px;
+  padding:6px 9px;
+  border:1px solid #343c4b;
+  border-radius:8px;
+  font-size:11px;
+  color:#aeb5c0
+}
+
 @media(max-width:520px){
   .stats{
     grid-template-columns:repeat(2,1fr)
@@ -319,6 +352,7 @@ button,input,textarea{font:inherit}
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
+
       <div class="sub">BUILD 2</div>
     </div>
 
@@ -331,28 +365,32 @@ button,input,textarea{font:inherit}
 
     <div class="eras">
 
-      <button class="era"
-        onclick="startGame('Sengoku Japan','1570','Kuroda Village')">
+      <button
+        class="era"
+        onclick="startGame('Sengoku Japan','1587','Kuroda Village')">
         ⚔️ Sengoku Japan
-        <small>1570 · Kuroda Village</small>
+        <small>1587 · Kuroda Village · PLAYABLE</small>
       </button>
 
-      <button class="era"
-        onclick="startGame('Roman Republic','44 BC','Rome')">
+      <button
+        class="era inprogress"
+        disabled>
         🏛️ Roman Republic
-        <small>44 BC · Rome</small>
+        <small>44 BC · Rome · IN PROGRESS</small>
       </button>
 
-      <button class="era"
-        onclick="startGame('Anglo-Saxon England','1066','York')">
+      <button
+        class="era inprogress"
+        disabled>
         🛡️ Anglo-Saxon England
-        <small>1066 · York</small>
+        <small>1066 · York · IN PROGRESS</small>
       </button>
 
-      <button class="era"
-        onclick="startGame('New Kingdom Egypt','1323 BC','Thebes')">
+      <button
+        class="era inprogress"
+        disabled>
         𓂀 Ancient Egypt
-        <small>1323 BC · Thebes</small>
+        <small>1323 BC · Thebes · IN PROGRESS</small>
       </button>
 
     </div>
@@ -385,7 +423,6 @@ button,input,textarea{font:inherit}
     </button>
 
   </div>
-
 
   <div class="brand">
 
@@ -437,6 +474,8 @@ button,input,textarea{font:inherit}
 
   <div class="card response">
 
+    <div id="sceneTitle" class="sceneTitle"></div>
+
     <div class="label">
       Realm response
     </div>
@@ -473,7 +512,7 @@ button,input,textarea{font:inherit}
 
       <textarea
         id="custom"
-        placeholder="Do anything... e.g. talk to the stranger, search the house, run away..."
+        placeholder="Try something outside the choices..."
       ></textarea>
 
       <button
@@ -540,11 +579,15 @@ button,input,textarea{font:inherit}
 
   <div class="card gameover">
 
-    <h2>YOUR STORY ENDS</h2>
+    <h2 id="endingTitle">YOUR STORY ENDS</h2>
 
     <p id="deathText">
       Your journey has come to an end.
     </p>
+
+    <div id="endingTag" class="endingTag">
+      ENDING
+    </div>
 
     <div class="endActions">
 
@@ -573,7 +616,7 @@ button,input,textarea{font:inherit}
 
 /* =====================================================
    REALMS — BUILD 2
-   No API required.
+   JAPAN CAMPAIGN
 ===================================================== */
 
 const REALMS_BACKEND =
@@ -599,29 +642,36 @@ const state = {
 
   day:1,
   hour:17,
-  turn:0,
 
   alive:true,
   ending:false,
 
+  scene:"opening",
+
+  lastAction:"",
+
   flags:{
     metStranger:false,
     trustedStranger:false,
-    warnedVillage:false,
     watchedRiders:false,
+    warnedVillage:false,
     followedRiders:false,
+    foundEvidence:false,
     discoveredTunnel:false,
     discoveredTraitor:false,
-    horseStolen:false,
     masaruQuestioned:false,
+    searchedShrine:false,
     explosionKnown:false,
     villageUnderAttack:false,
+    villageSaved:false,
     escapedVillage:false,
-    searchedShrine:false,
-    foundEvidence:false,
-    attacked:false,
+    horseStolen:false,
     gateDestroyed:false,
-    villageSaved:false
+    strangerAlive:true,
+    bombDisarmed:false,
+    traitorNameKnown:false,
+    elderTrust:false,
+    villagersWarned:false
   },
 
   relationships:{
@@ -633,11 +683,7 @@ const state = {
 
   quests:[],
 
-  history:[],
-
-  usedActions:[],
-
-  lastAction:""
+  history:[]
 
 };
 
@@ -670,25 +716,48 @@ function addItem(item){
   }
 
   renderInventory();
+
 }
 
 
 function removeItem(item){
 
-  const index =
+  const index=
     state.inventory.indexOf(item);
 
-  if(index !== -1){
+  if(index!==-1){
     state.inventory.splice(index,1);
   }
 
   renderInventory();
+
+}
+
+
+function addQuest(text){
+
+  if(!state.quests.includes(text)){
+    state.quests.push(text);
+  }
+
+  renderQuests();
+
+}
+
+
+function completeQuest(text){
+
+  state.quests=
+    state.quests.filter(q=>q!==text);
+
+  renderQuests();
+
 }
 
 
 function changeRelationship(person,amount){
 
-  if(state.relationships[person] === undefined){
+  if(state.relationships[person]===undefined){
     state.relationships[person]=0;
   }
 
@@ -702,25 +771,7 @@ function changeRelationship(person,amount){
         state.relationships[person]
       )
     );
-}
 
-
-function addQuest(text){
-
-  if(!state.quests.includes(text)){
-    state.quests.push(text);
-  }
-
-  renderQuests();
-}
-
-
-function completeQuest(text){
-
-  state.quests=
-    state.quests.filter(q=>q!==text);
-
-  renderQuests();
 }
 
 
@@ -730,14 +781,13 @@ function completeQuest(text){
 
 function timeText(){
 
-  const h=state.hour;
-
-  if(h<6) return "before dawn";
-  if(h<12) return "morning";
-  if(h<17) return "afternoon";
-  if(h<20) return "evening";
+  if(state.hour<6)return "before dawn";
+  if(state.hour<12)return "morning";
+  if(state.hour<17)return "afternoon";
+  if(state.hour<20)return "evening";
 
   return "night";
+
 }
 
 
@@ -751,52 +801,6 @@ function advanceTime(hours=1){
     state.day++;
 
   }
-
-  updateWorld();
-
-}
-
-
-/* =====================================================
-   WORLD
-===================================================== */
-
-function updateWorld(){
-
-  if(
-    state.explosionKnown &&
-    state.hour>=20 &&
-    !state.flags.villageUnderAttack &&
-    !state.flags.villageSaved &&
-    !state.flags.escapedVillage
-  ){
-
-    state.flags.villageUnderAttack=true;
-
-    addQuest(
-      "Survive the attack on Kuroda Village."
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   LOG
-===================================================== */
-
-function logEvent(text){
-
-  state.history.unshift(
-    `Day ${state.day}, ${timeText()} — ${text}`
-  );
-
-  if(state.history.length>40){
-    state.history.pop();
-  }
-
-  renderChronicle();
 
 }
 
@@ -817,6 +821,7 @@ function renderInventory(){
       `<div class="empty">Nothing.</div>`;
 
     return;
+
   }
 
   box.innerHTML=
@@ -841,6 +846,7 @@ function renderQuests(){
       `<div class="empty">No active quests.</div>`;
 
     return;
+
   }
 
   box.innerHTML=
@@ -871,20 +877,25 @@ function renderChronicle(){
 
 function updateStats(){
 
-  ["money","health","attack","rep"]
-    .forEach(key=>{
+  if(el("money")){
+    el("money").textContent=
+      Math.max(0,state.money);
+  }
 
-      const box=el(key);
+  if(el("health")){
+    el("health").textContent=
+      Math.max(0,state.health);
+  }
 
-      if(box){
-        box.textContent=
-          Math.max(
-            0,
-            state[key]
-          );
-      }
+  if(el("attack")){
+    el("attack").textContent=
+      Math.max(0,state.attack);
+  }
 
-    });
+  if(el("rep")){
+    el("rep").textContent=
+      state.rep;
+  }
 
   if(el("location")){
 
@@ -897,7 +908,26 @@ function updateStats(){
 
 
 /* =====================================================
-   GAME START
+   CHRONICLE
+===================================================== */
+
+function logEvent(text){
+
+  state.history.unshift(
+    `Day ${state.day}, ${timeText()} — ${text}`
+  );
+
+  if(state.history.length>60){
+    state.history.pop();
+  }
+
+  renderChronicle();
+
+}
+
+
+/* =====================================================
+   RESET
 ===================================================== */
 
 function resetState(){
@@ -914,29 +944,36 @@ function resetState(){
 
   state.day=1;
   state.hour=17;
-  state.turn=0;
 
   state.alive=true;
   state.ending=false;
 
+  state.scene="opening";
+
+  state.lastAction="";
+
   state.flags={
     metStranger:false,
     trustedStranger:false,
-    warnedVillage:false,
     watchedRiders:false,
+    warnedVillage:false,
     followedRiders:false,
+    foundEvidence:false,
     discoveredTunnel:false,
     discoveredTraitor:false,
-    horseStolen:false,
     masaruQuestioned:false,
+    searchedShrine:false,
     explosionKnown:false,
     villageUnderAttack:false,
+    villageSaved:false,
     escapedVillage:false,
-    searchedShrine:false,
-    foundEvidence:false,
-    attacked:false,
+    horseStolen:false,
     gateDestroyed:false,
-    villageSaved:false
+    strangerAlive:true,
+    bombDisarmed:false,
+    traitorNameKnown:false,
+    elderTrust:false,
+    villagersWarned:false
   };
 
   state.relationships={
@@ -948,11 +985,13 @@ function resetState(){
 
   state.quests=[];
   state.history=[];
-  state.usedActions=[];
-  state.lastAction="";
 
 }
 
+
+/* =====================================================
+   START
+===================================================== */
 
 function startGame(realm,year,location){
 
@@ -973,7 +1012,11 @@ function startGame(realm,year,location){
     `You arrived in ${location}.`
   );
 
-  setupOpening();
+  addQuest(
+    "Discover why armed riders are approaching Kuroda."
+  );
+
+  showScene("opening");
 
   updateStats();
   renderInventory();
@@ -983,18 +1026,33 @@ function startGame(realm,year,location){
 
 
 /* =====================================================
-   ERA OPENINGS
+   SCENE SYSTEM
 ===================================================== */
 
-function setupOpening(){
+/*
+   THIS IS THE IMPORTANT CHANGE.
 
-  if(state.realm==="Sengoku Japan"){
+   The game now has one current scene.
 
-    addQuest(
-      "Discover why armed riders are approaching Kuroda."
-    );
+   Every action:
+   1. removes the old choices
+   2. changes state.scene
+   3. renders one new scene
+   4. generates ONLY the choices for that scene
 
-    renderWorld(`Rain taps against the wooden roofs of Kuroda Village.
+   Therefore the game cannot keep stacking old choices.
+*/
+
+const scenes={
+
+/* =====================================================
+   OPENING
+===================================================== */
+
+opening:{
+  title:"THE STRANGERS ON THE ROAD",
+
+  text:`Rain taps against the wooden roofs of Kuroda Village.
 
 You are Shiro, fifteen years old.
 
@@ -1008,127 +1066,468 @@ He is watching the eastern road.
 
 Three riders are approaching in the distance.
 
-The village does not know they are coming.
+The village does not know they are coming.`,
 
-What do you do?`);
-
-    return;
-  }
-
-
-  if(state.realm==="Roman Republic"){
-
-    addQuest(
-      "Discover why armed men are gathering near the Forum."
-    );
-
-    renderWorld(`Rome is restless.
-
-It is 44 BC.
-
-The Senate is divided.
-
-Rumours spread through the streets that powerful men are preparing for violence.
-
-You are Lucius, a young citizen with no political influence.
-
-As you cross the Forum, a frightened senator grabs your arm.
-
-"Do not trust the men wearing red."
-
-He disappears into the crowd.
-
-Then you notice several armed men entering the Forum.
-
-Something is about to happen.
-
-What do you do?`);
-
-    return;
-  }
-
-
-  if(state.realm==="Anglo-Saxon England"){
-
-    addQuest(
-      "Discover why the northern scouts are warning York."
-    );
-
-    renderWorld(`Cold rain falls over York.
-
-It is 1066.
-
-You are Edwin, a young warrior with little status.
-
-The town is crowded with frightened families.
-
-A wounded scout arrives at the gate.
-
-"An army is coming."
-
-The soldiers around him exchange worried looks.
-
-Nobody knows exactly who is coming.
-
-Then a horn sounds from the northern road.
-
-The gates begin to close.
-
-What do you do?`);
-
-    return;
-  }
-
-
-  if(state.realm==="New Kingdom Egypt"){
-
-    addQuest(
-      "Discover why the temple priests are hiding something."
-    );
-
-    renderWorld(`Thebes is quiet beneath the evening sun.
-
-It is 1323 BC.
-
-You are Kha, a young worker attached to the temple.
-
-Today the priests ordered everyone away from the eastern chambers.
-
-They claim nothing is wrong.
-
-But you saw blood on the temple steps.
-
-A priest notices you watching.
-
-"Go home."
-
-He closes the chamber door.
-
-Something is being hidden.
-
-What do you do?`);
-
-  }
-
-}
+  choices:[
+    ["Approach the stranger","meetStranger"],
+    ["Hide and watch the riders","watchRiders"],
+    ["Warn the village elder","warnElder"],
+    ["Head toward the eastern road","investigateRoad"]
+  ]
+},
 
 
 /* =====================================================
-   WORLD RENDER
+   STRANGER
 ===================================================== */
 
-function renderWorld(text){
+stranger:{
+  title:"THE STRANGER",
+
+  text:`You approach the stranger.
+
+He studies you carefully.
+
+"You're young."
+
+His hand rests near his sleeve.
+
+"Those riders aren't merchants."
+
+He looks toward the eastern road.
+
+"Someone inside Kuroda is helping them."
+
+Then he looks directly at you.
+
+"If you want the truth, don't trust the first person who offers it."
+
+He gives you a small black cord marked with a silver knot.`,
+
+  choices:[
+    ["Ask who he is","questionStranger"],
+    ["Offer to help him","trustStranger"],
+    ["Ask about the riders","askRiders"],
+    ["Leave him and warn the elder","warnElder"]
+  ]
+},
+
+
+/* =====================================================
+   WATCH RIDERS
+===================================================== */
+
+riders:{
+  title:"THE RIDERS",
+
+  text:`You hide behind a wooden storehouse.
+
+The riders enter Kuroda.
+
+They do not behave like soldiers entering a battlefield.
+
+They behave like men who already know where they are going.
+
+One dismounts.
+
+Another speaks quietly to a figure waiting near the road.
+
+You cannot see the person's face.
+
+Then you hear:
+
+"The gate will be open after sunset."
+
+The riders move toward the abandoned shrine.`,
+
+  choices:[
+    ["Follow them","followRiders"],
+    ["Return and warn the elder","warnElder"],
+    ["Search where they stopped","searchRiderCamp"],
+    ["Keep watching from hiding","keepWatching"]
+  ]
+},
+
+
+/* =====================================================
+   ELDER
+===================================================== */
+
+elder:{
+  title:"THE VILLAGE ELDER",
+
+  text:`You find the village elder inside his house.
+
+You tell him about the riders.
+
+He listens.
+
+When you mention the eastern road, his expression changes.
+
+"You are certain?"
+
+You nod.
+
+He stands.
+
+"Then Kuroda has little time."
+
+He orders the gate watched and asks you one question:
+
+"Do you know who is helping them?"`,
+
+  choices:[
+    ["Tell him about the stranger","tellElderStranger"],
+    ["Tell him about the riders","tellElderRiders"],
+    ["Say you don't know yet","keepInvestigation"],
+    ["Ask for weapons and help","askElderHelp"]
+  ]
+},
+
+
+/* =====================================================
+   ROAD
+===================================================== */
+
+road:{
+  title:"THE EASTERN ROAD",
+
+  text:`You leave the village and follow the eastern road.
+
+The rain has turned the earth to mud.
+
+You find fresh footprints.
+
+Four sets.
+
+Then a fifth.
+
+The fifth set is smaller.
+
+Someone from Kuroda has been meeting the riders.
+
+Near a collapsed stone wall you find a scrap of cloth marked with the same silver knot the stranger showed you.`,
+
+  choices:[
+    ["Follow the footprints","followFootprints"],
+    ["Search the collapsed wall","searchWall"],
+    ["Return to Kuroda","returnVillage"],
+    ["Go to the abandoned shrine","goShrine"]
+  ]
+},
+
+
+/* =====================================================
+   AFTER FIRST INVESTIGATION
+===================================================== */
+
+villageAfterClue:{
+  title:"KURODA VILLAGE",
+
+  text:`You return to Kuroda.
+
+The atmosphere has changed.
+
+People are whispering.
+
+The gate guards are nervous.
+
+The stranger is nowhere to be seen.
+
+You now know there is an insider helping the approaching force.
+
+But you still do not know who.`,
+
+  choices:[
+    ["Find Masaru, the village messenger","findMasaru"],
+    ["Search the village storehouses","searchVillage"],
+    ["Return to the elder","returnElder"],
+    ["Investigate the shrine","goShrine"]
+  ]
+},
+
+
+/* =====================================================
+   MASARU
+===================================================== */
+
+masaru:{
+  title:"MASARU THE MESSENGER",
+
+  text:`You find Masaru near the western houses.
+
+He smiles when he sees you.
+
+"Can I help you?"
+
+You mention the riders.
+
+His smile disappears for half a second.
+
+Then it returns.
+
+"I know nothing."
+
+You notice mud on his sandals.
+
+The same reddish mud found near the eastern road.
+
+Masaru notices you looking.
+
+"You should stop asking questions."
+
+He walks away.`,
+
+  choices:[
+    ["Follow Masaru","followMasaru"],
+    ["Confront him","confrontMasaru"],
+    ["Search his quarters","searchMasaru"],
+    ["Tell the elder what you discovered","accuseMasaru"]
+  ]
+},
+
+
+/* =====================================================
+   SHRINE
+===================================================== */
+
+shrine:{
+  title:"THE ABANDONED SHRINE",
+
+  text:`The shrine has been abandoned for years.
+
+But someone has been here recently.
+
+There are footprints in the mud.
+
+Under the wooden floor you discover a hidden compartment.
+
+Inside is a bundle of supplies.
+
+Rope.
+
+Oil.
+
+And a sealed clay container.
+
+You hear voices outside.`,
+
+  choices:[
+    ["Hide and listen","hideShrine"],
+    ["Take the supplies","takeSupplies"],
+    ["Open the clay container","openContainer"],
+    ["Leave immediately","leaveShrine"]
+  ]
+},
+
+
+/* =====================================================
+   TUNNEL
+===================================================== */
+
+tunnel:{
+  title:"THE HIDDEN TUNNEL",
+
+  text:`Behind the collapsed wall you discover a narrow tunnel.
+
+It runs beneath the eastern side of Kuroda.
+
+The walls are damp.
+
+Someone has been using it recently.
+
+You hear voices ahead.
+
+One voice is unmistakably from Kuroda.
+
+"After sunset, open the gate."
+
+A second voice answers:
+
+"And the boy?"
+
+"He knows too much."
+
+You realise they are talking about you.`,
+
+  choices:[
+    ["Sneak closer","sneakTunnel"],
+    ["Run back to Kuroda","runTunnel"],
+    ["Attack the men","attackTunnel"],
+    ["Find another exit","searchTunnel"]
+  ]
+},
+
+
+/* =====================================================
+   EVIDENCE
+===================================================== */
+
+evidence:{
+  title:"THE TRUTH BEGINS TO EMERGE",
+
+  text:`You have gathered enough clues to see the shape of the plot.
+
+The riders are planning to attack Kuroda.
+
+Someone inside the village is helping them.
+
+The eastern gate is part of the plan.
+
+And the attack is coming tonight.
+
+You have one chance to decide what kind of person you will be.`,
+
+  choices:[
+    ["Warn the entire village","prepareVillage"],
+    ["Find the traitor yourself","huntTraitor"],
+    ["Find the stranger","findStranger"],
+    ["Leave Kuroda before the attack","leaveBeforeAttack"]
+  ]
+},
+
+
+/* =====================================================
+   PREPARATION
+===================================================== */
+
+preparation:{
+  title:"BEFORE SUNSET",
+
+  text:`The final light is disappearing over Kuroda.
+
+The villagers are frightened.
+
+You have discovered enough to know the attack is real.
+
+But knowing an attack is coming is not the same as knowing how to stop it.
+
+You can prepare the village, hunt the traitor, or try something more dangerous.`,
+
+  choices:[
+    ["Fortify the eastern gate","fortifyGate"],
+    ["Set a trap for the traitor","trapTraitor"],
+    ["Search for the explosive charge","findExplosive"],
+    ["Gather the villagers together","rallyVillagers"]
+  ]
+},
+
+
+/* =====================================================
+   NIGHT ATTACK
+===================================================== */
+
+attack:{
+  title:"THE NIGHT OF FIRE",
+
+  text:`Night falls.
+
+For several minutes Kuroda is silent.
+
+Then—
+
+A horn sounds from the eastern road.
+
+Torches appear beyond the trees.
+
+The attack has begun.
+
+The eastern gate shakes under the first assault.
+
+Somebody inside Kuroda has opened the smaller side gate.`,
+
+  choices:[
+    ["Defend the eastern gate","defendGate"],
+    ["Search for the traitor","findTraitorDuringAttack"],
+    ["Find and disarm the explosive","disarmExplosive"],
+    ["Escape through the forest","escapeAttack"]
+  ]
+},
+
+
+/* =====================================================
+   FINAL DECISION
+===================================================== */
+
+finalDecision:{
+  title:"THE LAST CHOICE",
+
+  text:`The battle has reached the heart of Kuroda.
+
+Smoke covers the streets.
+
+The attackers are inside the village.
+
+You have survived this long.
+
+Now you have to decide what matters more:
+
+your own survival,
+
+the people of Kuroda,
+
+or the truth that brought you into this.`,
+
+  choices:[
+    ["Save the villagers","saveVillage"],
+    ["Kill the traitor","killTraitor"],
+    ["Escape while you can","escapeFinal"],
+    ["Face the enemy commander","faceCommander"]
+  ]
+}
+
+};
+
+
+/* =====================================================
+   SHOW SCENE
+===================================================== */
+
+function showScene(sceneName){
 
   if(!state.alive)return;
 
-  el("reply").textContent=text;
+  state.scene=sceneName;
+
+  const scene=scenes[sceneName];
+
+  if(!scene){
+
+    console.error(
+      "Unknown scene:",
+      sceneName
+    );
+
+    return;
+  }
+
+  /*
+     CLEAR EVERYTHING FIRST.
+
+     This is what fixes the old button problem.
+  */
+
+  const choiceBox=el("choices");
+
+  if(choiceBox){
+    choiceBox.innerHTML="";
+  }
+
+  el("sceneTitle").textContent=
+    scene.title || "";
+
+  el("reply").textContent=
+    scene.text || "";
 
   el("you").textContent=
     state.lastAction
       ? `You: ${state.lastAction}`
       : "";
 
-  renderChoices();
+  renderChoices(
+    scene.choices || []
+  );
+
   renderInventory();
   renderQuests();
   renderChronicle();
@@ -1143,10 +1542,10 @@ function renderWorld(text){
 
 
 /* =====================================================
-   CHOICES
+   RENDER CHOICES
 ===================================================== */
 
-function renderChoices(){
+function renderChoices(choiceList){
 
   const box=el("choices");
 
@@ -1154,27 +1553,42 @@ function renderChoices(){
 
   box.innerHTML="";
 
-  if(!state.alive){
+  /*
+     HARD LIMIT:
+     The game will NEVER display more than four
+     prearranged choices.
+  */
 
-    return;
-  }
-
-  const choices=getChoices();
+  const choices=
+    choiceList.slice(0,4);
 
   choices.forEach(choice=>{
 
     const button=
       document.createElement("button");
 
-    button.textContent=choice.text;
+    button.textContent=
+      choice[0];
 
     button.onclick=()=>{
 
-      if(!state.alive)return;
+      /*
+         Disable every button immediately.
+
+         This prevents double-clicks from firing
+         two actions before the next scene loads.
+      */
+
+      [...box.querySelectorAll("button")]
+        .forEach(b=>{
+          b.disabled=true;
+        });
+
+      box.innerHTML="";
 
       performAction(
-        choice.action,
-        choice.text
+        choice[1],
+        choice[0]
       );
 
     };
@@ -1187,453 +1601,14 @@ function renderChoices(){
 
 
 /* =====================================================
-   CHOICE ENGINE
-===================================================== */
-
-function getChoices(){
-
-  const choices=[];
-
-
-  /* =================================================
-     SENGOKU
-  ================================================= */
-
-  if(state.realm==="Sengoku Japan"){
-
-    if(state.turn===0){
-
-      return [
-
-        {
-          text:"Approach the stranger",
-          action:"meetStranger"
-        },
-
-        {
-          text:"Hide and watch the riders",
-          action:"watchRiders"
-        },
-
-        {
-          text:"Warn the village elder",
-          action:"warnElder"
-        },
-
-        {
-          text:"Head toward the eastern road",
-          action:"road"
-        },
-
-        {
-          text:"Ignore everything and visit the market",
-          action:"market"
-        }
-
-      ];
-
-    }
-
-
-    if(
-      state.flags.villageUnderAttack
-    ){
-
-      return [
-
-        {
-          text:"Defend Kuroda",
-          action:"defendVillage"
-        },
-
-        {
-          text:"Escape into the forest",
-          action:"escape"
-        },
-
-        {
-          text:"Search for the explosive charge",
-          action:"findBomb"
-        }
-
-      ];
-
-    }
-
-
-    if(state.flags.metStranger){
-
-      choices.push({
-        text:"Question the stranger",
-        action:"questionStranger"
-      });
-
-      if(!state.flags.trustedStranger){
-
-        choices.push({
-          text:"Offer to help him",
-          action:"helpStranger"
-        });
-
-      }
-
-    }
-    else{
-
-      choices.push({
-        text:"Approach the stranger",
-        action:"meetStranger"
-      });
-
-    }
-
-
-    if(!state.flags.warnedVillage){
-
-      choices.push({
-        text:"Warn the village elder",
-        action:"warnElder"
-      });
-
-    }
-
-
-    if(!state.flags.watchedRiders){
-
-      choices.push({
-        text:"Watch the eastern road",
-        action:"watchRiders"
-      });
-
-    }
-
-
-    choices.push({
-
-      text:"Investigate the eastern road",
-      action:"road"
-
-    });
-
-
-    choices.push({
-
-      text:"Search the village",
-      action:"searchVillage"
-
-    });
-
-
-    choices.push({
-
-      text:"Visit the market",
-      action:"market"
-
-    });
-
-
-    if(!state.flags.masaruQuestioned){
-
-      choices.push({
-
-        text:"Find the messenger Masaru",
-        action:"masaru"
-
-      });
-
-    }
-
-
-    if(state.flags.discoveredTunnel){
-
-      choices.push({
-
-        text:"Enter the hidden tunnel",
-        action:"tunnel"
-
-      });
-
-    }
-
-
-    if(
-      state.flags.followedRiders &&
-      !state.flags.searchedShrine
-    ){
-
-      choices.push({
-
-        text:"Investigate the abandoned shrine",
-        action:"shrine"
-
-      });
-
-    }
-
-
-    if(
-      !state.flags.horseStolen &&
-      state.location==="Kuroda Village"
-    ){
-
-      choices.push({
-
-        text:"Steal a horse and leave",
-        action:"stealHorse"
-
-      });
-
-    }
-
-
-    choices.push({
-
-      text:"Wait until later",
-      action:"wait"
-
-    });
-
-
-    return choices;
-
-  }
-
-
-  /* =================================================
-     OTHER ERAS
-  ================================================= */
-
-  if(state.realm==="Roman Republic"){
-
-    if(state.turn===0){
-
-      return [
-
-        {
-          text:"Follow the frightened senator",
-          action:"romanSenator"
-        },
-
-        {
-          text:"Watch the armed men",
-          action:"romanWatch"
-        },
-
-        {
-          text:"Warn a nearby guard",
-          action:"romanGuard"
-        },
-
-        {
-          text:"Enter the Senate",
-          action:"romanSenate"
-        },
-
-        {
-          text:"Leave the Forum",
-          action:"romanLeave"
-        }
-
-      ];
-
-    }
-
-
-    choices.push({
-      text:"Investigate the Forum",
-      action:"romanWatch"
-    });
-
-    choices.push({
-      text:"Speak with a senator",
-      action:"romanSenator"
-    });
-
-    choices.push({
-      text:"Find a Roman guard",
-      action:"romanGuard"
-    });
-
-    choices.push({
-      text:"Enter the Senate",
-      action:"romanSenate"
-    });
-
-    choices.push({
-      text:"Leave Rome",
-      action:"romanLeave"
-    });
-
-    choices.push({
-      text:"Wait",
-      action:"wait"
-    });
-
-    return choices;
-
-  }
-
-
-  if(state.realm==="Anglo-Saxon England"){
-
-    if(state.turn===0){
-
-      return [
-
-        {
-          text:"Question the wounded scout",
-          action:"englandScout"
-        },
-
-        {
-          text:"Climb the gate tower",
-          action:"englandTower"
-        },
-
-        {
-          text:"Warn the town",
-          action:"englandWarn"
-        },
-
-        {
-          text:"Prepare your sword",
-          action:"englandPrepare"
-        },
-
-        {
-          text:"Leave York",
-          action:"englandLeave"
-        }
-
-      ];
-
-    }
-
-
-    choices.push({
-      text:"Question another scout",
-      action:"englandScout"
-    });
-
-    choices.push({
-      text:"Watch the northern road",
-      action:"englandTower"
-    });
-
-    choices.push({
-      text:"Warn York",
-      action:"englandWarn"
-    });
-
-    choices.push({
-      text:"Prepare for battle",
-      action:"englandPrepare"
-    });
-
-    choices.push({
-      text:"Leave York",
-      action:"englandLeave"
-    });
-
-    choices.push({
-      text:"Wait",
-      action:"wait"
-    });
-
-    return choices;
-
-  }
-
-
-  if(state.realm==="New Kingdom Egypt"){
-
-    if(state.turn===0){
-
-      return [
-
-        {
-          text:"Question the priest",
-          action:"egyptPriest"
-        },
-
-        {
-          text:"Search the eastern chambers",
-          action:"egyptChambers"
-        },
-
-        {
-          text:"Visit the temple library",
-          action:"egyptLibrary"
-        },
-
-        {
-          text:"Tell the workers",
-          action:"egyptWorkers"
-        },
-
-        {
-          text:"Leave the temple",
-          action:"egyptLeave"
-        }
-
-      ];
-
-    }
-
-
-    choices.push({
-      text:"Question the priest",
-      action:"egyptPriest"
-    });
-
-    choices.push({
-      text:"Search the eastern chambers",
-      action:"egyptChambers"
-    });
-
-    choices.push({
-      text:"Visit the temple library",
-      action:"egyptLibrary"
-    });
-
-    choices.push({
-      text:"Tell the workers",
-      action:"egyptWorkers"
-    });
-
-    choices.push({
-      text:"Leave the temple",
-      action:"egyptLeave"
-    });
-
-    choices.push({
-      text:"Wait",
-      action:"wait"
-    });
-
-    return choices;
-
-  }
-
-
-  return choices;
-
-}
-
-
-/* =====================================================
-   PERFORM ACTION
+   ACTION ENGINE
 ===================================================== */
 
 function performAction(action,label){
 
   if(!state.alive)return;
 
-  state.turn++;
-
   state.lastAction=label;
-
-  state.usedActions.push(action);
 
   advanceTime(1);
 
@@ -1647,132 +1622,205 @@ function performAction(action,label){
       questionStranger();
       break;
 
-    case"helpStranger":
-      helpStranger();
+    case"trustStranger":
+      trustStranger();
+      break;
+
+    case"askRiders":
+      askRiders();
       break;
 
     case"watchRiders":
       watchRiders();
       break;
 
+    case"followRiders":
+      followRiders();
+      break;
+
+    case"searchRiderCamp":
+      searchRiderCamp();
+      break;
+
+    case"keepWatching":
+      keepWatching();
+      break;
+
     case"warnElder":
       warnElder();
       break;
 
-    case"road":
+    case"tellElderStranger":
+      tellElderStranger();
+      break;
+
+    case"tellElderRiders":
+      tellElderRiders();
+      break;
+
+    case"keepInvestigation":
+      keepInvestigation();
+      break;
+
+    case"askElderHelp":
+      askElderHelp();
+      break;
+
+    case"investigateRoad":
       investigateRoad();
+      break;
+
+    case"followFootprints":
+      followFootprints();
+      break;
+
+    case"searchWall":
+      searchWall();
+      break;
+
+    case"returnVillage":
+      returnVillage();
+      break;
+
+    case"goShrine":
+      goShrine();
+      break;
+
+    case"findMasaru":
+      findMasaru();
       break;
 
     case"searchVillage":
       searchVillage();
       break;
 
-    case"market":
-      visitMarket();
+    case"returnElder":
+      returnElder();
       break;
 
-    case"masaru":
-      meetMasaru();
+    case"followMasaru":
+      followMasaru();
       break;
 
-    case"tunnel":
-      enterTunnel();
+    case"confrontMasaru":
+      confrontMasaru();
       break;
 
-    case"shrine":
-      investigateShrine();
+    case"searchMasaru":
+      searchMasaru();
       break;
 
-    case"stealHorse":
-      stealHorse();
+    case"accuseMasaru":
+      accuseMasaru();
       break;
 
-    case"defendVillage":
-      defendVillage();
+    case"hideShrine":
+      hideShrine();
       break;
 
-    case"escape":
-      escapeVillage();
+    case"takeSupplies":
+      takeSupplies();
       break;
 
-    case"findBomb":
-      findBomb();
+    case"openContainer":
+      openContainer();
       break;
 
-    case"romanSenator":
-      romanSenator();
+    case"leaveShrine":
+      leaveShrine();
       break;
 
-    case"romanWatch":
-      romanWatch();
+    case"sneakTunnel":
+      sneakTunnel();
       break;
 
-    case"romanGuard":
-      romanGuard();
+    case"runTunnel":
+      runTunnel();
       break;
 
-    case"romanSenate":
-      romanSenate();
+    case"attackTunnel":
+      attackTunnel();
       break;
 
-    case"romanLeave":
-      romanLeave();
+    case"searchTunnel":
+      searchTunnel();
       break;
 
-    case"englandScout":
-      englandScout();
+    case"prepareVillage":
+      prepareVillage();
       break;
 
-    case"englandTower":
-      englandTower();
+    case"huntTraitor":
+      huntTraitor();
       break;
 
-    case"englandWarn":
-      englandWarn();
+    case"findStranger":
+      findStranger();
       break;
 
-    case"englandPrepare":
-      englandPrepare();
+    case"leaveBeforeAttack":
+      leaveBeforeAttack();
       break;
 
-    case"englandLeave":
-      englandLeave();
+    case"fortifyGate":
+      fortifyGate();
       break;
 
-    case"egyptPriest":
-      egyptPriest();
+    case"trapTraitor":
+      trapTraitor();
       break;
 
-    case"egyptChambers":
-      egyptChambers();
+    case"findExplosive":
+      findExplosive();
       break;
 
-    case"egyptLibrary":
-      egyptLibrary();
+    case"rallyVillagers":
+      rallyVillagers();
       break;
 
-    case"egyptWorkers":
-      egyptWorkers();
+    case"defendGate":
+      defendGate();
       break;
 
-    case"egyptLeave":
-      egyptLeave();
+    case"findTraitorDuringAttack":
+      findTraitorDuringAttack();
       break;
 
-    case"wait":
-      waitAction();
+    case"disarmExplosive":
+      disarmExplosive();
+      break;
+
+    case"escapeAttack":
+      escapeAttack();
+      break;
+
+    case"saveVillage":
+      saveVillage();
+      break;
+
+    case"killTraitor":
+      killTraitor();
+      break;
+
+    case"escapeFinal":
+      escapeFinal();
+      break;
+
+    case"faceCommander":
+      faceCommander();
       break;
 
     default:
-      renderWorld(
-        "You hesitate. The world waits."
-      );
+      showScene("opening");
 
   }
 
   updateStats();
 
-  if(state.health<=0){
+  if(
+    state.alive &&
+    state.health<=0
+  ){
 
     triggerDeath(
       "Your injuries finally overwhelm you."
@@ -1784,108 +1832,75 @@ function performAction(action,label){
 
 
 /* =====================================================
-   SENGOKU — STRANGER
+   OPENING ACTIONS
 ===================================================== */
 
 function meetStranger(){
 
   state.flags.metStranger=true;
 
-  changeRelationship("stranger",1);
+  state.relationships.stranger++;
 
-  addQuest(
-    "Discover who inside Kuroda is helping the riders."
-  );
-
-  renderWorld(`You approach the stranger.
-
-He studies you carefully.
-
-"You're young."
-
-His hand rests near his sleeve.
-
-"Those riders aren't merchants."
-
-He looks toward the eastern road.
-
-"Someone inside Kuroda is helping them."
-
-Then he turns back to you.
-
-"Decide carefully who you trust."
-
-He walks away into the rain.`);
+  addItem("Black cord");
 
   logEvent(
-    "You met the mysterious stranger."
+    "You approached the mysterious stranger."
   );
+
+  showScene("stranger");
 
 }
 
 
 function questionStranger(){
 
-  changeRelationship("stranger",1);
+  state.relationships.stranger++;
 
   addQuest(
-    "Find evidence of the traitor."
+    "Discover who inside Kuroda is helping the riders."
   );
-
-  renderWorld(`You catch up with the stranger.
-
-"Who are you?"
-
-He gives a faint smile.
-
-"Someone who knows what happens tonight."
-
-He tells you the riders are searching for a person inside Kuroda.
-
-Then he says:
-
-"The traitor is closer than you think."
-
-Before you can ask more, he disappears into the rain.`);
 
   logEvent(
-    "The stranger revealed that Kuroda has a traitor."
+    "The stranger revealed that Kuroda has an insider."
   );
+
+  showScene("evidence");
 
 }
 
 
-function helpStranger(){
+function trustStranger(){
 
   state.flags.trustedStranger=true;
 
   state.rep+=2;
 
-  changeRelationship("stranger",3);
-
-  addItem("Black cord with silver knot");
+  state.relationships.stranger+=3;
 
   addQuest(
-    "Find someone carrying the silver-knot symbol."
+    "Find the person carrying the silver-knot symbol."
   );
-
-  renderWorld(`You tell the stranger you will help.
-
-For the first time, he smiles.
-
-He gives you a black cord with a tiny silver knot.
-
-"If you see this symbol again, pay attention."
-
-Then he disappears.
-
-You don't know whether you have gained an ally...
-
-or placed yourself in danger.`);
 
   logEvent(
-    "The stranger trusted you with a mysterious symbol."
+    "You chose to trust the stranger."
   );
+
+  showScene("villageAfterClue");
+
+}
+
+
+function askRiders(){
+
+  addQuest(
+    "Find out why the riders are coming."
+  );
+
+  logEvent(
+    "You asked the stranger about the riders."
+  );
+
+  showScene("riders");
 
 }
 
@@ -1898,87 +1913,58 @@ function watchRiders(){
 
   state.flags.watchedRiders=true;
 
-  const roll=random(1,3);
+  logEvent(
+    "You watched the riders enter Kuroda."
+  );
 
-  if(roll===1){
+  showScene("riders");
 
-    state.flags.followedRiders=true;
+}
 
-    addQuest(
-      "Investigate the abandoned shrine."
-    );
 
-    renderWorld(`You hide behind a storehouse.
+function followRiders(){
 
-The riders enter the outskirts of Kuroda.
+  state.flags.followedRiders=true;
 
-They speak with someone.
+  state.health-=3;
 
-You hear one sentence:
+  logEvent(
+    "You secretly followed the riders."
+  );
 
-"The explosion happens after sunset."
+  showScene("shrine");
 
-The riders then disappear toward an abandoned shrine.
+}
 
-You now know this is not a simple raid.`);
 
-    logEvent(
-      "You discovered that the riders are planning an attack."
-    );
+function searchRiderCamp(){
 
-  }
+  state.flags.foundEvidence=true;
 
-  else if(roll===2){
+  addItem("Silver rider token");
 
-    addItem("Silver rider token");
+  state.rep+=1;
 
-    state.flags.foundEvidence=true;
+  logEvent(
+    "You found a silver rider token."
+  );
 
-    renderWorld(`You watch the road.
+  showScene("villageAfterClue");
 
-One rider drops something.
+}
 
-After they disappear, you retrieve it.
 
-A small metal token.
+function keepWatching(){
 
-A silver knot is stamped into it.
+  state.flags.foundEvidence=true;
 
-The same symbol the stranger warned you about.`);
+  addItem("Silver rider token");
 
-    logEvent(
-      "You found a silver rider token."
-    );
+  logEvent(
+    "You remained hidden long enough to find evidence."
+  );
 
-  }
-
-  else{
-
-    state.flags.followedRiders=true;
-
-    renderWorld(`You follow the riders from a distance.
-
-They stop near the abandoned shrine.
-
-Someone else is waiting there.
-
-You cannot see his face.
-
-But you recognise his voice.
-
-It belongs to someone from Kuroda.`);
-
-    state.flags.discoveredTraitor=true;
-
-    addQuest(
-      "Discover the identity of the traitor."
-    );
-
-    logEvent(
-      "You discovered that someone from Kuroda is working with the riders."
-    );
-
-  }
+  showScene("villageAfterClue");
 
 }
 
@@ -1991,46 +1977,89 @@ function warnElder(){
 
   state.flags.warnedVillage=true;
 
+  state.flags.elderTrust=true;
+
   state.rep+=3;
 
-  changeRelationship("elder",3);
-  changeRelationship("villagers",2);
+  state.relationships.elder+=3;
 
   addQuest(
     "Prepare Kuroda for the coming attack."
   );
 
-  renderWorld(`You hurry to the village elder.
+  logEvent(
+    "You warned the village elder."
+  );
 
-You explain what you saw.
+  showScene("elder");
 
-He listens without interrupting.
+}
 
-Finally he stands.
 
-"Close the gate."
+function tellElderStranger(){
 
-The village changes immediately.
+  state.flags.warnedVillage=true;
 
-Doors are barred.
+  state.rep+=2;
 
-Weapons are brought out.
-
-The elder looks at you.
-
-"If you are wrong, you have frightened everyone."
-
-"If you are right..."
-
-He looks toward the eastern road.
-
-"Kuroda may survive the night."
-
-You have bought the village time.`);
+  addQuest(
+    "Find evidence of the traitor."
+  );
 
   logEvent(
-    "You warned Kuroda about the approaching danger."
+    "You told the elder about the stranger."
   );
+
+  showScene("villageAfterClue");
+
+}
+
+
+function tellElderRiders(){
+
+  state.flags.warnedVillage=true;
+
+  state.rep+=3;
+
+  state.relationships.elder+=2;
+
+  logEvent(
+    "You told the elder everything you witnessed."
+  );
+
+  showScene("preparation");
+
+}
+
+
+function keepInvestigation(){
+
+  state.flags.warnedVillage=true;
+
+  logEvent(
+    "You decided to investigate before making accusations."
+  );
+
+  showScene("villageAfterClue");
+
+}
+
+
+function askElderHelp(){
+
+  state.flags.warnedVillage=true;
+
+  state.attack+=3;
+
+  state.rep+=2;
+
+  addItem("Village spear");
+
+  logEvent(
+    "The elder gave you a village spear."
+  );
+
+  showScene("preparation");
 
 }
 
@@ -2041,345 +2070,60 @@ You have bought the village time.`);
 
 function investigateRoad(){
 
-  state.health-=random(2,6);
-
-  const roll=random(1,3);
-
-  if(roll===1){
-
-    state.flags.discoveredTunnel=true;
-
-    addQuest(
-      "Explore the hidden tunnel."
-    );
-
-    renderWorld(`You follow the eastern road.
-
-Near an abandoned shrine you notice footprints.
-
-They lead behind a collapsed stone wall.
-
-You move the stones.
-
-A narrow tunnel descends beneath the earth.
-
-Someone has been using it recently.`);
-
-    logEvent(
-      "You discovered a hidden tunnel."
-    );
-
-  }
-
-  else if(roll===2){
-
-    state.flags.foundEvidence=true;
-
-    addItem("Bloodstained cloth");
-
-    renderWorld(`You find a piece of bloodstained cloth caught on a thorn.
-
-The fabric carries the silver-knot symbol.
-
-Whatever happened here happened recently.
-
-Someone connected to the riders has been here.`);
-
-    logEvent(
-      "You found bloodstained evidence."
-    );
-
-  }
-
-  else{
-
-    renderWorld(`You reach the eastern road.
-
-Nothing.
-
-No riders.
-
-No stranger.
-
-Only rain.
-
-Then you notice footprints.
-
-They lead away from the road...
-
-toward Kuroda.`);
-
-    logEvent(
-      "You discovered footprints leading back toward Kuroda."
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   SEARCH VILLAGE
-===================================================== */
-
-function searchVillage(){
-
-  const roll=random(1,4);
-
-  if(roll===1){
-
-    state.money+=25;
-
-    renderWorld(`You search an abandoned storehouse.
-
-Inside a broken chest you discover 25 coins.
-
-Someone left in a hurry.`);
-
-    logEvent(
-      "You found 25 coins."
-    );
-
-  }
-
-  else if(roll===2){
-
-    state.flags.discoveredTunnel=true;
-
-    addQuest(
-      "Explore the hidden tunnel."
-    );
-
-    renderWorld(`You search beneath a storehouse.
-
-The floorboards are scratched.
-
-You move one.
-
-There is a hidden passage beneath it.
-
-Someone has been secretly moving through the village.`);
-
-    logEvent(
-      "You discovered a hidden passage."
-    );
-
-  }
-
-  else if(roll===3){
-
-    state.flags.discoveredTraitor=true;
-
-    addQuest(
-      "Investigate Masaru."
-    );
-
-    renderWorld(`You overhear two villagers arguing.
-
-One name keeps appearing.
-
-Masaru.
-
-The village messenger.
-
-When they notice you listening, they immediately stop talking.`);
-
-    logEvent(
-      "Masaru's name appeared in a suspicious conversation."
-    );
-
-  }
-
-  else{
-
-    addItem("Old map");
-
-    renderWorld(`Behind a loose wallboard you discover an old map.
-
-Three locations are marked:
-
-The eastern road.
-
-The abandoned shrine.
-
-The village well.
-
-Someone has been planning something.`);
-
-    logEvent(
-      "You discovered a mysterious map."
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   MARKET
-===================================================== */
-
-function visitMarket(){
-
-  const roll=random(1,3);
-
-  if(roll===1 && state.money>=30){
-
-    state.money-=30;
-
-    addItem("Bandage");
-
-    renderWorld(`A travelling merchant notices your injuries.
-
-"For thirty coins."
-
-You buy a bandage.
-
-It may save your life later.`);
-
-    logEvent(
-      "You bought a bandage."
-    );
-
-  }
-
-  else if(roll===2){
-
-    state.money+=10;
-
-    renderWorld(`You help a merchant move crates.
-
-He pays you ten coins.
-
-While working, you overhear him say that armed men have been seen around Kuroda.
-
-The village is in danger.`);
-
-    logEvent(
-      "A merchant paid you for helping."
-    );
-
-  }
-
-  else{
-
-    renderWorld(`The market is strangely quiet.
-
-A travelling merchant looks at you.
-
-"I wouldn't stay in Kuroda tonight."
-
-Before you can ask why, he leaves.`);
-
-    logEvent(
-      "A merchant warned you to leave."
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   MASARU
-===================================================== */
-
-function meetMasaru(){
-
-  state.flags.masaruQuestioned=true;
-
-  changeRelationship("masaru",-1);
-
-  addQuest(
-    "Find evidence against — or in favour of — Masaru."
-  );
-
-  renderWorld(`You find Masaru near the western houses.
-
-He smiles.
-
-"Can I help you?"
-
-You ask about the riders.
-
-His expression changes for half a second.
-
-Then he smiles again.
-
-"I know nothing."
-
-He walks away.
-
-You don't believe him.
-
-But suspicion isn't proof.`);
+  state.health-=2;
 
   logEvent(
-    "You questioned Masaru."
+    "You investigated the eastern road."
   );
+
+  showScene("road");
 
 }
 
 
-/* =====================================================
-   TUNNEL
-===================================================== */
+function followFootprints(){
 
-function enterTunnel(){
+  state.flags.discoveredTunnel=true;
 
-  state.health-=random(2,5);
+  addQuest(
+    "Explore the hidden tunnel."
+  );
 
-  const roll=random(1,2);
+  logEvent(
+    "The footprints led you to a hidden tunnel."
+  );
 
-  if(roll===1){
+  showScene("tunnel");
 
-    addItem("Silver dagger");
+}
 
-    state.money+=40;
 
-    renderWorld(`You crawl through the tunnel.
+function searchWall(){
 
-It opens into an underground chamber.
+  state.flags.discoveredTunnel=true;
 
-Weapons are stacked against the walls.
+  addItem("Old map");
 
-Someone has been preparing for war.
+  addQuest(
+    "Explore the hidden tunnel."
+  );
 
-You find a silver-stamped dagger and forty coins.`);
+  logEvent(
+    "You found an old map and a hidden passage."
+  );
 
-    logEvent(
-      "You discovered a hidden weapons cache."
-    );
+  showScene("tunnel");
 
-  }
+}
 
-  else{
 
-    state.flags.discoveredTraitor=true;
+function returnVillage(){
 
-    addQuest(
-      "Identify the person helping the attackers."
-    );
+  logEvent(
+    "You returned to Kuroda."
+  );
 
-    renderWorld(`You move silently through the tunnel.
-
-Voices.
-
-You stop.
-
-Someone is speaking above you.
-
-You recognise the voice.
-
-"The village will be open after sunset."
-
-You now know the attackers have an insider.`);
-
-    logEvent(
-      "You overheard the traitor."
-    );
-
-  }
+  showScene("villageAfterClue");
 
 }
 
@@ -2388,102 +2132,490 @@ You now know the attackers have an insider.`);
    SHRINE
 ===================================================== */
 
-function investigateShrine(){
+function goShrine(){
 
   state.flags.searchedShrine=true;
 
-  const roll=random(1,2);
+  logEvent(
+    "You travelled to the abandoned shrine."
+  );
 
-  if(roll===1){
+  showScene("shrine");
 
-    state.flags.explosionKnown=true;
+}
 
-    addItem("Fuse");
 
-    addQuest(
-      "Stop the attack before the village gate is destroyed."
-    );
+function hideShrine(){
 
-    renderWorld(`You reach the abandoned shrine.
+  state.flags.explosionKnown=true;
 
-The riders are gone.
+  addItem("Fuse");
 
-But they left something behind.
+  addQuest(
+    "Stop the explosive charge before the attack."
+  );
 
-Beneath the shrine floor is an explosive charge.
+  logEvent(
+    "You overheard the attackers preparing an explosion."
+  );
 
-A fuse leads toward Kuroda.
+  showScene("evidence");
 
-The attack will begin after sunset.
+}
 
-You finally understand what they intend to do.`);
 
-    logEvent(
-      "You discovered the explosive charge."
-    );
+function takeSupplies(){
 
-  }
+  addItem("Rope");
+  addItem("Oil");
 
-  else{
+  state.rep+=1;
 
-    state.flags.followedRiders=true;
+  logEvent(
+    "You took useful supplies from the shrine."
+  );
 
-    renderWorld(`The shrine is empty.
+  showScene("evidence");
 
-Fresh footprints lead into the forest.
+}
 
-Someone has been using this place as a meeting point.
 
-You hear a branch snap behind you.`);
+function openContainer(){
 
-    logEvent(
-      "The shrine contains evidence of secret meetings."
-    );
+  state.flags.explosionKnown=true;
 
-  }
+  addItem("Fuse");
+
+  addQuest(
+    "Stop the explosive charge before the attack."
+  );
+
+  logEvent(
+    "You discovered an explosive charge at the shrine."
+  );
+
+  showScene("evidence");
+
+}
+
+
+function leaveShrine(){
+
+  logEvent(
+    "You left the shrine before being discovered."
+  );
+
+  showScene("villageAfterClue");
 
 }
 
 
 /* =====================================================
-   HORSE
+   VILLAGE
 ===================================================== */
 
-function stealHorse(){
-
-  state.flags.horseStolen=true;
-
-  state.rep-=4;
-
-  state.location="Eastern Road";
-
-  addQuest(
-    "Decide what to do after leaving Kuroda."
-  );
-
-  renderWorld(`You make a reckless decision.
-
-A horse is tied behind the stable.
-
-You cut the rope.
-
-You climb onto its back.
-
-Someone screams.
-
-"THIEF!"
-
-You ride.
-
-Kuroda disappears behind you.
-
-You have escaped the village.
-
-But you may have abandoned everyone inside it.`);
+function findMasaru(){
 
   logEvent(
-    "You stole a horse and fled Kuroda."
+    "You went looking for Masaru."
   );
+
+  showScene("masaru");
+
+}
+
+
+function searchVillage(){
+
+  const roll=random(1,3);
+
+  if(roll===1){
+
+    state.money+=25;
+
+    logEvent(
+      "You found 25 coins in a storehouse."
+    );
+
+  }
+  else if(roll===2){
+
+    addItem("Bandage");
+
+    logEvent(
+      "You found a bandage in a storehouse."
+    );
+
+  }
+  else{
+
+    state.flags.foundEvidence=true;
+
+    addItem("Bloody cloth");
+
+    logEvent(
+      "You found bloody cloth marked with the silver knot."
+    );
+
+  }
+
+  showScene("evidence");
+
+}
+
+
+function returnElder(){
+
+  state.relationships.elder++;
+
+  logEvent(
+    "You returned to the elder."
+  );
+
+  showScene("preparation");
+
+}
+
+
+/* =====================================================
+   MASARU
+===================================================== */
+
+function followMasaru(){
+
+  state.flags.masaruQuestioned=true;
+
+  logEvent(
+    "You followed Masaru through the village."
+  );
+
+  showScene("tunnel");
+
+}
+
+
+function confrontMasaru(){
+
+  state.flags.discoveredTraitor=true;
+
+  state.flags.traitorNameKnown=true;
+
+  state.rep+=2;
+
+  logEvent(
+    "You confronted Masaru."
+  );
+
+  showScene("evidence");
+
+}
+
+
+function searchMasaru(){
+
+  state.flags.discoveredTraitor=true;
+
+  state.flags.traitorNameKnown=true;
+
+  addItem("Masaru's key");
+
+  logEvent(
+    "You found evidence linking Masaru to the conspiracy."
+  );
+
+  showScene("evidence");
+
+}
+
+
+function accuseMasaru(){
+
+  state.flags.discoveredTraitor=true;
+
+  state.flags.traitorNameKnown=true;
+
+  state.rep+=3;
+
+  state.relationships.elder+=2;
+
+  logEvent(
+    "You accused Masaru of helping the attackers."
+  );
+
+  showScene("preparation");
+
+}
+
+
+/* =====================================================
+   TUNNEL
+===================================================== */
+
+function sneakTunnel(){
+
+  state.flags.discoveredTraitor=true;
+
+  state.flags.traitorNameKnown=true;
+
+  state.rep+=2;
+
+  logEvent(
+    "You discovered that Masaru is the traitor."
+  );
+
+  showScene("evidence");
+
+}
+
+
+function runTunnel(){
+
+  state.health-=3;
+
+  logEvent(
+    "You fled the tunnel before being discovered."
+  );
+
+  showScene("villageAfterClue");
+
+}
+
+
+function attackTunnel(){
+
+  const damage=random(8,18);
+
+  state.health-=damage;
+
+  if(state.health<=0){
+
+    triggerDeath(
+      "The men in the tunnel overpower you."
+    );
+
+    return;
+
+  }
+
+  state.attack+=3;
+
+  state.flags.discoveredTraitor=true;
+
+  state.flags.traitorNameKnown=true;
+
+  logEvent(
+    "You fought the men in the tunnel and survived."
+  );
+
+  showScene("evidence");
+
+}
+
+
+function searchTunnel(){
+
+  state.flags.explosionKnown=true;
+
+  addItem("Fuse");
+
+  logEvent(
+    "You found an explosive charge beneath Kuroda."
+  );
+
+  showScene("evidence");
+
+}
+
+
+/* =====================================================
+   EVIDENCE / PREPARATION
+===================================================== */
+
+function prepareVillage(){
+
+  state.flags.warnedVillage=true;
+  state.flags.villagersWarned=true;
+
+  state.rep+=4;
+
+  state.relationships.villagers+=3;
+
+  addQuest(
+    "Survive the coming attack."
+  );
+
+  logEvent(
+    "You warned the villagers."
+  );
+
+  showScene("preparation");
+
+}
+
+
+function huntTraitor(){
+
+  if(!state.flags.traitorNameKnown){
+
+    logEvent(
+      "You began searching for the traitor."
+    );
+
+    showScene("masaru");
+
+    return;
+
+  }
+
+  logEvent(
+    "You decided to hunt Masaru before the attack."
+  );
+
+  showScene("preparation");
+
+}
+
+
+function findStranger(){
+
+  if(state.flags.trustedStranger){
+
+    state.rep+=2;
+
+    logEvent(
+      "The stranger agreed to help defend Kuroda."
+    );
+
+    showScene("preparation");
+
+    return;
+
+  }
+
+  state.flags.metStranger=true;
+
+  logEvent(
+    "You searched for the mysterious stranger."
+  );
+
+  showScene("stranger");
+
+}
+
+
+function leaveBeforeAttack(){
+
+  state.flags.escapedVillage=true;
+
+  state.location="Forest Road";
+
+  state.rep-=2;
+
+  logEvent(
+    "You left Kuroda before the attack."
+  );
+
+  ending(
+    "THE SURVIVOR",
+    `You leave Kuroda behind before the fighting begins.
+
+You survive the night.
+
+Days later, smoke can still be seen rising from the direction of the village.
+
+You never discover who lived.
+
+You never discover who died.
+
+Your story continues elsewhere, but Kuroda becomes a place you refuse to speak about.`,
+    "SURVIVAL ENDING"
+  );
+
+}
+
+
+/* =====================================================
+   PREPARATION
+===================================================== */
+
+function fortifyGate(){
+
+  state.attack+=4;
+
+  state.rep+=3;
+
+  addItem("Reinforced shield");
+
+  logEvent(
+    "You helped reinforce the eastern gate."
+  );
+
+  showScene("attack");
+
+}
+
+
+function trapTraitor(){
+
+  if(!state.flags.traitorNameKnown){
+
+    state.rep+=1;
+
+    logEvent(
+      "You prepared a trap without knowing exactly who the traitor was."
+    );
+
+    showScene("attack");
+
+    return;
+
+  }
+
+  state.rep+=4;
+
+  state.flags.discoveredTraitor=true;
+
+  logEvent(
+    "You prepared a trap for Masaru."
+  );
+
+  showScene("attack");
+
+}
+
+
+function findExplosive(){
+
+  state.flags.explosionKnown=true;
+
+  addItem("Fuse");
+
+  addQuest(
+    "Disarm the explosive during the attack."
+  );
+
+  logEvent(
+    "You found the explosive charge."
+  );
+
+  showScene("attack");
+
+}
+
+
+function rallyVillagers(){
+
+  state.rep+=5;
+
+  state.relationships.villagers+=4;
+
+  state.flags.villagersWarned=true;
+
+  logEvent(
+    "You rallied Kuroda's villagers."
+  );
+
+  showScene("attack");
 
 }
 
@@ -2492,159 +2624,138 @@ But you may have abandoned everyone inside it.`);
    ATTACK
 ===================================================== */
 
-function defendVillage(){
-
-  state.flags.attacked=true;
+function defendGate(){
 
   const strength=
     state.attack+
     state.rep+
-    random(-3,5);
+    random(-2,5);
 
-  if(strength>=15){
+  if(strength>=18){
 
-    state.health-=random(10,25);
-
-    state.rep+=5;
+    state.health-=random(8,20);
 
     state.flags.villageSaved=true;
+
     state.flags.villageUnderAttack=false;
 
     completeQuest(
-      "Survive the attack on Kuroda Village."
+      "Survive the coming attack."
     );
-
-    renderWorld(`The attack begins.
-
-Torches appear beyond the gate.
-
-Arrows tear through the rain.
-
-You fight beside the villagers.
-
-Your sword arm burns.
-
-The eastern gate nearly falls.
-
-But Kuroda holds.
-
-The attackers retreat into the darkness.
-
-The village survives.
-
-For tonight.`);
 
     logEvent(
-      "You helped defend Kuroda."
+      "You held the eastern gate."
     );
 
-  }
+    showScene("finalDecision");
 
+  }
   else{
 
-    state.health-=random(25,45);
+    state.health-=random(20,35);
 
     state.flags.gateDestroyed=true;
 
-    renderWorld(`The attack begins.
-
-You fight desperately.
-
-But there are too many attackers.
-
-The eastern gate breaks.
-
-Fire spreads through the village.
-
-You stumble through the smoke.
-
-Kuroda is falling.
-
-You may still escape...
-
-but the village is lost.`);
-
     logEvent(
-      "Kuroda's gate fell during the attack."
+      "The eastern gate was overwhelmed."
     );
+
+    if(state.health<=0){
+
+      triggerDeath(
+        "The eastern gate collapses and you are buried beneath the fighting."
+      );
+
+      return;
+
+    }
+
+    showScene("finalDecision");
 
   }
 
 }
 
 
-/* =====================================================
-   FIND BOMB
-===================================================== */
+function findTraitorDuringAttack(){
 
-function findBomb(){
+  if(state.flags.traitorNameKnown){
+
+    state.rep+=4;
+
+    logEvent(
+      "You found Masaru during the attack."
+    );
+
+    showScene("finalDecision");
+
+    return;
+
+  }
+
+  state.flags.traitorNameKnown=true;
+
+  state.flags.discoveredTraitor=true;
+
+  state.rep+=2;
+
+  logEvent(
+    "You discovered the traitor during the chaos."
+  );
+
+  showScene("finalDecision");
+
+}
+
+
+function disarmExplosive(){
 
   if(!state.flags.explosionKnown){
 
-    renderWorld(
-      `You search desperately through the village.
+    state.health-=5;
 
-You find nothing.
-
-You need more information about the attack.`
+    logEvent(
+      "You searched for an explosive but found nothing."
     );
 
+    showScene("finalDecision");
+
     return;
+
   }
 
   if(hasItem("Fuse")){
 
     removeItem("Fuse");
 
+    state.flags.bombDisarmed=true;
+
     state.flags.villageSaved=true;
-    state.flags.villageUnderAttack=false;
 
-    state.rep+=7;
-
-    completeQuest(
-      "Stop the attack before the village gate is destroyed."
-    );
-
-    renderWorld(`You follow the fuse beneath the village gate.
-
-You find the explosive charge.
-
-The attackers are already approaching.
-
-You cut the fuse moments before the charge ignites.
-
-The explosion never comes.
-
-For the first time tonight, the villagers cheer your name.
-
-You have changed history.`);
+    state.rep+=6;
 
     logEvent(
-      "You stopped the explosion."
+      "You disarmed the explosive beneath the gate."
     );
 
-  }
+    showScene("finalDecision");
 
-  else{
-
-    renderWorld(`You search for the explosive.
-
-You find the chamber...
-
-but not the charge.
-
-You need another clue.`);
+    return;
 
   }
+
+  state.health-=8;
+
+  logEvent(
+    "You found the explosive but cannot disarm it yet."
+  );
+
+  showScene("finalDecision");
 
 }
 
 
-/* =====================================================
-   ESCAPE
-===================================================== */
-
-function escapeVillage(){
+function escapeAttack(){
 
   state.flags.escapedVillage=true;
 
@@ -2652,474 +2763,275 @@ function escapeVillage(){
 
   state.rep-=2;
 
-  renderWorld(`You run.
-
-Behind you, Kuroda burns.
-
-You reach the forest.
-
-You are alive.
-
-But you left everyone behind.
-
-Perhaps it was cowardice.
-
-Perhaps it was survival.
-
-Only history will decide.`);
-
   logEvent(
-    "You abandoned Kuroda."
+    "You escaped Kuroda while the village burned."
   );
 
-}
-
-
-/* =====================================================
-   WAIT
-===================================================== */
-
-function waitAction(){
-
-  advanceTime(3);
-
-  if(
-    state.flags.villageUnderAttack
-  ){
-
-    renderWorld(`You waited too long.
-
-The night erupts with screams.
-
-The attack has begun.
-
-There is no more time to prepare.`);
-
-    logEvent(
-      "You waited while the attack began."
-    );
-
-  }
-
-  else{
-
-    renderWorld(`You wait.
-
-The rain continues.
-
-Hours pass.
-
-The world keeps moving without you.
-
-Night is approaching.`);
-
-    logEvent(
-      "You chose to wait."
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   ROMAN REPUBLIC
-===================================================== */
-
-function romanSenator(){
-
-  state.rep+=1;
-
-  renderWorld(`You follow the frightened senator through a side street.
-
-He looks over his shoulder.
-
-"You saw them, didn't you?"
-
-You nod.
-
-He lowers his voice.
-
-"Caesar is dead."
-
-Your stomach drops.
-
-Rome is about to change forever.
-
-The senator gives you a sealed letter.
-
-"Take this to the Senate."
-
-Then he disappears into the crowd.`);
-
-  addItem("Sealed Roman letter");
-
-  addQuest(
-    "Deliver the sealed letter to the Senate."
-  );
-
-  logEvent(
-    "A senator gave you a sealed letter."
-  );
-
-}
-
-
-function romanWatch(){
-
-  renderWorld(`You watch the armed men.
-
-They are not ordinary soldiers.
-
-They belong to several different factions.
-
-Some are loyal to Caesar.
-
-Others are not.
-
-A fight is coming.`);
-
-  addQuest(
-    "Discover which faction controls the Forum."
-  );
-
-  logEvent(
-    "You observed rival factions gathering."
-  );
-
-}
-
-
-function romanGuard(){
-
-  state.rep+=2;
-
-  renderWorld(`You warn a Roman guard.
-
-He looks at you suspiciously.
-
-Then he sees the armed men.
-
-"Get inside."
-
-He orders the gates closed.
-
-For now, you have helped prevent panic.`);
-
-  logEvent(
-    "You warned a Roman guard."
-  );
-
-}
-
-
-function romanSenate(){
-
-  if(hasItem("Sealed Roman letter")){
-
-    removeItem("Sealed Roman letter");
-
-    state.rep+=6;
-
-    renderWorld(`You enter the Senate.
-
-The room is chaos.
-
-You deliver the letter.
-
-Several senators read it.
-
-The information changes their plans.
-
-You may have just altered the course of Rome.`);
-
-    logEvent(
-      "You delivered the letter to the Senate."
-    );
-
-  }
-  else{
-
-    renderWorld(`You enter the Senate.
-
-Voices echo around you.
-
-You are only a young citizen.
-
-Nobody important notices you.
-
-You need something that gives you influence.`);
-
-    logEvent(
-      "You entered the Roman Senate."
-    );
-
-  }
-
-}
-
-
-function romanLeave(){
-
-  state.location="Roman countryside";
-
-  renderWorld(`You leave Rome.
-
-Behind you, the city prepares for a political storm.
+  ending(
+    "THE ESCAPE",
+    `You run into the forest.
+
+Behind you, Kuroda disappears beneath fire and smoke.
 
 You survive.
 
-But you will never know what might have happened if you had stayed.`);
+But the people you left behind will remember your name differently.
 
-  logEvent(
-    "You left Rome."
+Some will call you a coward.
+
+Others will say you were wise enough to survive.
+
+History rarely agrees with itself.`,
+    "SURVIVAL ENDING"
   );
 
 }
 
 
 /* =====================================================
-   ANGLO-SAXON ENGLAND
+   FINAL DECISIONS
 ===================================================== */
 
-function englandScout(){
+function saveVillage(){
 
-  state.rep+=1;
+  if(
+    state.flags.bombDisarmed ||
+    state.flags.villageSaved ||
+    state.rep>=8
+  ){
 
-  renderWorld(`The wounded scout grips your arm.
+    state.rep+=5;
 
-"Normans."
+    ending(
+      "THE SAVIOUR OF KURODA",
+      `You refuse to abandon the village.
 
-He spits the word.
+You gather the remaining defenders.
 
-"They are coming."
+The attackers expected panic.
 
-He tells you the army is larger than York expected.
+Instead, they meet resistance.
 
-But he also reveals something important.
+The eastern gate holds.
 
-"The northern road is still open."
+The explosive never detonates.
 
-You may have a way out.`);
+The traitor is exposed.
 
-  addQuest(
-    "Decide whether York should fight or evacuate."
-  );
+By dawn, the surviving attackers have fled into the mountains.
 
-  logEvent(
-    "A wounded scout warned you about the Norman army."
-  );
+Kuroda is badly damaged, but it still stands.
 
-}
+The elder finds you among the smoke.
 
+"You saved us."
 
-function englandTower(){
+For the first time in your life, people know your name.
 
-  renderWorld(`You climb the gate tower.
+Your story has become part of Kuroda's history.`,
+      "GOOD ENDING"
+    );
 
-From the top you see smoke on the horizon.
+    return;
 
-Then another column.
+  }
 
-Then another.
+  state.health-=20;
 
-An army is approaching.
+  if(state.health<=0){
 
-York has hours, perhaps less.`);
+    triggerDeath(
+      "You fight to save Kuroda, but the attackers overwhelm you."
+    );
 
-  addQuest(
-    "Warn York that the army is approaching."
-  );
+    return;
 
-  logEvent(
-    "You saw the approaching army."
-  );
+  }
 
-}
+  ending(
+    "THE WOUNDED DEFENDER",
+    `You fight until you can fight no more.
 
+Kuroda survives the night, but barely.
 
-function englandWarn(){
+The village remembers the young warrior who refused to run.
 
-  state.rep+=4;
+You survive your wounds, though the scars remain for the rest of your life.
 
-  renderWorld(`You warn the people of York.
+You did not change the whole war.
 
-The streets erupt into activity.
+You changed one village.
 
-Families gather supplies.
-
-Warriors prepare weapons.
-
-The town may have a chance.`);
-
-  logEvent(
-    "You warned York."
-  );
-
-}
-
-
-function englandPrepare(){
-
-  state.attack+=4;
-
-  renderWorld(`You prepare your sword.
-
-You sharpen the blade.
-
-You join the warriors at the gate.
-
-Whatever happens next, you will face it.`);
-
-  logEvent(
-    "You prepared for battle."
+Sometimes that is enough.`,
+    "BITTERSWEET ENDING"
   );
 
 }
 
 
-function englandLeave(){
+function killTraitor(){
 
-  state.location="Northern Road";
+  if(!state.flags.traitorNameKnown){
 
-  renderWorld(`You leave York.
+    state.flags.traitorNameKnown=true;
 
-Behind you, the town prepares for war.
+    logEvent(
+      "You found the traitor in the chaos."
+    );
 
-You do not know whether York will survive.
+  }
 
-But you are alive.`);
+  state.attack+=3;
 
-  logEvent(
-    "You left York before the battle."
+  state.rep+=3;
+
+  ending(
+    "THE BLOOD DEBT",
+    `You find Masaru near the eastern gate.
+
+He turns when he sees you.
+
+For a moment neither of you speaks.
+
+"You should have stayed out of this," he says.
+
+You draw your sword.
+
+The fight is short.
+
+When it ends, the traitor is dead.
+
+But the attackers are still outside.
+
+Kuroda survives the night, though much of the village burns.
+
+You killed the man responsible.
+
+Whether that makes you a hero is another question.`,
+    "DARK ENDING"
   );
 
 }
 
 
-/* =====================================================
-   ANCIENT EGYPT
-===================================================== */
+function escapeFinal(){
 
-function egyptPriest(){
+  state.location="Forest Road";
 
-  state.rep+=1;
+  state.rep-=3;
 
-  renderWorld(`You confront the priest.
+  ending(
+    "THE WANDERER",
+    `You turn your back on Kuroda.
 
-"What happened in the eastern chamber?"
+The sounds of battle fade behind you.
 
-He stares at you.
+You have no idea who won.
 
-"Nothing."
+You have no idea whether the village survived.
 
-You know he is lying.
+But you are alive.
 
-Finally he whispers:
+You take the eastern road and disappear into the wider world.
 
-"The tomb should never have been opened."
+Your story is not over.
 
-Then he walks away.`);
-
-  addQuest(
-    "Discover what was found inside the eastern chamber."
-  );
-
-  logEvent(
-    "A priest mentioned a forbidden tomb."
+It has simply left Kuroda behind.`,
+    "SURVIVAL ENDING"
   );
 
 }
 
 
-function egyptChambers(){
+function faceCommander(){
 
-  state.health-=5;
+  const strength=
+    state.attack+
+    state.rep+
+    random(-3,6);
 
-  addItem("Temple seal");
+  if(strength>=20){
 
-  renderWorld(`You slip into the eastern chamber.
+    state.health-=random(15,30);
 
-The walls are covered with ancient symbols.
+    if(state.health<=0){
 
-At the centre of the room is a broken stone seal.
+      triggerDeath(
+        "You defeat the enemy commander, but your wounds prove fatal."
+      );
 
-Something was opened here.
+      return;
 
-Something that the priests did not want anyone to see.`);
+    }
 
-  addQuest(
-    "Discover what the broken temple seal protected."
-  );
+    state.rep+=8;
 
-  logEvent(
-    "You discovered a broken temple seal."
-  );
+    ending(
+      "THE WARRIOR",
+      `You walk through the smoke toward the enemy commander.
 
-}
+He laughs when he sees you.
 
+Then he sees the sword in your hand.
 
-function egyptLibrary(){
+The duel is brutal.
 
-  addItem("Papyrus fragment");
+You are wounded.
 
-  renderWorld(`The temple library is almost empty.
+So is he.
 
-You search through the records.
+In the end, you remain standing.
 
-One damaged papyrus mentions a sealed tomb beneath the eastern chamber.
+The attackers see their commander fall and retreat.
 
-The final line has been deliberately scratched away.`);
+Kuroda survives.
 
-  addQuest(
-    "Find the missing part of the papyrus."
-  );
+The elder later tells the story differently:
 
-  logEvent(
-    "You found a mysterious papyrus fragment."
-  );
+He says a fifteen-year-old warrior stood against an army.
 
-}
+You know the truth.
 
+You were simply too stubborn to run.`,
+      "HEROIC ENDING"
+    );
 
-function egyptWorkers(){
+  }
+  else{
 
-  state.rep+=2;
+    state.health-=35;
 
-  renderWorld(`You tell the workers what you saw.
+    if(state.health<=0){
 
-At first they laugh.
+      triggerDeath(
+        "The enemy commander proves too powerful."
+      );
 
-Then one of them goes pale.
+      return;
 
-"I saw them carrying something from the eastern chamber last night."
+    }
 
-The workers fall silent.`);
+    ending(
+      "THE BROKEN SWORD",
+      `You face the enemy commander.
 
-  logEvent(
-    "The temple workers revealed another clue."
-  );
+You fight bravely.
 
-}
+But bravery is not always enough.
 
+You are thrown aside and left wounded in the mud.
 
-function egyptLeave(){
+By morning, the attackers have withdrawn.
 
-  state.location="Thebes";
+Kuroda survives, but your name is barely remembered.
 
-  renderWorld(`You leave the temple.
+You survived.
 
-Thebes continues its evening rituals.
+Sometimes that is the only victory available.`,
+      "BITTERSWEET ENDING"
+    );
 
-Behind you, the temple guards close the gates.
-
-Whatever is hidden inside will remain hidden...
-
-for now.`);
-
-  logEvent(
-    "You left the temple."
-  );
+  }
 
 }
 
@@ -3142,8 +3054,6 @@ function customAction(){
 
   box.value="";
 
-  state.turn++;
-
   state.lastAction=raw;
 
   advanceTime(1);
@@ -3158,80 +3068,109 @@ function customAction(){
 
 
 /* =====================================================
-   CUSTOM INTERPRETER
+   CUSTOM ACTION INTERPRETER
 ===================================================== */
 
 function interpretCustomAction(raw){
 
-  const text=raw.toLowerCase();
+  const text=
+    raw.toLowerCase();
 
 
-  /* DEATH */
-
-  if(
-    /(kill myself|suicide|die)/.test(text)
-  ){
-
-    triggerDeath(
-      "You made a fatal decision."
-    );
-
-    return;
-  }
-
-
-  /* HORSE */
+  /* RUN / ESCAPE */
 
   if(
-    /horse/.test(text)
+    /(run away|escape|flee|leave)/.test(text)
   ){
 
-    stealHorse();
+    escapeAttack();
+
     return;
+
   }
 
 
   /* FIGHT */
 
   if(
-    /(fight|attack|stab|strike|punch|hit|kill|sword)/.test(text)
+    /(fight|attack|stab|strike|hit|sword|kill)/.test(text)
   ){
 
-    state.health-=random(8,20);
-    state.attack+=2;
-    state.rep+=2;
+    state.health-=random(8,18);
+    state.attack+=1;
 
-    renderWorld(`You choose violence.
-
-"${raw}"
-
-Steel flashes.
-
-The encounter is messy.
-
-You survive, but you are injured.
-
-Your actions have consequences.`);
+    logEvent(
+      "Your custom action turned violent."
+    );
 
     if(state.health<=0){
 
       triggerDeath(
-        "Your wounds are too severe."
+        "Your custom action leaves you badly wounded."
       );
+
+      return;
 
     }
 
+    showScene(
+      state.scene==="attack"
+        ?"finalDecision"
+        :"evidence"
+    );
+
     return;
+
+  }
+
+
+  /* SEARCH */
+
+  if(
+    /(search|investigate|inspect|examine|look|explore)/.test(text)
+  ){
+
+    if(
+      /shrine/.test(text)
+    ){
+
+      goShrine();
+      return;
+
+    }
+
+    if(
+      /tunnel|passage/.test(text)
+    ){
+
+      state.flags.discoveredTunnel=true;
+      showScene("tunnel");
+      return;
+
+    }
+
+    if(
+      /masaru|messenger/.test(text)
+    ){
+
+      findMasaru();
+      return;
+
+    }
+
+    searchVillage();
+    return;
+
   }
 
 
   /* TALK */
 
   if(
-    /(talk|speak|ask|question|confront|tell)/.test(text)
+    /(talk|speak|ask|question|confront)/.test(text)
   ){
 
-    if(/stranger|unknown man/.test(text)){
+    if(/stranger/.test(text)){
 
       meetStranger();
       return;
@@ -3247,70 +3186,13 @@ Your actions have consequences.`);
 
     if(/masaru|messenger/.test(text)){
 
-      meetMasaru();
+      findMasaru();
       return;
 
     }
 
-    if(state.realm==="Roman Republic"){
+    showScene("evidence");
 
-      romanSenator();
-      return;
-
-    }
-
-    if(state.realm==="Anglo-Saxon England"){
-
-      englandScout();
-      return;
-
-    }
-
-    if(state.realm==="New Kingdom Egypt"){
-
-      egyptPriest();
-      return;
-
-    }
-
-  }
-
-
-  /* SEARCH */
-
-  if(
-    /(search|investigate|inspect|examine|look|explore)/.test(text)
-  ){
-
-    if(/road|east|rider/.test(text)){
-
-      investigateRoad();
-      return;
-
-    }
-
-    if(/shrine/.test(text)){
-
-      investigateShrine();
-      return;
-
-    }
-
-    if(/tunnel|underground|passage/.test(text)){
-
-      enterTunnel();
-      return;
-
-    }
-
-    if(state.realm==="New Kingdom Egypt"){
-
-      egyptChambers();
-      return;
-
-    }
-
-    searchVillage();
     return;
 
   }
@@ -3322,78 +3204,8 @@ Your actions have consequences.`);
     /(follow|tail|track|chase)/.test(text)
   ){
 
-    state.flags.followedRiders=true;
-
-    addQuest(
-      "Investigate where the people you followed are going."
-    );
-
-    renderWorld(`You decide not to confront them.
-
-Instead, you follow.
-
-You keep your distance.
-
-The people ahead have not noticed you.
-
-They are heading toward a place you have not yet seen.
-
-You may have discovered another path into the mystery.`);
-
-    logEvent(
-      "You followed someone instead of confronting them."
-    );
-
+    followRiders();
     return;
-
-  }
-
-
-  /* WARN */
-
-  if(
-    /(warn|alert|protect)/.test(text)
-  ){
-
-    warnElder();
-    return;
-
-  }
-
-
-  /* RUN */
-
-  if(
-    /(run|escape|flee|leave)/.test(text)
-  ){
-
-    if(state.realm==="Sengoku Japan"){
-
-      escapeVillage();
-      return;
-
-    }
-
-    if(state.realm==="Roman Republic"){
-
-      romanLeave();
-      return;
-
-    }
-
-    if(state.realm==="Anglo-Saxon England"){
-
-      englandLeave();
-      return;
-
-    }
-
-    if(state.realm==="New Kingdom Egypt"){
-
-      egyptLeave();
-      return;
-
-    }
 
   }
 
@@ -3404,104 +3216,115 @@ You may have discovered another path into the mystery.`);
     /(wait|rest|sleep|stay)/.test(text)
   ){
 
-    waitAction();
+    advanceTime(3);
+
+    logEvent(
+      "You waited as the situation developed."
+    );
+
+    if(
+      state.scene==="preparation"
+    ){
+
+      showScene("attack");
+
+    }
+    else{
+
+      showScene("evidence");
+
+    }
+
     return;
 
   }
 
 
-  /* CREATIVE */
+  /*
+     Anything else gets a small consequence.
 
-  creativeAction(raw);
+     It does NOT restart the story.
+  */
+
+  const roll=random(1,3);
+
+  if(roll===1){
+
+    state.rep+=1;
+
+    logEvent(
+      "Your unusual idea gave you a small advantage."
+    );
+
+  }
+  else if(roll===2){
+
+    state.money+=10;
+
+    logEvent(
+      "Your improvisation earned you a few coins."
+    );
+
+  }
+  else{
+
+    state.health-=4;
+
+    logEvent(
+      "Your improvisation went badly."
+    );
+
+  }
+
+  if(state.health<=0){
+
+    triggerDeath(
+      "Your improvised action proves fatal."
+    );
+
+    return;
+
+  }
+
+  showScene(
+    state.scene
+  );
 
 }
 
 
 /* =====================================================
-   CREATIVE ACTION
+   ENDINGS
 ===================================================== */
 
-function creativeAction(raw){
+function ending(title,text,tag){
 
-  const roll=random(1,4);
+  if(!state.alive)return;
 
-  if(roll===1){
+  state.alive=false;
+  state.ending=true;
 
-    state.rep++;
+  state.quests=[];
 
-    renderWorld(`You attempt something unexpected:
+  updateStats();
 
-"${raw}"
+  el("game").classList.add("hidden");
 
-It does not go exactly as planned.
+  el("gameover").classList.remove("hidden");
 
-But your unusual approach catches someone off guard.
+  el("endingTitle").textContent=
+    title;
 
-You gain a small advantage.`);
+  el("deathText").textContent=
+    text;
 
-  }
+  el("endingTag").textContent=
+    tag;
 
-  else if(roll===2){
-
-    const money=random(5,20);
-
-    state.money+=money;
-
-    renderWorld(`You improvise:
-
-"${raw}"
-
-Your idea leads somewhere useful.
-
-You gain ${money} coins.`);
-
-  }
-
-  else if(roll===3){
-
-    state.flags.foundEvidence=true;
-
-    addItem("Unidentified clue");
-
-    renderWorld(`You try:
-
-"${raw}"
-
-Something catches your attention.
-
-You discover a strange clue.
-
-You do not understand it yet.
-
-But it may become important later.`);
-
-  }
-
-  else{
-
-    state.health-=5;
-
-    renderWorld(`You attempt:
-
-"${raw}"
-
-The idea is risky.
-
-Something goes wrong.
-
-You are injured.
-
-But your decision has changed the situation.`);
-
-    if(state.health<=0){
-
-      triggerDeath(
-        "The risky action proves fatal."
-      );
-
-    }
-
-  }
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
@@ -3527,8 +3350,14 @@ function triggerDeath(reason){
 
   el("gameover").classList.remove("hidden");
 
+  el("endingTitle").textContent=
+    "YOUR STORY ENDS";
+
   el("deathText").textContent=
     `${reason} Your story ended on Day ${state.day} in ${state.location}.`;
+
+  el("endingTag").textContent=
+    "DEATH";
 
   window.scrollTo({
     top:0,
@@ -3547,9 +3376,7 @@ function returnToMenu(){
   state.alive=false;
 
   el("game").classList.add("hidden");
-
   el("gameover").classList.add("hidden");
-
   el("start").classList.remove("hidden");
 
   window.scrollTo({
@@ -3568,14 +3395,15 @@ function restartGame(){
 
   const realm=state.realm;
   const year=state.year;
-  const location=
-    state.realm==="Sengoku Japan"
-      ?"Kuroda Village"
-      :state.realm==="Roman Republic"
-        ?"Rome"
-        :state.realm==="Anglo-Saxon England"
-          ?"York"
-          :"Thebes";
+  const location=state.location;
+
+  if(!realm){
+
+    returnToMenu();
+
+    return;
+
+  }
 
   startGame(
     realm,
@@ -3598,4 +3426,3 @@ updateStats();
 
 </body>
 </html>
-```
