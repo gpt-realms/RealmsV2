@@ -412,6 +412,93 @@ body{background:#05070a;color:#ece7dc}
 @media(max-width:760px){#game .gameShell{grid-template-columns:1fr}#game .gameSidebar{position:static}#game .stats{grid-template-columns:repeat(4,1fr)}#game .stat{display:block;text-align:center;border-bottom:0}.sceneArt{height:230px}#game .choices{grid-template-columns:1fr}.choiceThumb{width:78px}}
 @media(max-width:520px){#game .stats{grid-template-columns:repeat(2,1fr)}.sceneArt{height:190px}#game .reply{font-size:15px}}
 
+
+/* BUILD 3.9 — DEMO-MATCH LAYOUT + LOOP REPAIR */
+#game .app{max-width:1440px;padding:10px 16px 22px}
+#game .topButtons{position:absolute;right:18px;top:18px;z-index:5}
+#game>.app>.brand{min-height:82px;padding:12px 360px 13px 18px;background:linear-gradient(90deg,#080b0f,#0d1117);border:1px solid #5d482a;border-radius:8px;margin-bottom:10px}
+#game>.app>.brand h1{font-size:32px;letter-spacing:11px;color:#f0e7d7}
+#game>.app>.brand .sub{color:#c9a56a}
+#game .gameShell{grid-template-columns:245px minmax(0,1fr);gap:12px}
+#game .gameSidebar{background:#080b0f;border:1px solid #5d482a;border-radius:8px;padding:10px;position:sticky;top:8px}
+#game .gameSidebar:before{content:'COMMONER';display:block;font-family:Georgia,serif;font-size:18px;color:#e8c47f;text-align:center;letter-spacing:2px;padding:8px 0 11px;border-bottom:1px solid #40331f;margin-bottom:7px}
+#game .gameSidebar .card{box-shadow:none;margin:0 0 8px;border-radius:5px}
+#game .stats{padding:5px 10px!important}
+#game .stat{padding:9px 2px}
+#game .gameMain{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+#game #saveNotice{margin-bottom:8px}
+#game .sceneArt{height:auto;aspect-ratio:16/7;max-height:520px;border-radius:8px 8px 0 0;border-color:#6b512d;box-shadow:0 18px 50px #0008}
+#game .sceneArt img{object-fit:cover;object-position:center 52%}
+#game .sceneArtMeta{left:18px;bottom:14px}
+#game .response{padding:18px 30px 20px!important;border-left:1px solid #5d482a;border-right:1px solid #5d482a;border-bottom:1px solid #5d482a!important;border-radius:0!important;margin:0!important}
+#game .response .label{display:none}
+#game .sceneTitle{text-align:left!important;font-size:18px!important;margin-bottom:10px!important}
+#game .reply{text-align:left!important;max-width:none!important;font-size:16px!important;line-height:1.55!important}
+#game .you{text-align:left!important}
+#game .gameMain>.card:not(.response):not(#saveNotice){border-radius:0;border-left:1px solid #5d482a;border-right:1px solid #5d482a;border-top:0;margin:0;padding:12px 16px;background:#080b0f}
+#game .gameMain>.card:last-child{border-radius:0 0 8px 8px;border-bottom:1px solid #5d482a}
+#game .choices{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px!important}
+#game .choices button{min-height:112px!important;padding:0!important;display:grid;grid-template-columns:92px 1fr;align-items:stretch;text-align:left;border-radius:5px!important;background:#0b0f14!important}
+#game .choiceThumb{float:none!important;width:92px!important;height:100%!important;min-height:110px;object-fit:cover;border:0!important;border-right:1px solid #4e3c25!important;border-radius:4px 0 0 4px!important;margin:0!important}
+#game .choiceMain,#game .choiceMeta{grid-column:2;padding-left:10px;padding-right:8px}
+#game .choiceMain{align-self:end;padding-top:10px;font-size:14px!important}
+#game .choiceMeta{align-self:start;padding-bottom:10px;font-size:10px!important}
+#game .choices button:not(:has(.choiceThumb)){display:block;padding:12px!important;min-height:86px!important}
+#game .choices button:not(:has(.choiceThumb)) .choiceMain,#game .choices button:not(:has(.choiceThumb)) .choiceMeta{padding-left:0}
+#game .memory{margin:12px 0 0}
+@media(max-width:1050px){#game .choices{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:760px){#game .topButtons{position:static}#game>.app>.brand{padding:12px}#game .gameShell{grid-template-columns:1fr}#game .gameSidebar{position:static}#game .sceneArt{aspect-ratio:16/9}.gameSidebar:before{display:none!important}}
+@media(max-width:520px){#game .choices{grid-template-columns:1fr!important}#game .sceneArt{aspect-ratio:4/3}#game .response{padding:15px!important}}
+
+
+/* BUILD 3.10 — FULL-PAGE REALMS ART DIRECTION */
+:root{--realms-gold:#b99355;--realms-gold2:#6f542f;--realms-ink:#07090c;--realms-paper:#d8cbb6}
+html{background:#050608}
+body{min-height:100vh;background-color:#07090c;background-size:cover;background-position:center;background-attachment:fixed;transition:background-image .45s ease;color:#e8e1d5;position:relative}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:linear-gradient(90deg,rgba(3,5,7,.97) 0%,rgba(3,5,7,.88) 18%,rgba(3,5,7,.67) 50%,rgba(3,5,7,.9) 82%,rgba(3,5,7,.98) 100%),linear-gradient(0deg,rgba(3,4,6,.94),rgba(3,4,6,.35) 45%,rgba(3,4,6,.82));backdrop-filter:blur(2px)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.24;background-image:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.018) 4px),radial-gradient(circle at 50% 0,rgba(190,145,77,.16),transparent 36%)}
+#game{min-height:100vh;padding:18px 0 34px}
+#game .app{max-width:1540px!important;width:calc(100% - 38px);margin:0 auto!important;padding:0!important;border:1px solid #715631;border-radius:10px;background:rgba(5,7,9,.88);box-shadow:0 0 0 1px #18130d,0 30px 100px #000,0 0 90px rgba(155,112,52,.08);overflow:hidden;position:relative}
+#game .app:before,#game .app:after{content:"◆";position:absolute;top:14px;color:#a67d43;font-size:13px;z-index:8;text-shadow:0 0 16px #c99a4b}
+#game .app:before{left:18px}#game .app:after{right:18px}
+#game>.app>.brand{margin:0!important;border:0!important;border-bottom:1px solid #715631!important;border-radius:0!important;min-height:94px!important;padding:17px 390px 15px 56px!important;background:linear-gradient(90deg,rgba(5,7,9,.99),rgba(16,17,17,.95),rgba(5,7,9,.99))!important;position:relative}
+#game>.app>.brand:after{content:"戦国の記録";position:absolute;left:58px;bottom:10px;color:#756447;font-family:Georgia,serif;font-size:9px;letter-spacing:5px}
+#game>.app>.brand h1{font-family:Georgia,'Times New Roman',serif!important;font-size:35px!important;font-weight:500;letter-spacing:13px!important;text-shadow:0 2px 22px #000}
+#game .topButtons{top:26px!important;right:52px!important}
+#game .topButtons button{background:#0b0e11!important;border-color:#493a27!important;color:#cfc4b2!important;border-radius:3px!important;padding:8px 10px!important;font-size:11px!important}
+#game .gameShell{grid-template-columns:260px minmax(0,1fr)!important;gap:0!important}
+#game .gameSidebar{border:0!important;border-right:1px solid #715631!important;border-radius:0!important;padding:16px 13px!important;background:linear-gradient(180deg,rgba(8,10,12,.98),rgba(5,7,9,.94))!important;top:0!important;min-height:calc(100vh - 95px)}
+#game .gameSidebar:before{font-size:19px!important;letter-spacing:4px!important;color:#e2c58e!important;padding:5px 0 15px!important}
+#game .gameSidebar .card{background:transparent!important;border:0!important;border-bottom:1px solid #30271b!important;padding:12px 5px!important}
+#game .stats{display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important}
+#game .stat{background:transparent!important;border-radius:0!important;border-bottom:1px solid #241f18!important;padding:12px 5px!important}
+#game .stat b{font-family:Georgia,serif;font-size:21px!important;color:#e9d4ae}.stat span{letter-spacing:1.4px!important;color:#756f65!important}
+#game .gameMain{background:rgba(7,9,11,.72)}
+#game .sceneArt{border:0!important;border-bottom:1px solid #715631!important;border-radius:0!important;aspect-ratio:16/7!important;max-height:560px!important;box-shadow:inset 0 -70px 80px #050608!important;position:relative}
+#game .sceneArt:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 55%,rgba(5,7,9,.86)),linear-gradient(90deg,rgba(5,7,9,.18),transparent 25%,transparent 75%,rgba(5,7,9,.18))}
+#game .sceneArt img{filter:saturate(.82) contrast(1.06) brightness(.88);transform:scale(1.002)}
+#game .sceneArtMeta{z-index:2!important;background:rgba(5,7,9,.72)!important;border:1px solid #6b512d!important;border-radius:2px!important;color:#d5c6ad!important;letter-spacing:.6px!important}
+#game .response{background:linear-gradient(90deg,rgba(13,14,14,.98),rgba(18,17,15,.97),rgba(13,14,14,.98))!important;border:0!important;border-bottom:1px solid #4a3924!important;padding:23px 34px 25px!important;position:relative}
+#game .response:before{content:"CHRONICLE";display:block;color:#806c4d;font-size:9px;letter-spacing:4px;margin-bottom:8px}
+#game .sceneTitle{font-family:Georgia,'Times New Roman',serif!important;color:#e7c98f!important;font-size:20px!important;letter-spacing:1.2px!important}
+#game .reply{font-family:Georgia,'Times New Roman',serif!important;color:#ddd3c3!important;font-size:16px!important;line-height:1.62!important;max-width:1080px!important}
+#game .gameMain>.card:not(.response):not(#saveNotice){background:rgba(6,8,10,.96)!important;border:0!important;border-bottom:1px solid #302719!important;padding:16px 20px!important}
+#game .gameMain>.card:not(.response):not(#saveNotice)>.label{color:#8d7857!important;letter-spacing:3px!important;margin-bottom:11px!important}
+#game .choices{gap:10px!important}
+#game .choices button{border:1px solid #4c3a25!important;background:linear-gradient(180deg,#111418,#090b0e)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.015),0 5px 16px #0006!important;transition:.18s ease!important}
+#game .choices button:hover{border-color:#aa8046!important;transform:translateY(-2px)!important;box-shadow:0 9px 22px #0009,0 0 18px rgba(174,127,62,.08)!important}
+#game .choiceThumb{filter:saturate(.75) contrast(1.08) brightness(.78)!important}
+#game .choiceMain{font-family:Georgia,serif!important;color:#e6c78e!important;letter-spacing:.2px}
+#game .choiceMeta{color:#8f8a80!important}
+#game .memory{border-color:#7c5e33!important;background:#17130d!important;color:#d6b67d!important}
+#game .empty{color:#665d50!important;letter-spacing:3px;text-align:center;padding:9px}
+#start{min-height:100vh;display:grid;place-items:center;padding:35px;background:radial-gradient(circle at 50% 20%,rgba(150,108,52,.12),transparent 35%)}
+#start>.card{width:min(900px,94vw);background:rgba(7,9,11,.94);border:1px solid #715631;border-radius:7px;padding:28px;box-shadow:0 30px 100px #000}
+#start .brand h1{font-family:Georgia,serif;letter-spacing:12px;font-size:36px;color:#eadcc4}
+#start .era{border-radius:3px;border-color:#4c3a25;background:#0c0f12}.era:not(.inprogress):hover{border-color:#a67d43;background:#121416}
+@media(max-width:900px){#game .app{width:calc(100% - 16px)}#game>.app>.brand{padding:15px 18px!important}#game>.app>.brand:after{display:none}#game .topButtons{position:static!important;padding:8px 10px;background:#080a0c;border-bottom:1px solid #33291c}#game .gameShell{grid-template-columns:1fr!important}#game .gameSidebar{position:static!important;min-height:0;border-right:0!important;border-bottom:1px solid #715631!important}#game .stats{grid-template-columns:repeat(4,1fr)!important}#game .sceneArt{aspect-ratio:16/9!important}}
+@media(max-width:560px){#game .stats{grid-template-columns:repeat(2,1fr)!important}#game .response{padding:18px!important}#game>.app>.brand h1{font-size:27px!important;letter-spacing:8px!important}}
+
 </style>
 </head>
 
@@ -429,7 +516,7 @@ body{background:#05070a;color:#ece7dc}
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
-      <div class="sub">JAPAN · BUILD 3.8</div>
+      <div class="sub">JAPAN · BUILD 3.10</div>
     </div>
 
     <h2>Choose where your story begins.</h2>
@@ -1142,7 +1229,11 @@ function sceneAtmosphere(sceneName=""){
 }
 function updateSceneArt(sceneName=""){
   const key=sceneArtKey(sceneName), img=el("sceneArtImg"), meta=el("sceneArtMeta");
-  if(img && SCENE_ART[key]){ img.style.opacity=".25"; setTimeout(()=>{img.src=SCENE_ART[key];img.onload=()=>img.style.opacity="1";},35); }
+  if(img && SCENE_ART[key]){
+    img.style.opacity=".25";
+    document.body.style.backgroundImage=`url("${SCENE_ART[key]}")`;
+    setTimeout(()=>{img.src=SCENE_ART[key];img.onload=()=>img.style.opacity="1";},35);
+  }
   const a=sceneAtmosphere(sceneName);
   if(meta) meta.innerHTML=`<span>${a.loc}</span><span>${a.time}</span><span>${a.weather}</span><span>${a.tension}</span>`;
   const life=el("visualLife"); if(life) life.innerHTML=`Age <b>${state.age}</b><br>${state.season} · ${state.year}<br>${a.time} · ${a.weather}`;
@@ -5741,9 +5832,9 @@ Training with another person feels different. Mistakes have consequences.`,
     title:"AGE 11 — THE LIMIT OF PRACTICE",
     text:`You repeat the cut until your hands know it before you think. Then something changes: not your technique, but the rate at which you improve.
 
-You can keep practising, but repetition alone is no longer enough. You are eleven. Your body is still growing, and there are lessons a fence post cannot teach.
+You have exhausted what these basic drills can teach you. Your hands know the motions now, but repetition alone is no longer making you better. You are eleven; your body is still growing, and the next lesson has to come from a person, a risk, a journey or time itself.
 
-To advance faster you need a teacher, a real opponent, experience on the road — or simply time to grow older.`,
+If you want to improve, you need a teacher, a real opponent, experience on the road — or simply time to grow older.`,
     choices:[
       ["Find a real teacher","age11SeekSamurai","Teacher storyline · new techniques"],
       ["Spar with Daichi","age11TrainingDaichi","Live opponent · relationship"],
@@ -5769,7 +5860,7 @@ Then, after a moment:
 He understands more than he says.`,
     choices:[
       ["Ask your father about becoming a warrior","age11AskLeave"],
-      ["Train after the work is finished","age11TrainAgain"],
+      ["Ask your father what warriors really sacrifice","age11AskLeave","Family conversation · warrior road"],
       ["Keep learning the land","age11FarmMore"],
       ["Return to your other choices","age11Life"]
     ]
@@ -5791,7 +5882,7 @@ An old charcoal seller tells you of a wounded retainer named Saburo living two v
     choices:[
       ["Travel east and find Saburo","age11MeetSaburo"],
       ["Ask your father before going","age11AskLeave"],
-      ["Train more before approaching him","age11TrainAgain"],
+      ["Go to Saburo before doubt changes your mind","age11MeetSaburo","Teacher storyline · leave Kuroda for the day"],
       ["Stay in Kuroda for now","age11Life"]
     ]
   },
@@ -5879,7 +5970,7 @@ You can obey, earn more trust, train in secret, or eventually leave without perm
 A closed door is not the end of a life. It is another decision.`,
     choices:[
       ["Earn their trust by helping at home","age11WorkHome"],
-      ["Train anyway","age11TrainAgain"],
+      ["Seek instruction outside the family","age11SeekSamurai","Teacher storyline · Ambitious progress"],
       ["Seek Saburo without leaving permanently","age11MeetSaburo"],
       ["Return to your choices","age11Life"]
     ]
@@ -5926,7 +6017,7 @@ You can prepare in Kuroda, search for someone willing to teach a commoner's chil
 None of these choices closes the others forever.`,
     choices:[
       ["Search for a teacher","age11SeekSamurai","+ Intelligence · + Exploration · Ambitious progress"],
-      ["Train before you go","age11TrainAgain","+ Swordsmanship · + Discipline"],
+      ["Visit Daichi before you go","age11TrainingDaichi","Relationship · a real goodbye may matter later"],
       ["Ask your family to let you leave","age11AskLeave","Family Trust can change the outcome"],
       ["Return to your life in Kuroda","age11Life","Return to the age-11 life hub"]
     ]
@@ -6074,7 +6165,7 @@ A failed fight has become a new story instead of a dead end.`,
     choices:[
       ["Remember the camp and return home","banditRemember","Creates a future revenge/investigation thread"],
       ["Tell your father what happened","banditTellFather","+ Family Trust · + Reputation"],
-      ["Train before coming back","age11TrainAgain","+ Swordsmanship · + Discipline"],
+      ["Return with a plan instead of more drills","age11SeekSamurai","Teacher route · preparation through story"],
       ["Return to exploring","age11ExploreHub","Travel elsewhere"]
     ]
   }
@@ -6370,6 +6461,8 @@ function showScene(name){
   }
 
   state.scene=name;
+  state.sceneVisits=state.sceneVisits||{};
+  state.sceneVisits[name]=(state.sceneVisits[name]||0)+1;
   updateSceneArt(name);
 
   el("sceneTitle").textContent=scene.title;
@@ -6379,7 +6472,16 @@ function showScene(name){
       ? `You: ${state.lastAction}`
       : "";
 
-  renderChoices(scene.choices||[]);
+  let sceneChoices=(scene.choices||[]).map(c=>c.slice());
+
+  // Build 3.9: practice is finite content, not an infinite carousel.
+  if(state.age===11 && ["age11Training","age11TrainingFootwork","age11TrainingDaichi"].includes(name) && (state.age11TrainingSessions||0)>=4){
+    sceneChoices=sceneChoices.filter(c=>!["age11TrainAgain","age11SparDaichi"].includes(c[1]));
+    if(!sceneChoices.some(c=>c[1]==="age11SeekSamurai")) sceneChoices.unshift(["Find instruction beyond basic practice","age11SeekSamurai","Training plateau reached · pursue a teacher"]);
+    if(!sceneChoices.some(c=>c[1]==="age11ExploreHub")) sceneChoices.push(["Seek experience beyond Kuroda","age11ExploreHub","Roads · villages · danger · real experience"]);
+  }
+
+  renderChoices(sceneChoices);
 
   const memory=el("memoryBox");
 
@@ -6670,16 +6772,16 @@ actions.age11TrainAgain=()=>{
   state.lastTrainingLimit="";
   const swordGain=addSkill("swordsmanship",1);
   const disciplineGain=addSkill("discipline",1);
-  if(state.age11TrainingSessions%2===0) addSkill("endurance",1);
+  if(state.age11TrainingSessions===2) addSkill("endurance",1);
   state.power=Math.max(state.power,1+Math.floor(skillLevel("swordsmanship")/3));
-  logEvent(`You spent several weeks training at age 11. Training sessions: ${state.age11TrainingSessions}.`);
+  logEvent(`You completed a distinct stage of sword practice at age 11. Stage: ${Math.min(state.age11TrainingSessions,4)}.`);
 
   const cap=ageSkillCap(11);
-  if(skillLevel("swordsmanship")>=cap || (swordGain===0 && disciplineGain===0)){
+  if(state.age11TrainingSessions>=4 || skillLevel("swordsmanship")>=cap || (swordGain===0 && disciplineGain===0)){
     showScene("age11TrainingPlateau");
-  }else if(state.age11TrainingSessions%3===2){
+  }else if(state.age11TrainingSessions===2){
     showScene("age11TrainingFootwork");
-  }else if(state.age11TrainingSessions%3===0){
+  }else if(state.age11TrainingSessions===3){
     showScene("age11TrainingDaichi");
   }else{
     showScene("age11Training");
@@ -6688,12 +6790,15 @@ actions.age11TrainAgain=()=>{
 
 actions.age11TrainingDaichi=()=>showScene("age11TrainingDaichi");
 actions.age11SparDaichi=()=>{
-  state.age11TrainingSessions=(state.age11TrainingSessions||0)+1;
+  if(state.flags.age11SparredDaichi){ showScene("age11TrainingPlateau"); return; }
+  state.flags.age11SparredDaichi=true;
+  state.age11TrainingSessions=Math.max((state.age11TrainingSessions||0)+1,4);
   addSkill("swordsmanship",1);
   addSkill("endurance",1);
   relation("daichi",2);
-  remember("Age 11 — You began using Daichi as a real sparring partner instead of repeating drills alone.");
-  showScene(skillLevel("swordsmanship")>=ageSkillCap(11)?"age11TrainingPlateau":"age11TrainingDaichi");
+  remember("Age 11 — You learned what a moving opponent could teach that a training post never would.");
+  logEvent("You completed your first serious controlled spar with Daichi. Repeating it will not create another lesson by itself.");
+  showScene("age11TrainingPlateau");
 };
 
 actions.age11WorkHome=()=>{
@@ -6865,7 +6970,7 @@ actions.robberLoot=()=>{ state.money+=6; addItem("Red Bandit Cord"); traitProgre
 actions.roadHomeSafe=()=>{ state.reputation+=1; traitProgress("honourable"); state.location="Kuroda Village"; showScene("kurodaTrade"); };
 actions.robberFollow=()=>{ addSkill("exploration",1); showScene("banditTrail"); };
 actions.roadHomeHurt=()=>{ state.location="Kuroda Village"; state.health=clamp(state.health+5,1,100); showScene("age11Life"); };
-actions.robberyResolve=()=>{ addSkill("strength",1); traitProgress("ambitious"); state.location="Kuroda Village"; showScene("age11Training"); };
+actions.robberyResolve=()=>{ addSkill("strength",1); traitProgress("ambitious"); state.location="Kuroda Village"; remember("Age 11 — Being robbed turned training from a game into a reason to survive."); showScene("age11WarriorMenu"); };
 actions.robberFollowHurt=()=>{ addSkill("exploration",1); state.health=clamp(state.health-3,1,100); showScene("banditTrail"); };
 actions.banditRemember=()=>{ state.flags.revengeTarget=true; remember("Age 11 — You learned where the road robbers hide."); state.location="Kuroda Village"; showScene("age11Life"); };
 actions.banditTellFather=()=>{ state.familyTrust+=1; state.reputation+=1; relation("father",1); state.flags.revengeTarget=true; state.location="Kuroda Village"; showScene("age11Life"); };
