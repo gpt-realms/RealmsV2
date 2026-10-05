@@ -392,7 +392,7 @@ button,input,textarea{font:inherit}
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
-      <div class="sub">JAPAN · BUILD 3.2</div>
+      <div class="sub">JAPAN · BUILD 3.4</div>
     </div>
 
     <h2>Choose where your story begins.</h2>
@@ -481,14 +481,8 @@ button,input,textarea{font:inherit}
   </div>
 
   <div class="card">
-    <div class="label">Custom action</div>
-    <div class="custom">
-      <textarea id="custom" placeholder="Try something outside the choices..."></textarea>
-      <button class="send" onclick="customAction()">ACT</button>
-    </div>
-    <div class="modeLine">
-      Custom actions can alter the story, but the main story remains choice-driven.
-    </div>
+    <div class="label">Free Action</div>
+    <div class="empty">COMING SOON</div>
   </div>
 
   <div class="card">
@@ -1922,7 +1916,7 @@ You are alive.
 
 And stronger for it.`,
   choices:[
-    ["Laugh it off","age10"],
+    ["Laugh it off","childhoodPaths"],
     ["Teach yourself to swim properly","age10Train"]
   ]
 },
@@ -1941,7 +1935,7 @@ You know that.
 
 Years later, you will remember this decision when someone else tells you courage means never being afraid.`,
   choices:[
-    ["Continue","age10"]
+    ["Continue","childhoodPaths"]
   ]
 },
 
@@ -1969,7 +1963,7 @@ Then he surfaces laughing.
 
 You jump too.`,
   choices:[
-    ["Continue","age10"]
+    ["Continue","childhoodPaths"]
   ]
 },
 
@@ -1989,6 +1983,85 @@ But you remember it.`,
   choices:[
     ["Study the carving","age10Curious"],
     ["Tell Ren","age10"]
+  ]
+},
+
+childhoodPaths:{
+  title:"CHILDHOOD — WHAT PULLS AT YOU?",
+  text:`Not every important day becomes a birthday.
+
+Between chores, hunger, games and rumours of war, you begin choosing what deserves your time.
+
+The choice does not end the others forever. It simply decides what you pursue now.`,
+  choices:[
+    ["Spend more time with your family","childhoodFamilyPath"],
+    ["Find Ren and see what trouble he has found","childhoodRenPath"],
+    ["Find Daichi and help him","childhoodDaichiPath"],
+    ["Watch the warriors and dream of another life","childhoodAmbitionPath"]
+  ]
+},
+
+familyThread:{
+  title:"THE WORK THAT KEEPS YOU ALIVE",
+  text:`Your father's hands are cracked from work. Your mother has begun stretching every handful of rice further than it should go.
+
+Nobody calls it bravery. Nobody sings songs about it.
+
+But keeping a family alive is its own kind of battle.`,
+  choices:[
+    ["Take on more of your father's work","familyExtraWork"],
+    ["Stay with your mother and learn how she deals with people","familyLearnMother"],
+    ["Return to the wider village","age10"],
+    ["Think about leaving this life someday","childhoodAmbitionPath"]
+  ]
+},
+
+renThread:{
+  title:"REN'S LATEST IDEA",
+  text:`Ren finds you near the edge of the village with the expression that usually means somebody is about to regret knowing him.
+
+"I found something."
+
+You ask whether it belongs to him.
+
+He grins.
+
+"That's a complicated question."`,
+  choices:[
+    ["Help him investigate it","renExtraScheme"],
+    ["Make him race you through the woods instead","renExtraTrain"],
+    ["Tell him you want no part of theft","age10"],
+    ["Bring Daichi along","childhoodDaichiPath"]
+  ]
+},
+
+daichiThread:{
+  title:"DAICHI NEEDS A HAND",
+  text:`Daichi's family has fallen behind on work after his mother becomes ill.
+
+He tries to pretend everything is normal.
+
+You know him well enough to see through it.`,
+  choices:[
+    ["Help with his family's work","daichiExtraHelp"],
+    ["Take him away from the village for an afternoon","daichiExtraExplore"],
+    ["Ask your family to help his","familyLearnMother"],
+    ["Leave him his pride and say nothing","age10"]
+  ]
+},
+
+ambitionThread:{
+  title:"THE SOUND OF WOODEN SWORDS",
+  text:`Travelling retainers stop near Kuroda for several days.
+
+At dawn you hear wooden practice swords striking in a clearing beyond the road.
+
+You are still a commoner's child. That does not stop you watching.`,
+  choices:[
+    ["Make a wooden sword and copy them","ambitionWoodenSword"],
+    ["Study their footwork from a distance","ambitionWatchWarriors"],
+    ["Ask one of them whether a commoner can become a warrior","age11SeekSamurai"],
+    ["Return to your family","childhoodFamilyPath"]
   ]
 },
 
@@ -5804,18 +5877,80 @@ function renderChoices(list){
     const unlocked=requirementMet(req);
 
     const previews={
-      age6Fight:"+ Strength · + Courage · − Reputation",
-      age7Honest:"+ Honour · + Reputation · + Daichi relationship",
+      age5Farm:"+ Farming · + Endurance · + Family Trust",
+      age5Question:"+ Intelligence · Curious progress",
+      age5Mischief:"+ Mischief · + Exploration · Mischievous progress",
+      age5Sick:"+ Mischief · − Family Trust · Mischievous progress",
+      age6:"Continue your childhood",
+      age6Learn:"+ Intelligence",
+      age6Mischief:"+ Mischief · Mischievous progress",
+      age6Protect:"+ Charisma · + Reputation · + Daichi · Protective/Courageous progress",
+      age6Fight:"+ Strength · + Daichi · Courageous progress · − Reputation",
+      age6Trick:"+ Mischief · + Stealth · + Daichi",
+      age6Adult:"+ Discipline · + Reputation · + Daichi",
+      age6Daichi:"+ Daichi relationship · creates a memory",
+      age7Honest:"+ Honour · + Reputation · + Daichi · Honourable progress",
+      age7AfterTruth:"Courageous progress",
+      age7TruthDaichi:"+ Daichi relationship · Kind-hearted progress",
+      renComeDown:"+ Charisma · + Ren relationship",
+      renClimb:"+ Strength · + Endurance · + Ren relationship",
+      renIgnore:"+ Mischief · + Ren relationship",
+      renStone:"+ Mischief · + Ren relationship · − Reputation",
+      age8Honour:"+ Discipline · + Honour · Honourable progress",
+      age8Mischief:"+ Mischief · Mischievous progress",
+      age8Friend:"+ Ren relationship",
+      harvestQuiet:"+ Discipline · Cautious progress",
+      harvestAsk:"+ Speech · + Intelligence",
+      harvestFollow:"+ Stealth · + Exploration",
+      harvestConfront:"+ Charisma · + Honour · Protective progress",
+      age9Father:"+ Family Trust",
+      riverJump:"+ Endurance · + Strength · Courageous progress",
+      riverRefuse:"+ Discipline · Cautious progress",
+      riverDare:"+ Charisma · + Mischief",
+      riverExplore:"+ Exploration · + Intelligence · may uncover something",
+      rainSneak:"+ Stealth · + Intelligence",
+      rainFather:"+ Family Trust",
+      rainFollow:"+ Stealth · + Exploration",
+      rainHide:"Cautious approach · creates a memory",
+      rainFollowFar:"+ Stealth · risk of injury",
+      swordHelp:"+ Swordsmanship · + Strength · + Power",
+      swordAdult:"+ Discipline · + Family Trust",
+      swordHide:"+ Intelligence · Independent progress · gain Hidden Sword",
+      swordChase:"+ Endurance · Reckless progress",
+      age12Train:"+ Swordsmanship · + Discipline · + Power",
+      age12TrainSecret:"+2 Swordsmanship · + Stealth · Independent progress",
+      aikoSit:"+ Charisma · + Aiko relationship · Kind-hearted progress",
+      aikoSecret:"+ Speech · + Aiko relationship · advances mystery",
+      aikoRoof:"+ Strength · + Mischief · + Aiko relationship",
+      aikoFamily:"+ Intelligence · + Aiko relationship",
+      aikoHelp:"+ Aiko relationship · Protective progress",
+      aikoUnderstand:"+ Aiko relationship · Kind-hearted progress",
+      aikoClose:"+ Aiko relationship",
+      merchantInvestigation:"+ Intelligence · opens merchant storyline",
       age11TrainAgain:"+ Swordsmanship · + Discipline · time passes by weeks, not years",
       age11WorkHome:"+ Farming · + Strength · + Family Trust",
       age11FarmMore:"+ Farming · + Endurance · + Family Trust",
       age11SeekSamurai:"+ Intelligence · + Exploration · Ambitious progress",
-      age11LeavePromise:"Speech may help · outcome depends on Family Trust",
+      age11LeavePromise:"+ Speech · Loyal progress · outcome depends on Family Trust",
       age11LeaveProtect:"+ Honour · Protective progress · outcome depends on your history",
-      age11LeaveDefy:"Rebellious progress · − Family Trust · leave home immediately",
+      age11LeaveDefy:"Rebellious/Independent progress · − Family Trust · leave home",
       age11MeetSaburo:"Travel east · possible sword teacher",
-      age11SaburoTrain:"+ Swordsmanship · + Discipline · begin a warrior path",
-      age11RoadWork:"+ Money · + Endurance · + Trade"
+      age11SaburoTrain:"+2 Swordsmanship · + Discipline · begin warrior path",
+      age11SaburoTalk:"+ Intelligence · + Speech",
+      age11RoadLife:"+ Survival · + Exploration · leave Kuroda",
+      age11RoadWork:"+ 5 Mon · + Endurance · + Trade",
+      childhoodFamilyPath:"Open the family/farm storyline",
+      childhoodRenPath:"Open the Ren/trouble storyline",
+      childhoodDaichiPath:"Open the Daichi/friendship storyline",
+      childhoodAmbitionPath:"Open the warrior-ambition storyline",
+      familyExtraWork:"+ Farming · + Strength · + Family Trust",
+      familyLearnMother:"+ Speech · + Family Trust · Kind-hearted progress",
+      renExtraScheme:"+ Mischief · + Ren relationship · possible trouble",
+      renExtraTrain:"+ Endurance · + Ren relationship",
+      daichiExtraHelp:"+ Daichi relationship · Protective progress · + Reputation",
+      daichiExtraExplore:"+ Exploration · + Daichi relationship",
+      ambitionWoodenSword:"+ Swordsmanship · + Discipline",
+      ambitionWatchWarriors:"+ Intelligence · + Swordsmanship · Ambitious progress"
     };
 
     const button=document.createElement("button");
@@ -6293,6 +6428,8 @@ actions.riverExplore=()=>{
   showScene("riverExplore");
 };
 
+actions.age10Train=()=>{ addSkill("endurance",1); addSkill("survival",1); showScene("childhoodPaths"); };
+
 actions.age10=()=>{
   setAge(10);
   state.season="Autumn";
@@ -6300,6 +6437,50 @@ actions.age10=()=>{
   showScene("age10");
 };
 
+
+actions.childhoodFamilyPath=()=>showScene("familyThread");
+actions.childhoodRenPath=()=>showScene("renThread");
+actions.childhoodDaichiPath=()=>showScene("daichiThread");
+actions.childhoodAmbitionPath=()=>showScene("ambitionThread");
+
+actions.familyExtraWork=()=>{
+  addSkill("farming",1); addSkill("strength",1); state.familyTrust+=2; relation("father",1);
+  remember("You chose to carry more of your family's burden as a child.");
+  showScene("familyThread");
+};
+actions.familyLearnMother=()=>{
+  addSkill("speech",1); state.familyTrust+=1; relation("mother",1); traitProgress("kind");
+  remember("You learned how your mother kept the family together when food and money were scarce.");
+  showScene("familyThread");
+};
+actions.renExtraScheme=()=>{
+  addSkill("mischief",1); addSkill("stealth",1); relation("ren",2); traitProgress("mischievous");
+  remember("You joined one of Ren's childhood schemes instead of walking away.");
+  showScene("renThread");
+};
+actions.renExtraTrain=()=>{
+  addSkill("endurance",1); addSkill("strength",1); relation("ren",1);
+  showScene("renThread");
+};
+actions.daichiExtraHelp=()=>{
+  relation("daichi",2); state.reputation+=1; traitProgress("protective"); addSkill("farming",1);
+  remember("You helped Daichi's family when his mother was ill.");
+  showScene("daichiThread");
+};
+actions.daichiExtraExplore=()=>{
+  relation("daichi",1); addSkill("exploration",1); traitProgress("kind");
+  showScene("daichiThread");
+};
+actions.ambitionWoodenSword=()=>{
+  addSkill("swordsmanship",1); addSkill("discipline",1); traitProgress("ambitious");
+  remember("Before anyone agreed to teach you, you made a wooden sword and taught yourself.");
+  showScene("ambitionThread");
+};
+actions.ambitionWatchWarriors=()=>{
+  addSkill("intelligence",1); addSkill("swordsmanship",1); traitProgress("ambitious");
+  remember("You studied travelling warriors from a distance and copied their footwork.");
+  showScene("ambitionThread");
+};
 
 /* Rainy night */
 
