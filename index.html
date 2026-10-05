@@ -392,7 +392,7 @@ button,input,textarea{font:inherit}
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
-      <div class="sub">JAPAN · BUILD 3.4</div>
+      <div class="sub">JAPAN · BUILD 3.6</div>
     </div>
 
     <h2>Choose where your story begins.</h2>
@@ -1049,6 +1049,15 @@ function logEvent(text){
 
 }
 
+
+
+function showNotice(title,text){
+  const box=el("saveNotice");
+  if(!box)return;
+  box.classList.remove("hidden");
+  box.innerHTML=`<b>${title}</b><div class="modeLine">${text}</div>`;
+  setTimeout(()=>box.classList.add("hidden"),2600);
+}
 
 /* =====================================================
    RENDER
@@ -5577,10 +5586,10 @@ You can train. Work. Search for a teacher. Or try to leave home and chase a warr
 
 Time will pass because of what you choose — not because the story tells you to grow up.`,
     choices:[
-      ["Keep training with the sword","age11TrainAgain"],
-      ["Stay home and work with your family","age11WorkHome"],
-      ["Search for a samurai willing to teach you","age11SeekSamurai"],
-      ["Tell your family you want to leave home","age11AskLeave"]
+      ["Work, trade and earn money","age11WorkTradeHub","Jobs · markets · caravans · buying and selling"],
+      ["Spend time with people","age11PeopleHub","Ren · Daichi · family · village relationships"],
+      ["Explore beyond Kuroda","age11ExploreHub","Villages · roads · mysteries · danger"],
+      ["Train or pursue the warrior road","age11WarriorMenu","Training · teachers · service · leaving home"]
     ]
   },
 
@@ -5764,6 +5773,448 @@ Now you have to build it.`,
   }
 });
 
+
+/* =====================================================
+   BUILD 3.5 — CHILDHOOD FREEDOM / TRAVEL & TRADE
+===================================================== */
+
+Object.assign(scenes,{
+  age11WarriorMenu:{
+    title:"AGE 11 — THE WARRIOR ROAD",
+    text:`Wanting a sword is easy. Building a life around one is harder.
+
+You can prepare in Kuroda, search for someone willing to teach a commoner's child, or ask your family for permission to leave.
+
+None of these choices closes the others forever.`,
+    choices:[
+      ["Search for a teacher","age11SeekSamurai","+ Intelligence · + Exploration · Ambitious progress"],
+      ["Train before you go","age11TrainAgain","+ Swordsmanship · + Discipline"],
+      ["Ask your family to let you leave","age11AskLeave","Family Trust can change the outcome"],
+      ["Return to your life in Kuroda","age11Life","Return to the age-11 life hub"]
+    ]
+  },
+
+  age11ExploreHub:{
+    title:"AGE 11 — BEYOND KURODA",
+    text:`Kuroda is only one village among many.
+
+Three roads leave the valley. Traders use them. Pilgrims use them. So do soldiers, thieves and people who do not want to explain where they came from.
+
+You can travel, earn money, buy goods cheaply and sell them elsewhere — if you make it home with them.`,
+    choices:[
+      ["Walk to Hoshikawa","travelHoshikawa","Market village · rice and cloth · road risk"],
+      ["Take the forest road to Mizuno","travelMizuno","Herbs · hunters · higher road risk"],
+      ["Visit the roadside post at Aonuma","travelAonuma","Travellers · work · rumours"],
+      ["Investigate old rumours and strange clues","mysteryHub","Rainy-night mystery · crest · strangers"]
+    ]
+  },
+
+  hoshikawa:{
+    title:"AGE 11 — HOSHIKAWA MARKET",
+    text:`Hoshikawa is larger than Kuroda and twice as loud.
+
+Farmers argue over rice. Cloth hangs beneath striped awnings. Porters shout for people to move. For the first time, money feels like something that can move a life rather than merely disappear from it.
+
+A careful child can work here. A clever one can trade.`,
+    choices:[
+      ["Buy a sack of rice — 4 Mon","buyRice","− 4 Mon · gain Trade Rice"],
+      ["Look for paid work","hoshikawaWork","+ Mon · + Endurance · + Trade"],
+      ["Listen for opportunities and rumours","hoshikawaRumours","+ Intelligence · possible story lead"],
+      ["Take the road home","returnFromTravel","Return to Kuroda · road events possible"]
+    ]
+  },
+
+  mizuno:{
+    title:"AGE 11 — MIZUNO",
+    text:`Mizuno sits where the forest opens around a cold stream.
+
+Hunters bring skins here. An old woman sells dried herbs from shallow baskets. There are fewer guards than Hoshikawa and more people who watch your purse before they look at your face.`,
+    choices:[
+      ["Buy medicinal herbs — 3 Mon","buyHerbs","− 3 Mon · gain Medicinal Herbs"],
+      ["Help a hunter carry his catch","mizunoWork","+ Mon · + Strength · + Survival"],
+      ["Explore the forest edge","mizunoExplore","+ Exploration · + Survival · possible discovery"],
+      ["Take the road home","returnFromTravel","Return to Kuroda · road events possible"]
+    ]
+  },
+
+  aonuma:{
+    title:"AGE 11 — AONUMA ROAD POST",
+    text:`Aonuma is barely a village. It survives because everyone travelling north eventually wants food, a dry floor or fresh sandals.
+
+That makes it a good place to earn coin — and an even better place to hear things that were never meant for Kuroda.`,
+    choices:[
+      ["Carry packs for travellers","aonumaWork","+ Mon · + Endurance · + Reputation"],
+      ["Buy cheap cloth — 5 Mon","buyCloth","− 5 Mon · gain Folded Cloth"],
+      ["Sit near the fire and listen","aonumaListen","+ Intelligence · + Speech · rumours"],
+      ["Take the road home","returnFromTravel","Return to Kuroda · road events possible"]
+    ]
+  },
+
+  kurodaTrade:{
+    title:"AGE 11 — WHAT YOU BROUGHT HOME",
+    text:`Back in Kuroda, your mother looks over the things you carried home.
+
+"Buying is easy," she says. "Selling without being cheated is the lesson."
+
+Anything useful in your pack can become coin — or be kept for a later problem.`,
+    choices:[
+      ["Sell trade rice","sellRice","Sell Trade Rice for 7 Mon"],
+      ["Sell medicinal herbs","sellHerbs","Sell Medicinal Herbs for 6 Mon"],
+      ["Sell folded cloth","sellCloth","Sell Folded Cloth for 9 Mon"],
+      ["Keep your goods and return to your life","age11Life","Keep inventory"]
+    ]
+  },
+
+  roadRobbery:{
+    title:"AGE 11 — ROBBED ON THE ROAD",
+    text:`A man steps from behind a cedar.
+
+Another appears behind you.
+
+Neither wears a uniform. One holds a short blade.
+
+"Bag. Coins. Now."
+
+They expected a child travelling alone.
+
+Whether that was a good assumption depends on what you have spent your childhood becoming.`,
+    choices:[
+      ["Stand your ground and fight","robberFight","Strength/Swordsmanship affect the result · risk of injury"],
+      ["Run into the trees","robberRun","Endurance/Stealth affect the result"],
+      ["Hand over some money","robberPay","Lose Mon · avoid the fight"],
+      ["Talk while looking for an opening","robberTalk","Speech/Charisma affect the result"]
+    ]
+  },
+
+  robberyVictory:{
+    title:"ROAD FIGHT — THEY CHOSE THE WRONG CHILD",
+    text:`The robber reaches for you.
+
+You move first.
+
+Training turns panic into something useful: your feet move, your shoulders stay loose, and the first attacker finds himself in the dirt before he understands why.
+
+The second decides your purse is not worth broken teeth.
+
+He runs.
+
+For the first time, the road learns something about you too.`,
+    choices:[
+      ["Search what they dropped","robberLoot","+ Mon · possible item · Violent progress"],
+      ["Let them run and go home","roadHomeSafe","+ Reputation · Honourable progress"],
+      ["Follow them to learn where they hide","robberFollow","+ Exploration · opens bandit thread"]
+    ]
+  },
+
+  robberyLoss:{
+    title:"ROAD FIGHT — OUTMATCHED",
+    text:`Courage is not the same thing as strength.
+
+You swing first. The robber catches your arm, twists it and drives you into the road.
+
+When you wake, your ribs hurt and your purse is lighter.
+
+But you are alive.
+
+This is not the end of the road. Now you know exactly what you are training for.`,
+    choices:[
+      ["Return home and recover","roadHomeHurt","Lose Mon · − Health · creates a memory"],
+      ["Swear you will be ready next time","robberyResolve","+ Strength · Ambitious progress · return to training"],
+      ["Try to track the robbers","robberFollowHurt","+ Exploration · risk another consequence"]
+    ]
+  },
+
+  banditTrail:{
+    title:"AGE 11 — THE BANDIT TRAIL",
+    text:`You find a strip of red cloth snagged on a thorn and boot prints leading north.
+
+The trail disappears toward an abandoned charcoal camp.
+
+You could tell an adult. You could return stronger. Or you could keep this knowledge to yourself.
+
+A failed fight has become a new story instead of a dead end.`,
+    choices:[
+      ["Remember the camp and return home","banditRemember","Creates a future revenge/investigation thread"],
+      ["Tell your father what happened","banditTellFather","+ Family Trust · + Reputation"],
+      ["Train before coming back","age11TrainAgain","+ Swordsmanship · + Discipline"],
+      ["Return to exploring","age11ExploreHub","Travel elsewhere"]
+    ]
+  }
+});
+
+
+
+/* =====================================================
+   BUILD 3.6 — BRANCHING LIVES
+   Multi-scene childhood routes. Hubs expose more options
+   without placing more than four buttons on one screen.
+===================================================== */
+
+Object.assign(scenes,{
+  age11WorkTradeHub:{
+    title:"AGE 11 — WORK & TRADE",
+    text:`A few mon can change what is possible.
+
+Kuroda has field work and small errands. Hoshikawa has a real market. Aonuma hires anyone strong enough to carry a pack. Merchants sometimes need another pair of hands on the road.
+
+Work can become a life of its own — or simply pay for the life you actually want.`,
+    choices:[
+      ["Work around Kuroda","kurodaJobs","Local jobs · family · reputation"],
+      ["Trade between villages","age11ExploreHub","Buy low · sell elsewhere · road danger"],
+      ["Look for caravan work","caravanStart","Longer story · wages · travel · danger"],
+      ["Return to your life","age11Life","Back to the main hub"]
+    ]
+  },
+  kurodaJobs:{
+    title:"KURODA — FINDING WORK",
+    text:`Nobody in Kuroda calls it employment. Someone simply has work that needs doing.
+
+The miller needs sacks moved. Your mother could use help selling vegetables. Old Genza has a fence half-destroyed by rain. Your father, naturally, has enough field work for three children.`,
+    choices:[
+      ["Carry sacks for the miller","jobMiller","+ 4 Mon · + Strength · + Endurance"],
+      ["Help your mother sell produce","jobMother","+ 3 Mon · + Trade · + Speech · + Family Trust"],
+      ["Repair Genza's fence","jobFence","+ 3 Mon · + Reputation · + Farming"],
+      ["Ask about better-paid work","jobRisky","May open less respectable opportunities"]
+    ]
+  },
+  riskyJob:{
+    title:"KURODA — WORK AFTER DARK",
+    text:`A sake seller looks you over and lowers his voice.
+
+"There is a bundle beside the western shrine. Bring it here after dark. Don't open it. Don't ask who left it."
+
+Five mon for carrying a bundle is far too much money.
+
+That tells you almost everything you need to know.`,
+    choices:[
+      ["Take the job without questions","riskyCarry","+ 5 Mon · + Stealth · opens underworld thread"],
+      ["Open the bundle first","riskyOpen","+ Intelligence · risk · discover what you're carrying"],
+      ["Tell the village elder","riskyTell","+ Reputation · Honourable progress"],
+      ["Refuse and leave","age11WorkTradeHub","No consequence"]
+    ]
+  },
+  caravanOffer:{
+    title:"HOSHIKAWA — THE CARAVAN OFFER",
+    text:`A merchant named Iori catches you staring at three loaded handcarts.
+
+"You know the road to Aonuma?"
+
+You nod.
+
+"Good. One porter vanished this morning. Walk with us, keep your eyes open and don't steal from me. Eight mon when we arrive."
+
+It would take several days. You would be travelling with strangers and valuable goods.`,
+    choices:[
+      ["Join Iori's caravan","caravanJoin","Several days · + Trade · + Exploration"],
+      ["Demand part of the wage now","caravanBargain","Speech/Trade can improve your deal"],
+      ["Ask why the porter vanished","caravanQuestion","+ Intelligence · possible danger clue"],
+      ["Decline","age11WorkTradeHub","Return to work and trade"]
+    ]
+  },
+  caravanRoad:{
+    title:"THE CARAVAN — FIRST NIGHT",
+    text:`By sunset your shoulders ache.
+
+Iori's carts carry cloth, salt and two sealed wooden boxes he never lets out of sight. Around the fire, one guard claims the missing porter simply ran away.
+
+Later you hear movement beyond the trees.
+
+Someone is watching the camp.`,
+    choices:[
+      ["Wake the guards quietly","caravanWarn","+ Reputation · + Iori trust · cautious response"],
+      ["Investigate alone","caravanInvestigate","Stealth/Exploration · risk · mystery"],
+      ["Pretend you heard nothing","caravanSleep","Safer now · consequences later"],
+      ["Check Iori's sealed boxes","caravanBoxes","+ Stealth · dangerous information"]
+    ]
+  },
+  caravanAmbush:{
+    title:"THE CARAVAN — AMBUSH",
+    text:`The attack comes at dawn.
+
+A rope snaps across the road. The lead cart tips. Two men rush from the brush while a third goes straight for Iori's sealed boxes.
+
+Nobody is waiting for you to become older before this matters.`,
+    choices:[
+      ["Protect Iori","caravanProtect","Strength/Swordsmanship · + Iori trust"],
+      ["Save the trade goods","caravanGoods","+ Trade · + Reputation · possible reward"],
+      ["Chase the man with the box","caravanChase","+ Exploration · opens conspiracy clue"],
+      ["Get clear and survive","caravanEscape","Endurance/Stealth · caravan remembers"]
+    ]
+  },
+  caravanEnd:{
+    title:"AONUMA — PAID IN FULL",
+    text:`The caravan reaches Aonuma battered but moving.
+
+Iori counts coins into your palm. He no longer speaks to you like a child he hired because somebody else disappeared.
+
+"If you want work again," he says, "ask for me in Hoshikawa."
+
+One journey has created a contact, an income and enemies you may not even know yet.`,
+    choices:[
+      ["Ask Iori for regular work","caravanCareer","Merchant path · recurring contact"],
+      ["Spend time trading in Aonuma","aonuma","Use the market"],
+      ["Return to Kuroda","returnFromTravel","Road events possible"],
+      ["Keep travelling instead","age11ExploreHub","Choose another destination"]
+    ]
+  },
+  age11PeopleHub:{
+    title:"AGE 11 — PEOPLE OF KURODA",
+    text:`A life is not built from skills alone.
+
+Ren is always one bad idea away from an adventure. Daichi has begun trying to prove he no longer needs protecting. Your family notices every day you choose the road over them — and every day you choose to come home.`,
+    choices:[
+      ["Find Ren","renBranch","Trouble · theft · exploration · friendship"],
+      ["Find Daichi","daichiBranch","Friendship · courage · village problems"],
+      ["Spend the day with your family","familyBranch","Trust · money · home storyline"],
+      ["Return to your life","age11Life","Back to the main hub"]
+    ]
+  },
+  renBranch:{
+    title:"AGE 11 — REN HAS A PLAN",
+    text:`Ren is waiting behind the storehouse with the expression that usually means somebody else is about to have a worse afternoon.
+
+"Hoshikawa merchant," he whispers. "Rich one. Cheats farmers on weights. His purse is practically asking to be rescued."
+
+Then he grins.
+
+"Or we could do something boring."`,
+    choices:[
+      ["Help Ren steal the purse","renPickpocket","+ Stealth · + Mischief · criminal route"],
+      ["Suggest robbing his cart instead","renCart","Bigger reward · much bigger risk"],
+      ["Convince Ren to expose the cheating","renExpose","+ Speech · + Reputation · changes Ren"],
+      ["Forget crime — go exploring together","renExplore","+ Ren · + Exploration · new location"]
+    ]
+  },
+  renCaught:{
+    title:"HOSHIKAWA — CAUGHT",
+    text:`A hand closes around Ren's wrist.
+
+The merchant shouts for the watch.
+
+Ren looks at you once. No grin now.
+
+You have seconds to decide whether this becomes his problem, your problem, or everybody's problem.`,
+    choices:[
+      ["Take the blame","renTakeBlame","+ Ren · Loyal progress · lose Reputation"],
+      ["Create a distraction","renDistract","Mischief/Charisma · possible escape"],
+      ["Run and leave Ren","renAbandon","− Ren · avoid punishment · lasting memory"],
+      ["Pay back what was taken","renRepay","Lose Mon · + Honour · relationship changes"]
+    ]
+  },
+  renHideout:{
+    title:"REN — THE OLD STOREHOUSE",
+    text:`Ren leads you to an abandoned storehouse beyond the irrigation ditch.
+
+Inside are old sake jars, a broken spear shaft and marks carved into one wall — names, dates and a crest you have seen somewhere before.
+
+Ren stops joking.
+
+"You know that mark?"`,
+    choices:[
+      ["Study the crest","renCrest","+ Intelligence · advances mystery"],
+      ["Search the whole building","renSearch","+ Exploration · possible item"],
+      ["Tell Ren about the rainy-night strangers","renMysteryTrust","+ Ren · mystery partnership"],
+      ["Keep the secret to yourself","age11PeopleHub","Independent progress"]
+    ]
+  },
+  daichiBranch:{
+    title:"AGE 11 — DAICHI",
+    text:`You find Daichi carrying a split bamboo staff.
+
+"I'm tired of everyone remembering the mud," he says.
+
+He means the bully. He means being the child who needed you.
+
+A farmer farther up the valley has also reported missing chickens and strange footprints near his shed. Daichi wants to investigate them himself.`,
+    choices:[
+      ["Train with Daichi first","daichiTrain","+ Strength · + Daichi · he grows too"],
+      ["Investigate the farm together","daichiFarm","+ Exploration · multi-scene village problem"],
+      ["Tell him he isn't ready","daichiArgue","Relationship consequence"],
+      ["Ask what he wants from his life","daichiTalk","+ Speech · + Daichi · future ambition"]
+    ]
+  },
+  daichiFarmNight:{
+    title:"DAICHI — FOOTPRINTS IN THE MUD",
+    text:`The missing chickens are not the work of a fox.
+
+You find sandal prints behind the shed and a strip of cloth caught beneath the fence. Someone has been stealing food from several farms.
+
+At dusk, a thin figure appears near the grain store.
+
+Daichi grips his staff.`,
+    choices:[
+      ["Rush the thief together","daichiCatch","Strength · courage · possible fight"],
+      ["Follow without being seen","daichiFollow","Stealth · discover why they steal"],
+      ["Call the farmer","daichiCall","+ Reputation · safer outcome"],
+      ["Let the thief take the food","daichiMercy","Compassionate progress · hidden consequence"]
+    ]
+  },
+  familyBranch:{
+    title:"AGE 11 — THE HOUSEHOLD",
+    text:`Your mother waits until your father is outside before showing you the jar where the family keeps its coins.
+
+There is almost nothing in it.
+
+A roof beam needs replacing before the heavy rains. Seed rice must be bought. Your younger sibling needs sandals.
+
+Adventure feels different when you know exactly what five mon means at home.`,
+    choices:[
+      ["Give some of your money to the family","familyGive","Lose Mon · + Family Trust · Protective progress"],
+      ["Promise to earn what is needed","familyEarn","Opens family debt goal · + Ambition"],
+      ["Ask your mother to teach you trading","familyTradeLesson","+ Trade · + Speech · + Family Trust"],
+      ["Say the farm will never change anything","familyRejectFarm","Ambitious/Rebellious progress · relationship consequence"]
+    ]
+  },
+  familyGoal:{
+    title:"AGE 11 — A ROOF BEFORE THE RAINS",
+    text:`You start noticing money everywhere.
+
+A porter earns four mon. Herbs bought in Mizuno can sell for more in Kuroda. Iori's caravan pays eight if you survive the road. Ren knows quicker methods that your parents would hate.
+
+You need twelve mon to solve the immediate problem at home. How you get it is up to you.`,
+    choices:[
+      ["Take honest local work","kurodaJobs","Steady money · slower"],
+      ["Trade between villages","age11ExploreHub","Profit · road risk"],
+      ["Find Ren and ask about fast money","renBranch","Crime becomes an option"],
+      ["Pay for the roof now","familyPayRoof","Requires 12 Mon"]
+    ]
+  },
+  mysteryHub:{
+    title:"AGE 11 — QUESTIONS THAT NEVER LEFT",
+    text:`Years have passed since the rain hammered the roof and strangers whispered at the elder's house.
+
+“If he is still alive...”
+
+You still do not know who they meant.
+
+But the damaged crest, the rumours at Aonuma and armed men buying rice suggest the past is moving again.`,
+    choices:[
+      ["Return to the elder's house after dark","mysteryElder","+ Stealth · direct investigation"],
+      ["Ask traders about the damaged crest","mysteryTraders","+ Speech · + Intelligence"],
+      ["Search the old roads with Ren","renHideout","Ren can become your partner"],
+      ["Leave the mystery alone for now","age11ExploreHub","The thread remains available"]
+    ]
+  },
+  mysteryElderScene:{
+    title:"KURODA — THE ELDER'S HOUSE",
+    text:`The elder's shutters are closed, but lamplight leaks through one crack.
+
+Two voices speak inside.
+
+One belongs to the elder.
+
+The other says: "The child would be eleven now."
+
+A floorboard creaks beneath your foot.`,
+    choices:[
+      ["Stay and listen","mysteryListen","Stealth check · major clue"],
+      ["Knock on the door","mysteryKnock","Bold confrontation · Speech matters"],
+      ["Circle behind the house","mysteryBack","+ Exploration · another way in"],
+      ["Leave before you're seen","age11Life","Keep what you heard"]
+    ]
+  }
+});
+
 /* =====================================================
    SCENE DISPLAY
 ===================================================== */
@@ -5872,6 +6323,7 @@ function renderChoices(list){
 
     const label=choice[0];
     const action=choice[1];
+    const choicePreview=choice[2]||"";
 
     const req=requirementFor(action);
     const unlocked=requirementMet(req);
@@ -5964,10 +6416,10 @@ function renderChoices(list){
 
     button.appendChild(main);
 
-    if(unlocked && previews[action]){
+    if(unlocked && (choicePreview || previews[action])){
       const meta=document.createElement("span");
       meta.className="choiceMeta";
-      meta.textContent=previews[action];
+      meta.textContent=choicePreview || previews[action];
       button.appendChild(meta);
     }
 
@@ -6171,6 +6623,173 @@ actions.age11RoadWork=()=>{
 };
 
 
+
+
+/* =====================================================
+   BUILD 3.5 — TRAVEL / TRADE / ROAD ACTIONS
+===================================================== */
+
+actions.age11ExploreHub=()=>showScene("age11ExploreHub");
+actions.age11WarriorMenu=()=>showScene("age11WarriorMenu");
+
+function travelTo(place,scene){
+  state.location=place;
+  addSkill("exploration",1);
+  logEvent(`You travelled to ${place}.`);
+  showScene(scene);
+}
+
+actions.travelHoshikawa=()=>travelTo("Hoshikawa Market","hoshikawa");
+actions.travelMizuno=()=>travelTo("Mizuno Village","mizuno");
+actions.travelAonuma=()=>travelTo("Aonuma Road Post","aonuma");
+
+actions.buyRice=()=>{
+  if(state.money<4){ showNotice("NOT ENOUGH MON","You need 4 Mon to buy the rice."); showScene("hoshikawa"); return; }
+  state.money-=4; addItem("Trade Rice"); addSkill("trade",1); showScene("hoshikawa");
+};
+actions.buyHerbs=()=>{
+  if(state.money<3){ showNotice("NOT ENOUGH MON","You need 3 Mon to buy the herbs."); showScene("mizuno"); return; }
+  state.money-=3; addItem("Medicinal Herbs"); addSkill("trade",1); showScene("mizuno");
+};
+actions.buyCloth=()=>{
+  if(state.money<5){ showNotice("NOT ENOUGH MON","You need 5 Mon to buy the cloth."); showScene("aonuma"); return; }
+  state.money-=5; addItem("Folded Cloth"); addSkill("trade",1); showScene("aonuma");
+};
+
+actions.hoshikawaWork=()=>{ state.money+=4; addSkill("endurance",1); addSkill("trade",1); showScene("hoshikawa"); };
+actions.mizunoWork=()=>{ state.money+=3; addSkill("strength",1); addSkill("survival",1); showScene("mizuno"); };
+actions.aonumaWork=()=>{ state.money+=4; addSkill("endurance",1); state.reputation+=1; showScene("aonuma"); };
+actions.hoshikawaRumours=()=>{ addSkill("intelligence",1); remember("Age 11 — Traders in Hoshikawa whispered about armed men buying rice in secret."); showScene("hoshikawa"); };
+actions.mizunoExplore=()=>{ addSkill("exploration",1); addSkill("survival",1); remember("Age 11 — You found an old charcoal trail beyond Mizuno."); showScene("mizuno"); };
+actions.aonumaListen=()=>{ addSkill("intelligence",1); addSkill("speech",1); remember("Age 11 — At Aonuma you heard travellers mention men searching villages for someone unnamed."); showScene("aonuma"); };
+
+actions.returnFromTravel=()=>{
+  const risk=Math.random();
+  if(risk<0.35){ state.location="Road to Kuroda"; showScene("roadRobbery"); }
+  else { state.location="Kuroda Village"; showScene("kurodaTrade"); }
+};
+
+actions.robberFight=()=>{
+  const combat=skillLevel("strength")+skillLevel("swordsmanship")+Math.floor(state.power/2);
+  if(combat>=7 || (combat>=5 && Math.random()<0.55)){
+    addSkill("strength",1); addSkill("swordsmanship",1); traitProgress("courageous");
+    remember("Age 11 — You fought off robbers on the road to Kuroda.");
+    showScene("robberyVictory");
+  }else{
+    state.health=clamp(state.health-rand(8,18),1,100);
+    state.money=Math.max(0,state.money-rand(1,5));
+    addSkill("endurance",1); remember("Age 11 — Road robbers beat and robbed you when you tried to fight.");
+    showScene("robberyLoss");
+  }
+};
+actions.robberRun=()=>{
+  const score=skillLevel("endurance")+skillLevel("stealth");
+  if(score>=5 || Math.random()<0.45){ addSkill("endurance",1); addSkill("stealth",1); state.location="Kuroda Village"; showScene("kurodaTrade"); }
+  else { state.health=clamp(state.health-5,1,100); state.money=Math.max(0,state.money-2); showScene("robberyLoss"); }
+};
+actions.robberPay=()=>{ state.money=Math.max(0,state.money-Math.min(state.money,4)); traitProgress("cautious"); state.location="Kuroda Village"; showScene("kurodaTrade"); };
+actions.robberTalk=()=>{
+  const score=skillLevel("speech")+skillLevel("charisma");
+  if(score>=5 || Math.random()<0.4){ addSkill("speech",1); addSkill("charisma",1); state.location="Kuroda Village"; showScene("kurodaTrade"); }
+  else { state.money=Math.max(0,state.money-3); showScene("robberyLoss"); }
+};
+actions.robberLoot=()=>{ state.money+=6; addItem("Red Bandit Cord"); traitProgress("violent"); state.location="Kuroda Village"; showScene("kurodaTrade"); };
+actions.roadHomeSafe=()=>{ state.reputation+=1; traitProgress("honourable"); state.location="Kuroda Village"; showScene("kurodaTrade"); };
+actions.robberFollow=()=>{ addSkill("exploration",1); showScene("banditTrail"); };
+actions.roadHomeHurt=()=>{ state.location="Kuroda Village"; state.health=clamp(state.health+5,1,100); showScene("age11Life"); };
+actions.robberyResolve=()=>{ addSkill("strength",1); traitProgress("ambitious"); state.location="Kuroda Village"; showScene("age11Training"); };
+actions.robberFollowHurt=()=>{ addSkill("exploration",1); state.health=clamp(state.health-3,1,100); showScene("banditTrail"); };
+actions.banditRemember=()=>{ state.flags.revengeTarget=true; remember("Age 11 — You learned where the road robbers hide."); state.location="Kuroda Village"; showScene("age11Life"); };
+actions.banditTellFather=()=>{ state.familyTrust+=1; state.reputation+=1; relation("father",1); state.flags.revengeTarget=true; state.location="Kuroda Village"; showScene("age11Life"); };
+
+actions.sellRice=()=>{ if(hasItem("Trade Rice")){ removeItem("Trade Rice"); state.money+=7; addSkill("trade",1); } showScene("kurodaTrade"); };
+actions.sellHerbs=()=>{ if(hasItem("Medicinal Herbs")){ removeItem("Medicinal Herbs"); state.money+=6; addSkill("trade",1); } showScene("kurodaTrade"); };
+actions.sellCloth=()=>{ if(hasItem("Folded Cloth")){ removeItem("Folded Cloth"); state.money+=9; addSkill("trade",1); } showScene("kurodaTrade"); };
+
+
+
+/* =====================================================
+   BUILD 3.6 — BRANCHING LIFE ACTIONS
+===================================================== */
+actions.age11WorkTradeHub=()=>showScene("age11WorkTradeHub");
+actions.kurodaJobs=()=>showScene("kurodaJobs");
+actions.jobMiller=()=>{ state.money+=4; addSkill("strength",1); addSkill("endurance",1); showScene("kurodaJobs"); };
+actions.jobMother=()=>{ state.money+=3; addSkill("trade",1); addSkill("speech",1); state.familyTrust+=1; relation("mother",1); showScene("kurodaJobs"); };
+actions.jobFence=()=>{ state.money+=3; state.reputation+=1; addSkill("farming",1); showScene("kurodaJobs"); };
+actions.jobRisky=()=>showScene("riskyJob");
+actions.riskyCarry=()=>{ state.money+=5; addSkill("stealth",1); traitProgress("independent"); state.flags.underworldContact=true; remember("Age 11 — You carried a suspicious bundle from the western shrine for five mon."); showScene("age11WorkTradeHub"); };
+actions.riskyOpen=()=>{ addSkill("intelligence",1); addSkill("stealth",1); state.flags.underworldContact=true; addItem("Smuggled Letter"); remember("Age 11 — You opened a smuggler's bundle and found a coded letter."); showScene("mysteryHub"); };
+actions.riskyTell=()=>{ state.reputation+=2; state.honour+=1; traitProgress("honourable"); showScene("age11WorkTradeHub"); };
+actions.caravanStart=()=>showScene("caravanOffer");
+actions.caravanJoin=()=>{ addSkill("trade",1); addSkill("exploration",1); state.flags.ioriMet=true; showScene("caravanRoad"); };
+actions.caravanBargain=()=>{ addSkill("speech",1); if(skillLevel("speech")+skillLevel("trade")>=5){state.money+=2; state.flags.caravanBonus=true;} showScene("caravanRoad"); };
+actions.caravanQuestion=()=>{ addSkill("intelligence",1); state.flags.caravanWarned=true; remember("Age 11 — Iori admitted his missing porter feared someone was following the caravan."); showScene("caravanRoad"); };
+actions.caravanWarn=()=>{ state.reputation+=1; state.flags.ioriTrust=true; traitProgress("cautious"); showScene("caravanAmbush"); };
+actions.caravanInvestigate=()=>{ addSkill("stealth",1); addSkill("exploration",1); state.flags.sawCaravanWatcher=true; showScene("caravanAmbush"); };
+actions.caravanSleep=()=>{ state.flags.caravanSurprised=true; showScene("caravanAmbush"); };
+actions.caravanBoxes=()=>{ addSkill("stealth",1); addSkill("intelligence",1); state.flags.sawCrestCargo=true; remember("Age 11 — Iori's sealed cargo bore the same damaged crest connected to the old mystery."); showScene("caravanAmbush"); };
+function finishCaravan(extra=0){ state.money+=8+extra+(state.flags.caravanBonus?2:0); addSkill("trade",1); state.location="Aonuma Road Post"; state.flags.ioriContact=true; showScene("caravanEnd"); }
+actions.caravanProtect=()=>{ const n=skillLevel("strength")+skillLevel("swordsmanship"); if(n>=5){addSkill("swordsmanship",1); state.reputation+=2; state.flags.ioriTrust=true; finishCaravan(3);} else {state.health=clamp(state.health-8,1,100); addSkill("endurance",1); finishCaravan();} };
+actions.caravanGoods=()=>{ addSkill("trade",1); state.reputation+=1; finishCaravan(2); };
+actions.caravanChase=()=>{ addSkill("exploration",1); state.flags.sawCrestCargo=true; remember("Age 11 — You chased a caravan raider carrying a box marked with the damaged crest."); finishCaravan(); };
+actions.caravanEscape=()=>{ addSkill("endurance",1); addSkill("stealth",1); finishCaravan(); };
+actions.caravanCareer=()=>{ state.flags.merchantContact=true; state.flags.ioriContact=true; addSkill("trade",1); traitProgress("ambitious"); showScene("age11WorkTradeHub"); };
+actions.aonuma=()=>showScene("aonuma");
+actions.renHideout=()=>showScene("renHideout");
+actions.age11PeopleHub=()=>showScene("age11PeopleHub");
+actions.renBranch=()=>showScene("renBranch");
+actions.renPickpocket=()=>{ addSkill("stealth",1); addSkill("mischief",1); relation("ren",2); state.flags.criminal=true; if(skillLevel("stealth")+skillLevel("mischief")>=5 || Math.random()<0.45){state.money+=7; showScene("renHideout");} else showScene("renCaught"); };
+actions.renCart=()=>{ relation("ren",1); traitProgress("reckless"); state.flags.criminal=true; state.money+=10; state.reputation-=2; remember("Age 11 — You and Ren stole goods from a Hoshikawa merchant's cart."); showScene("renHideout"); };
+actions.renExpose=()=>{ addSkill("speech",1); state.reputation+=2; relation("ren",1); traitProgress("honourable"); showScene("renHideout"); };
+actions.renExplore=()=>{ addSkill("exploration",1); relation("ren",2); showScene("renHideout"); };
+actions.renTakeBlame=()=>{ relation("ren",3); state.reputation-=2; traitProgress("loyal"); remember("Age 11 — You took the blame when Ren was caught stealing in Hoshikawa."); showScene("renHideout"); };
+actions.renDistract=()=>{ addSkill("mischief",1); addSkill("charisma",1); relation("ren",2); showScene("renHideout"); };
+actions.renAbandon=()=>{ relation("ren",-3); traitProgress("cautious"); remember("Age 11 — You ran when Ren was caught stealing and left him behind."); showScene("age11Life"); };
+actions.renRepay=()=>{ state.money=Math.max(0,state.money-5); state.honour+=1; relation("ren",1); traitProgress("honourable"); showScene("renHideout"); };
+actions.renCrest=()=>{ addSkill("intelligence",1); state.flags.mysteryStarted=true; remember("Age 11 — You and Ren found the damaged crest carved inside an abandoned storehouse."); showScene("mysteryHub"); };
+actions.renSearch=()=>{ addSkill("exploration",1); addItem("Broken Spearhead"); showScene("renHideout"); };
+actions.renMysteryTrust=()=>{ relation("ren",2); state.flags.renKnowsMystery=true; state.flags.mysteryStarted=true; showScene("mysteryHub"); };
+actions.daichiBranch=()=>showScene("daichiBranch");
+actions.daichiTrain=()=>{ addSkill("strength",1); relation("daichi",2); state.daichiTraining=(state.daichiTraining||0)+1; showScene("daichiBranch"); };
+actions.daichiFarm=()=>{ addSkill("exploration",1); relation("daichi",1); showScene("daichiFarmNight"); };
+actions.daichiArgue=()=>{ relation("daichi",-1); traitProgress("protective"); showScene("age11PeopleHub"); };
+actions.daichiTalk=()=>{ addSkill("speech",1); relation("daichi",2); state.flags.daichiAmbition=true; showScene("age11PeopleHub"); };
+actions.daichiCatch=()=>{ addSkill("strength",1); relation("daichi",2); state.reputation+=1; traitProgress("courageous"); showScene("age11PeopleHub"); };
+actions.daichiFollow=()=>{ addSkill("stealth",1); relation("daichi",1); remember("Age 11 — You and Daichi discovered the food thief was feeding a displaced family in the woods."); showScene("age11PeopleHub"); };
+actions.daichiCall=()=>{ state.reputation+=2; relation("daichi",1); showScene("age11PeopleHub"); };
+actions.daichiMercy=()=>{ traitProgress("compassionate"); relation("daichi",2); state.reputation-=1; remember("Age 11 — You let a hungry thief escape with food while Daichi watched."); showScene("age11PeopleHub"); };
+actions.familyBranch=()=>showScene("familyBranch");
+actions.familyGive=()=>{ const gift=Math.min(state.money,5); state.money-=gift; state.familyTrust+=gift?2:0; traitProgress("protective"); relation("mother",1); showScene("familyGoal"); };
+actions.familyEarn=()=>{ traitProgress("ambitious"); state.flags.familyRoofGoal=true; showScene("familyGoal"); };
+actions.familyTradeLesson=()=>{ addSkill("trade",1); addSkill("speech",1); state.familyTrust+=1; relation("mother",1); showScene("familyGoal"); };
+actions.familyRejectFarm=()=>{ traitProgress("ambitious"); traitProgress("rebellious"); state.familyTrust-=1; showScene("age11Life"); };
+actions.familyPayRoof=()=>{ if(state.money<12){showNotice("NOT ENOUGH MON","The roof and seed rice need 12 Mon. You can earn it however you choose."); showScene("familyGoal"); return;} state.money-=12; state.familyTrust+=3; state.reputation+=1; state.flags.familyRoofPaid=true; remember("Age 11 — You paid for the household roof and seed rice with money you earned yourself."); showScene("age11PeopleHub"); };
+actions.mysteryHub=()=>showScene("mysteryHub");
+actions.mysteryElder=()=>{ addSkill("stealth",1); showScene("mysteryElderScene"); };
+actions.mysteryTraders=()=>{ addSkill("speech",1); addSkill("intelligence",1); state.flags.mysteryStarted=true; remember("Age 11 — Traders linked the damaged crest to a household destroyed years ago."); showScene("mysteryHub"); };
+actions.mysteryListen=()=>{ addSkill("stealth",1); state.flags.mysteryStarted=true; remember("Age 11 — At the elder's house you heard: ‘The child would be eleven now.’"); showScene("age11Life"); };
+actions.mysteryKnock=()=>{ addSkill("speech",1); traitProgress("courageous"); state.flags.mysteryStarted=true; showScene("age11Life"); };
+actions.mysteryBack=()=>{ addSkill("exploration",1); addSkill("stealth",1); state.flags.mysteryStarted=true; addItem("Crest Rubbing"); showScene("mysteryHub"); };
+
+/* Build 3.5 dead-route repair: legacy choices now resolve instead of silently stopping. */
+actions.age7Mother=()=>showScene("age6MOTHER");
+actions.age7Mischief=()=>{ addSkill("mischief",1); traitProgress("mischievous"); showScene("age7"); };
+actions.childhoodPaths=()=>showScene("age10");
+actions.age10Curious=()=>{ addSkill("intelligence",1); addSkill("exploration",1); remember("Age 9 — You studied the damaged crest beneath the bridge."); showScene("age10"); };
+actions.fatherQuestion=()=>showScene("fatherQuestion");
+actions.age14Adventure=()=>showScene("age14");
+actions.age14Father=()=>{ state.familyTrust+=1; relation("father",1); showScene("age14"); };
+actions.age14Secret=()=>{ addSkill("stealth",1); traitProgress("independent"); showScene("age14"); };
+actions.warRescue2=()=>showScene("warRescue2");
+actions.warAfter=()=>showScene("warAfter");
+actions.fatherMissing=()=>{ addSkill("exploration",1); showScene("warAfter"); };
+actions.findAiko=()=>{ relation("aiko",1); showScene("warAfter"); };
+actions.findFamily=()=>{ state.familyTrust+=1; showScene("warAfter"); };
+actions.merchantMystery=()=>{ addSkill("intelligence",1); showScene("merchantInvestigation"); };
+actions.mysteryDestroy=()=>showScene("mysteryDestroy");
+actions.mysteryReveal=()=>showScene("mysteryReveal");
+actions.mysteryDemand=()=>showScene("mysteryDemand");
+actions.legacyLeader=()=>{ state.flags.leader=true; state.reputation+=2; showScene("legacy"); };
 
 /* =====================================================
    SIMPLE SCENE TRANSITIONS
