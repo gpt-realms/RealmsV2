@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>REALMS — Build 2</title>
+<title>REALMS — Japan</title>
 
 <style>
 *{box-sizing:border-box}
@@ -20,130 +20,158 @@ button,input,textarea{font:inherit}
 .app{
   max-width:760px;
   margin:auto;
-  padding:16px
+  padding:14px
 }
 
 .brand{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:14px
+  margin-bottom:12px
 }
 
 .brand h1{
   margin:0;
-  font-size:26px;
+  font-size:25px;
   letter-spacing:3px
 }
 
 .sub{
   color:#8e96a3;
-  font-size:12px
+  font-size:11px
 }
 
 .card{
   background:#12161e;
   border:1px solid #252c38;
-  border-radius:16px;
-  padding:16px;
-  margin-bottom:12px;
-  box-shadow:0 8px 30px #0005
+  border-radius:13px;
+  padding:13px;
+  margin-bottom:9px;
+  box-shadow:0 7px 25px #0005
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:8px
+  gap:7px
 }
 
 .stat{
   background:#0c0f15;
-  border-radius:10px;
-  padding:10px;
+  border-radius:9px;
+  padding:8px;
   text-align:center
 }
 
 .stat b{
   display:block;
-  font-size:17px
+  font-size:16px
 }
 
 .stat span{
-  font-size:10px;
+  font-size:9px;
   color:#8e96a3
 }
 
 .response{
-  min-height:240px
+  min-height:210px
 }
 
 .label{
-  font-size:10px;
-  letter-spacing:1.5px;
+  font-size:9px;
+  letter-spacing:1.4px;
   color:#8e96a3;
   text-transform:uppercase;
-  margin-bottom:9px
+  margin-bottom:7px
 }
 
 .reply{
-  font-size:16px;
-  line-height:1.6;
+  font-size:15px;
+  line-height:1.48;
   white-space:pre-line
 }
 
 .you{
   color:#9aa3b2;
-  font-size:12px;
-  margin-bottom:10px
+  font-size:11px;
+  margin-bottom:8px
+}
+
+.sceneTitle{
+  font-size:13px;
+  color:#cbd2dc;
+  font-weight:700;
+  margin-bottom:8px;
+  letter-spacing:.4px
 }
 
 .choices{
   display:grid;
-  gap:8px
+  gap:6px
 }
 
 .choices button,
 .send,
 .menuButton,
-.restartButton{
+.restartButton,
+.saveButton{
   border:1px solid #343c4b;
   background:#1a202b;
   color:#fff;
-  border-radius:11px;
-  padding:12px;
+  border-radius:9px;
+  padding:10px;
   text-align:left;
   cursor:pointer;
-  transition:.15s
+  transition:.12s
 }
 
 .choices button:hover,
 .send:hover,
 .menuButton:hover,
-.restartButton:hover{
+.restartButton:hover,
+.saveButton:hover{
   background:#283142;
   transform:translateY(-1px)
 }
 
 .choices button:disabled{
-  opacity:.45;
-  cursor:default;
+  opacity:.42;
+  cursor:not-allowed;
   transform:none
+}
+
+.choiceMain{
+  display:block;
+  font-weight:600
+}
+
+.choiceMeta{
+  display:block;
+  margin-top:3px;
+  color:#929aa7;
+  font-size:11px;
+  line-height:1.3
+}
+
+.choiceLocked{
+  border-color:#473d2d!important;
+  background:#181715!important
 }
 
 .custom{
   display:flex;
-  gap:8px
+  gap:7px
 }
 
 .custom textarea{
   flex:1;
-  min-height:76px;
+  min-height:62px;
   resize:vertical;
   background:#0c0f15;
   border:1px solid #303745;
   color:#fff;
-  border-radius:11px;
-  padding:11px
+  border-radius:9px;
+  padding:10px
 }
 
 .send{
@@ -151,48 +179,49 @@ button,input,textarea{font:inherit}
   color:#111;
   text-align:center;
   font-weight:700;
-  min-width:95px
+  min-width:85px
 }
 
 .inventory{
   display:flex;
-  gap:8px;
+  gap:6px;
   flex-wrap:wrap
 }
 
 .item{
   background:#0c0f15;
   border:1px solid #282f3b;
-  border-radius:10px;
-  padding:9px;
-  font-size:12px
+  border-radius:8px;
+  padding:7px;
+  font-size:11px
 }
 
 .quest{
   background:#0c0f15;
   border-left:3px solid #777;
-  padding:9px 10px;
-  margin-bottom:7px;
-  font-size:12px;
+  padding:7px 9px;
+  margin-bottom:5px;
+  font-size:11px;
   color:#c9ced7
 }
 
 .chron{
-  max-height:230px;
+  max-height:210px;
   overflow:auto
 }
 
 .event{
-  padding:9px 0;
+  padding:7px 0;
   border-bottom:1px solid #222936;
-  font-size:12px;
+  font-size:11px;
   color:#b9c0ca
 }
 
 .start{
   min-height:100vh;
   display:grid;
-  place-items:center
+  place-items:center;
+  padding:14px
 }
 
 .start .card{
@@ -202,23 +231,23 @@ button,input,textarea{font:inherit}
 .eras{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:9px
+  gap:8px
 }
 
 .era{
-  padding:15px;
-  border-radius:12px;
+  padding:13px;
+  border-radius:10px;
   border:1px solid #303744;
   background:#171c25;
   color:#fff;
   text-align:left;
   cursor:pointer;
-  transition:.15s
+  transition:.12s
 }
 
 .era:hover{
   background:#222a38;
-  transform:translateY(-2px)
+  transform:translateY(-1px)
 }
 
 .era.inprogress{
@@ -226,56 +255,56 @@ button,input,textarea{font:inherit}
   cursor:not-allowed
 }
 
-.era.inprogress:hover{
-  background:#171c25;
-  transform:none
-}
-
 .era small{
   display:block;
   color:#8e96a3;
-  margin-top:5px
+  margin-top:4px
 }
 
-.hidden{
-  display:none!important
-}
+.hidden{display:none!important}
 
 .topButtons{
   display:flex;
-  gap:8px;
-  margin-bottom:12px
+  gap:6px;
+  margin-bottom:9px;
+  flex-wrap:wrap
 }
 
 .menuButton{
-  padding:8px 13px
+  padding:7px 11px;
+  font-size:12px
 }
 
-.danger{
-  border-color:#5a3030!important
+.danger{border-color:#5a3030!important}
+
+.saveButton{
+  background:#18261d;
+  border-color:#31523c
 }
 
 .gameover{
   text-align:center;
-  padding:35px 15px
+  padding:30px 14px
 }
 
 .gameover h2{
-  font-size:32px;
-  letter-spacing:3px;
-  margin:0 0 12px
+  font-size:28px;
+  letter-spacing:2px;
+  margin:0 0 10px
 }
 
 .gameover p{
   color:#aeb5c0;
-  line-height:1.6
+  line-height:1.5;
+  white-space:pre-line
 }
 
 .endActions{
   display:flex;
   justify-content:center;
-  gap:9px;
-  margin-top:20px
+  gap:7px;
+  margin-top:17px;
+  flex-wrap:wrap
 }
 
 .restartButton{
@@ -286,53 +315,65 @@ button,input,textarea{font:inherit}
 
 .locationBox{
   color:#bfc6d1;
-  font-size:12px;
-  margin-top:5px
+  font-size:11px;
+  margin-top:4px
 }
 
 .empty{
   color:#6f7783;
-  font-size:12px
+  font-size:11px
 }
 
-.sceneTitle{
-  font-size:13px;
-  color:#cbd2dc;
-  font-weight:700;
-  margin-bottom:10px;
-  letter-spacing:.5px
+.memory{
+  margin-top:10px;
+  padding:8px 9px;
+  border-left:3px solid #8d6d34;
+  background:#17150f;
+  color:#d7c28e;
+  font-size:11px
 }
 
-.endingTag{
-  display:inline-block;
-  margin-top:14px;
-  padding:6px 9px;
-  border:1px solid #343c4b;
+.skillGrid,
+.traitGrid,
+.relGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px
+}
+
+.smallStat{
+  background:#0c0f15;
   border-radius:8px;
-  font-size:11px;
-  color:#aeb5c0
+  padding:7px;
+  font-size:11px
+}
+
+.smallStat b{
+  display:block;
+  color:#e2e5ea;
+  margin-bottom:2px
+}
+
+.rank{
+  font-size:9px;
+  color:#9aa3b2
+}
+
+.good{color:#9bd49e}
+.warn{color:#d6b46a}
+.bad{color:#d48d8d}
+
+.modeLine{
+  margin-top:7px;
+  font-size:10px;
+  color:#777f8c
 }
 
 @media(max-width:520px){
-  .stats{
-    grid-template-columns:repeat(2,1fr)
-  }
-
-  .eras{
-    grid-template-columns:1fr
-  }
-
-  .custom{
-    flex-direction:column
-  }
-
-  .send{
-    width:100%
-  }
-
-  .topButtons{
-    flex-wrap:wrap
-  }
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .eras{grid-template-columns:1fr}
+  .custom{flex-direction:column}
+  .send{width:100%}
 }
 </style>
 </head>
@@ -344,7 +385,6 @@ button,input,textarea{font:inherit}
 ===================================================== -->
 
 <div id="start" class="start">
-
   <div class="card">
 
     <div class="brand">
@@ -352,55 +392,45 @@ button,input,textarea{font:inherit}
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
-
-      <div class="sub">BUILD 2</div>
+      <div class="sub">JAPAN · BUILD 3</div>
     </div>
 
     <h2>Choose where your story begins.</h2>
 
     <p class="sub">
-      Every choice changes the world.
-      Every action leaves a mark on history.
+      Your life begins before you understand the world.
+      What you become is built one decision at a time.
     </p>
 
     <div class="eras">
 
-      <button
-        class="era"
-        onclick="startGame('Sengoku Japan','1587','Kuroda Village')">
+      <button class="era" onclick="startGame()">
         ⚔️ Sengoku Japan
-        <small>1587 · Kuroda Village · PLAYABLE</small>
+        <small>1570 · Kuroda Province · COMMONER · PLAYABLE</small>
       </button>
 
-      <button
-        class="era inprogress"
-        disabled>
-        🏛️ Roman Republic
-        <small>44 BC · Rome · IN PROGRESS</small>
+      <button class="era inprogress" disabled>
+        🏯 Warrior / Samurai
+        <small>1570 · Kuroda Province · IN PROGRESS</small>
       </button>
 
-      <button
-        class="era inprogress"
-        disabled>
-        🛡️ Anglo-Saxon England
-        <small>1066 · York · IN PROGRESS</small>
+      <button class="era inprogress" disabled>
+        💰 Merchant Family
+        <small>1570 · Kuroda Province · IN PROGRESS</small>
       </button>
 
-      <button
-        class="era inprogress"
-        disabled>
-        𓂀 Ancient Egypt
-        <small>1323 BC · Thebes · IN PROGRESS</small>
+      <button class="era inprogress" disabled>
+        🏛️ Other Realms
+        <small>ROMAN · ENGLAND · EGYPT · IN PROGRESS</small>
       </button>
 
     </div>
 
-    <p class="sub" style="margin-top:14px">
-      Historical Mode · Build 2
-    </p>
+    <div class="modeLine">
+      Historical Mode · Commoner campaign
+    </div>
 
   </div>
-
 </div>
 
 
@@ -409,368 +439,579 @@ button,input,textarea{font:inherit}
 ===================================================== -->
 
 <div id="game" class="hidden">
-
 <main class="app">
 
   <div class="topButtons">
-
-    <button class="menuButton" onclick="returnToMenu()">
-      ← Main Menu
-    </button>
-
-    <button class="menuButton danger" onclick="restartGame()">
-      ↻ Restart Story
-    </button>
-
+    <button class="menuButton" onclick="openSaveMenu()">💾 Save</button>
+    <button class="menuButton" onclick="loadGame()">↥ Load</button>
+    <button class="menuButton" onclick="showCharacter()">Character</button>
+    <button class="menuButton" onclick="returnToMenu()">← Menu</button>
+    <button class="menuButton danger" onclick="restartGame()">↻ Restart</button>
   </div>
 
   <div class="brand">
-
     <div>
-
       <h1>REALMS</h1>
-
       <div id="realm" class="sub"></div>
-
       <div id="location" class="locationBox"></div>
-
     </div>
-
-    <div class="sub">
-      CHRONICLE I
-    </div>
-
+    <div class="sub">CHRONICLE I</div>
   </div>
-
-
-  <!-- STATS -->
 
   <div class="card stats">
-
-    <div class="stat">
-      <b id="money">120</b>
-      <span>MON</span>
-    </div>
-
-    <div class="stat">
-      <b id="health">100</b>
-      <span>HEALTH</span>
-    </div>
-
-    <div class="stat">
-      <b id="attack">12</b>
-      <span>ATTACK</span>
-    </div>
-
-    <div class="stat">
-      <b id="rep">0</b>
-      <span>REPUTATION</span>
-    </div>
-
+    <div class="stat"><b id="money">0</b><span>MON</span></div>
+    <div class="stat"><b id="health">100</b><span>HEALTH</span></div>
+    <div class="stat"><b id="attack">1</b><span>POWER</span></div>
+    <div class="stat"><b id="rep">0</b><span>REPUTATION</span></div>
   </div>
 
-
-  <!-- RESPONSE -->
+  <div id="saveNotice" class="card hidden"></div>
 
   <div class="card response">
-
     <div id="sceneTitle" class="sceneTitle"></div>
-
-    <div class="label">
-      Realm response
-    </div>
-
+    <div class="label">Chronicle</div>
     <div id="you" class="you"></div>
-
     <div id="reply" class="reply"></div>
-
+    <div id="memoryBox"></div>
   </div>
 
-
-  <!-- CHOICES -->
-
   <div class="card">
-
-    <div class="label">
-      What do you do?
-    </div>
-
+    <div class="label">What do you do?</div>
     <div id="choices" class="choices"></div>
-
   </div>
 
-
-  <!-- CUSTOM -->
-
   <div class="card">
-
-    <div class="label">
-      Custom action
-    </div>
-
+    <div class="label">Custom action</div>
     <div class="custom">
-
-      <textarea
-        id="custom"
-        placeholder="Try something outside the choices..."
-      ></textarea>
-
-      <button
-        class="send"
-        onclick="customAction()">
-        ACT
-      </button>
-
+      <textarea id="custom" placeholder="Try something outside the choices..."></textarea>
+      <button class="send" onclick="customAction()">ACT</button>
     </div>
-
+    <div class="modeLine">
+      Custom actions can alter the story, but the main story remains choice-driven.
+    </div>
   </div>
 
-
-  <!-- QUESTS -->
-
   <div class="card">
-
-    <div class="label">
-      Active quests
-    </div>
-
+    <div class="label">Active quests</div>
     <div id="quests"></div>
-
   </div>
 
-
-  <!-- INVENTORY -->
-
   <div class="card">
-
-    <div class="label">
-      Inventory
-    </div>
-
+    <div class="label">Inventory</div>
     <div id="inventory" class="inventory"></div>
-
   </div>
 
-
-  <!-- CHRONICLE -->
-
   <div class="card">
-
-    <div class="label">
-      Chronicle — permanent history
-    </div>
-
+    <div class="label">Chronicle — permanent history</div>
     <div id="chron" class="chron"></div>
-
   </div>
 
 </main>
-
 </div>
 
 
 <!-- =====================================================
-     GAME OVER
+     CHARACTER
 ===================================================== -->
 
-<div id="gameover" class="hidden">
-
+<div id="character" class="hidden">
 <main class="app">
 
-  <div class="card gameover">
+  <div class="topButtons">
+    <button class="menuButton" onclick="closeCharacter()">← Back to Story</button>
+  </div>
 
-    <h2 id="endingTitle">YOUR STORY ENDS</h2>
-
-    <p id="deathText">
-      Your journey has come to an end.
-    </p>
-
-    <div id="endingTag" class="endingTag">
-      ENDING
+  <div class="brand">
+    <div>
+      <h1>CHARACTER</h1>
+      <div class="sub">THE LIFE YOU HAVE BUILT</div>
     </div>
+  </div>
 
-    <div class="endActions">
+  <div class="card">
+    <div class="label">Skills</div>
+    <div id="skillGrid" class="skillGrid"></div>
+  </div>
 
-      <button
-        class="restartButton"
-        onclick="restartGame()">
-        ↻ Restart Story
-      </button>
+  <div class="card">
+    <div class="label">Traits</div>
+    <div id="traitGrid" class="traitGrid"></div>
+  </div>
 
-      <button
-        class="menuButton"
-        onclick="returnToMenu()">
-        ← Main Menu
-      </button>
+  <div class="card">
+    <div class="label">Relationships</div>
+    <div id="relGrid" class="relGrid"></div>
+  </div>
 
-    </div>
-
+  <div class="card">
+    <div class="label">Life</div>
+    <div id="lifeSummary"></div>
   </div>
 
 </main>
+</div>
 
+
+<!-- =====================================================
+     GAME OVER / ENDING
+===================================================== -->
+
+<div id="gameover" class="hidden">
+<main class="app">
+
+  <div class="card gameover">
+    <h2 id="endingTitle">YOUR STORY ENDS</h2>
+
+    <p id="deathText"></p>
+
+    <div id="endingTag" class="endingTag">ENDING</div>
+
+    <div class="endActions">
+      <button class="restartButton" onclick="restartGame()">↻ Live Again</button>
+      <button class="menuButton" onclick="returnToMenu()">← Main Menu</button>
+    </div>
+  </div>
+
+</main>
 </div>
 
 
 <script>
 
 /* =====================================================
-   REALMS — BUILD 2
-   JAPAN CAMPAIGN
+   REALMS — COMMONER CAMPAIGN
+   No API required.
+   Local save system.
 ===================================================== */
 
-const REALMS_BACKEND =
-  "https://old-meadow-9cfc.horrorhowell.workers.dev";
+const SAVE_KEY="REALMS_COMMONER_SAVE_V3";
 
+const state={
 
-/* =====================================================
-   STATE
-===================================================== */
-
-const state = {
-
-  money:120,
-  health:100,
-  attack:12,
-  rep:0,
-
-  realm:"",
-  year:"",
-  location:"",
-
-  inventory:[],
-
-  day:1,
-  hour:17,
-
+  age:0,
+  year:1570,
+  season:"Late autumn",
+  location:"Kuroda Village",
+  scene:"birth",
   alive:true,
   ending:false,
 
-  scene:"opening",
+  money:0,
+  health:100,
+  reputation:0,
+  honour:0,
+  familyTrust:0,
+  hunger:0,
 
-  lastAction:"",
+  power:1,
 
-  flags:{
-    metStranger:false,
-    trustedStranger:false,
-    watchedRiders:false,
-    warnedVillage:false,
-    followedRiders:false,
-    foundEvidence:false,
-    discoveredTunnel:false,
-    discoveredTraitor:false,
-    masaruQuestioned:false,
-    searchedShrine:false,
-    explosionKnown:false,
-    villageUnderAttack:false,
-    villageSaved:false,
-    escapedVillage:false,
-    horseStolen:false,
-    gateDestroyed:false,
-    strangerAlive:true,
-    bombDisarmed:false,
-    traitorNameKnown:false,
-    elderTrust:false,
-    villagersWarned:false
+  skills:{
+    farming:0,
+    endurance:0,
+    strength:0,
+    intelligence:0,
+    speech:0,
+    charisma:0,
+    stealth:0,
+    swordsmanship:0,
+    archery:0,
+    trade:0,
+    survival:0,
+    exploration:0,
+    mischief:0,
+    discipline:0,
+    leadership:0
   },
+
+  traits:{},
 
   relationships:{
-    stranger:0,
-    elder:0,
-    masaru:0,
-    villagers:0
+    ren:0,
+    daichi:0,
+    aiko:0,
+    mother:5,
+    father:5,
+    siblings:3,
+    villagers:0,
+    elder:0
   },
 
+  flags:{
+    orchard:false,
+    river:false,
+    badHarvest:false,
+    rainyNight:false,
+    strangerHeard:false,
+    swordFound:false,
+    aikoMet:false,
+    merchantContact:false,
+    warSeen:false,
+    fatherWounded:false,
+    villageBurned:false,
+    renReturned:false,
+    mysteryStarted:false,
+    mysterySolved:false,
+    messageFound:false,
+    married:false,
+    childBorn:false,
+    traitorKnown:false,
+    revengeTarget:false,
+    revengeComplete:false,
+    criminal:false,
+    merchant:false,
+    farmer:false,
+    soldier:false,
+    wanderer:false,
+    leader:false,
+    darkPath:false,
+    monster:false,
+    finalEnemyAlive:true,
+    savedVillage:false,
+    leftVillage:false
+  },
+
+  memories:[],
   quests:[],
+  inventory:[],
 
-  history:[]
+  history:[],
 
+  lastAction:"",
+  lastMemory:"",
+
+  family:{
+    fatherAlive:true,
+    motherAlive:true,
+    siblings:1,
+    partner:null,
+    children:0
+  },
+
+  customCount:0
 };
 
 
 /* =====================================================
-   HELPERS
+   BASIC HELPERS
 ===================================================== */
 
 function el(id){
   return document.getElementById(id);
 }
 
-
-function random(min,max){
-  return Math.floor(
-    Math.random()*(max-min+1)
-  )+min;
+function clamp(n,min,max){
+  return Math.max(min,Math.min(max,n));
 }
 
+function hasFlag(flag){
+  return !!state.flags[flag];
+}
 
 function hasItem(item){
   return state.inventory.includes(item);
 }
 
-
 function addItem(item){
-
-  if(!hasItem(item)){
-    state.inventory.push(item);
-  }
-
-  renderInventory();
-
+  if(!hasItem(item)) state.inventory.push(item);
 }
-
 
 function removeItem(item){
+  state.inventory=state.inventory.filter(x=>x!==item);
+}
 
-  const index=
-    state.inventory.indexOf(item);
+function addQuest(q){
+  if(!state.quests.includes(q)) state.quests.push(q);
+}
 
-  if(index!==-1){
-    state.inventory.splice(index,1);
-  }
+function completeQuest(q){
+  state.quests=state.quests.filter(x=>x!==q);
+}
 
-  renderInventory();
-
+function rand(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
 }
 
 
-function addQuest(text){
+/* =====================================================
+   SKILLS
+===================================================== */
 
-  if(!state.quests.includes(text)){
-    state.quests.push(text);
-  }
+const skillNames={
+  farming:"Farming",
+  endurance:"Endurance",
+  strength:"Strength",
+  intelligence:"Intelligence",
+  speech:"Speech",
+  charisma:"Charisma",
+  stealth:"Stealth",
+  swordsmanship:"Swordsmanship",
+  archery:"Archery",
+  trade:"Trade",
+  survival:"Survival",
+  exploration:"Exploration",
+  mischief:"Mischief",
+  discipline:"Discipline",
+  leadership:"Leadership"
+};
 
-  renderQuests();
+const rankData={
 
-}
+  farming:[
+    [0,"Untrained"],
+    [5,"Field Hand"],
+    [10,"Farmer"],
+    [15,"Master Farmer"],
+    [20,"Landholder"],
+    [25,"Agricultural Master"],
+    [30,"Steward of the Land"]
+  ],
 
+  strength:[
+    [0,"Frail"],
+    [5,"Fit"],
+    [10,"Strong"],
+    [15,"Powerful"],
+    [20,"Strongman"],
+    [25,"Colossus"],
+    [30,"Titan"]
+  ],
 
-function completeQuest(text){
+  speech:[
+    [0,"Quiet"],
+    [5,"Talker"],
+    [10,"Chatty"],
+    [15,"Wordsmith"],
+    [20,"Orator"],
+    [25,"Master Speaker"],
+    [30,"Philosopher"]
+  ],
 
-  state.quests=
-    state.quests.filter(q=>q!==text);
+  charisma:[
+    [0,"Unknown"],
+    [5,"Likeable"],
+    [10,"Charming"],
+    [15,"Influential"],
+    [20,"Persuasive"],
+    [25,"Silver-Tongued"],
+    [30,"Magnetic"]
+  ],
 
-  renderQuests();
+  pickpocketing:[
+    [0,"Untrained"],
+    [5,"Light-Fingered"],
+    [10,"Pickpocket"],
+    [15,"Thief"],
+    [20,"Master Thief"],
+    [25,"Shadowhand"],
+    [30,"Phantom"]
+  ],
 
-}
+  swordsmanship:[
+    [0,"Untrained"],
+    [5,"Swordsman"],
+    [10,"Duelist"],
+    [15,"Blademaster"],
+    [20,"Master Swordsman"],
+    [25,"Sword Saint"],
+    [30,"Legendary Blade"]
+  ],
 
+  stealth:[
+    [0,"Obvious"],
+    [5,"Quiet"],
+    [10,"Sneaky"],
+    [15,"Shadow"],
+    [20,"Ghost"],
+    [25,"Phantom"],
+    [30,"Unseen"]
+  ],
 
-function changeRelationship(person,amount){
+  intelligence:[
+    [0,"Uneducated"],
+    [5,"Observant"],
+    [10,"Clever"],
+    [15,"Learned"],
+    [20,"Scholar"],
+    [25,"Mastermind"],
+    [30,"Genius"]
+  ],
 
-  if(state.relationships[person]===undefined){
-    state.relationships[person]=0;
-  }
+  trade:[
+    [0,"Novice"],
+    [5,"Trader"],
+    [10,"Dealer"],
+    [15,"Merchant"],
+    [20,"Master Merchant"],
+    [25,"Magnate"],
+    [30,"Merchant Prince"]
+  ],
 
-  state.relationships[person]+=amount;
+  leadership:[
+    [0,"Follower"],
+    [5,"Guide"],
+    [10,"Leader"],
+    [15,"Commander"],
+    [20,"Captain"],
+    [25,"Warlord"],
+    [30,"Legendary Leader"]
+  ]
+};
 
-  state.relationships[person]=
-    Math.max(
-      -10,
-      Math.min(
-        10,
-        state.relationships[person]
-      )
+function addSkill(skill,amount=1){
+
+  if(state.skills[skill]===undefined)
+    state.skills[skill]=0;
+
+  const old=Math.floor(state.skills[skill]/5);
+
+  state.skills[skill]=clamp(
+    state.skills[skill]+amount,
+    0,
+    30
+  );
+
+  const now=Math.floor(state.skills[skill]/5);
+
+  if(now>old && state.skills[skill]%5===0){
+
+    logEvent(
+      `${skillNames[skill]||skill} mastery increased.`
     );
+
+  }
+
+}
+
+function skillLevel(skill){
+  return state.skills[skill]||0;
+}
+
+function getRank(skill){
+
+  const level=skillLevel(skill);
+  const data=rankData[skill];
+
+  if(!data) return "Level "+level;
+
+  let rank=data[0][1];
+
+  data.forEach(x=>{
+    if(level>=x[0]) rank=x[1];
+  });
+
+  return rank;
+}
+
+function skillCheck(skill,difficulty){
+
+  const level=skillLevel(skill);
+
+  const chance=
+    clamp(
+      45+(level-difficulty)*7,
+      10,
+      95
+    );
+
+  return Math.random()*100<chance;
+}
+
+
+/* =====================================================
+   TRAITS
+===================================================== */
+
+const traitNames={
+  kind:"Kind-hearted",
+  protective:"Protective",
+  mischievous:"Mischievous",
+  cautious:"Cautious",
+  curious:"Curious",
+  courageous:"Courageous",
+  disciplined:"Disciplined",
+  rebellious:"Rebellious",
+  ambitious:"Ambitious",
+  honourable:"Honourable",
+  deceitful:"Deceitful",
+  loyal:"Loyal",
+  violent:"Violent",
+  cruel:"Cruel",
+  ruthless:"Ruthless",
+  compassionate:"Compassionate",
+  greedy:"Greedy",
+  independent:"Independent",
+  reckless:"Reckless"
+};
+
+function traitProgress(trait){
+
+  if(!state.traits[trait])
+    state.traits[trait]=0;
+
+  state.traits[trait]++;
+
+  if(state.traits[trait]===3){
+
+    logEvent(
+      `Trait developed: ${traitNames[trait]||trait}.`
+    );
+
+  }
+
+}
+
+function hasTrait(trait){
+  return (state.traits[trait]||0)>=3;
+}
+
+
+/* =====================================================
+   MEMORIES
+===================================================== */
+
+function remember(text){
+
+  if(!state.memories.includes(text)){
+
+    state.memories.push(text);
+    state.lastMemory=text;
+
+    logEvent(
+      `Memory created: ${text}`
+    );
+
+  }
+
+}
+
+function recognizeMemory(text){
+
+  if(state.memories.includes(text)){
+
+    state.lastMemory=text;
+
+    return true;
+
+  }
+
+  return false;
+}
+
+
+/* =====================================================
+   RELATIONSHIPS
+===================================================== */
+
+function relation(person,amount){
+
+  if(state.relationships[person]===undefined)
+    state.relationships[person]=0;
+
+  state.relationships[person]=clamp(
+    state.relationships[person]+amount,
+    -10,
+    10
+  );
 
 }
 
@@ -779,28 +1020,38 @@ function changeRelationship(person,amount){
    TIME
 ===================================================== */
 
-function timeText(){
+function setAge(age){
 
-  if(state.hour<6)return "before dawn";
-  if(state.hour<12)return "morning";
-  if(state.hour<17)return "afternoon";
-  if(state.hour<20)return "evening";
-
-  return "night";
+  state.age=age;
+  state.year=1570+age;
 
 }
 
+function seasonForAge(age){
 
-function advanceTime(hours=1){
+  const seasons=[
+    "Spring",
+    "Summer",
+    "Autumn",
+    "Winter"
+  ];
 
-  state.hour+=hours;
+  return seasons[age%4];
+}
 
-  while(state.hour>=24){
 
-    state.hour-=24;
-    state.day++;
+/* =====================================================
+   LOG
+===================================================== */
 
-  }
+function logEvent(text){
+
+  state.history.unshift(
+    `${state.year} · ${state.location} — ${text}`
+  );
+
+  if(state.history.length>100)
+    state.history.pop();
 
 }
 
@@ -809,30 +1060,52 @@ function advanceTime(hours=1){
    RENDER
 ===================================================== */
 
+function render(){
+
+  el("realm").textContent=
+    `Sengoku Japan · ${state.year}`;
+
+  el("location").textContent=
+    `${state.location} · Age ${state.age} · ${state.season}`;
+
+  el("money").textContent=
+    Math.max(0,state.money);
+
+  el("health").textContent=
+    clamp(state.health,0,100);
+
+  el("attack").textContent=
+    state.power;
+
+  el("rep").textContent=
+    state.reputation;
+
+  renderInventory();
+  renderQuests();
+  renderChronicle();
+
+}
+
 function renderInventory(){
 
   const box=el("inventory");
 
   if(!box)return;
 
-  if(state.inventory.length===0){
+  if(!state.inventory.length){
 
     box.innerHTML=
       `<div class="empty">Nothing.</div>`;
 
     return;
-
   }
 
   box.innerHTML=
     state.inventory
-      .map(item=>
-        `<div class="item">${item}</div>`
-      )
+      .map(x=>`<div class="item">${x}</div>`)
       .join("");
 
 }
-
 
 function renderQuests(){
 
@@ -840,24 +1113,20 @@ function renderQuests(){
 
   if(!box)return;
 
-  if(state.quests.length===0){
+  if(!state.quests.length){
 
     box.innerHTML=
       `<div class="empty">No active quests.</div>`;
 
     return;
-
   }
 
   box.innerHTML=
     state.quests
-      .map(q=>
-        `<div class="quest">◆ ${q}</div>`
-      )
+      .map(x=>`<div class="quest">◆ ${x}</div>`)
       .join("");
 
 }
-
 
 function renderChronicle(){
 
@@ -867,160 +1136,93 @@ function renderChronicle(){
 
   box.innerHTML=
     state.history
-      .map(x=>
-        `<div class="event">${x}</div>`
-      )
+      .map(x=>`<div class="event">${x}</div>`)
       .join("");
 
 }
 
 
-function updateStats(){
+/* =====================================================
+   CHARACTER SCREEN
+===================================================== */
 
-  if(el("money")){
-    el("money").textContent=
-      Math.max(0,state.money);
-  }
+function showCharacter(){
 
-  if(el("health")){
-    el("health").textContent=
-      Math.max(0,state.health);
-  }
+  el("game").classList.add("hidden");
+  el("character").classList.remove("hidden");
 
-  if(el("attack")){
-    el("attack").textContent=
-      Math.max(0,state.attack);
-  }
+  const skillBox=el("skillGrid");
 
-  if(el("rep")){
-    el("rep").textContent=
-      state.rep;
-  }
+  skillBox.innerHTML=
+    Object.keys(state.skills)
+      .map(k=>`
+        <div class="smallStat">
+          <b>${skillNames[k]||k}</b>
+          ${state.skills[k]}
+          <span class="rank">${getRank(k)}</span>
+        </div>
+      `)
+      .join("");
 
-  if(el("location")){
+  const traitBox=el("traitGrid");
 
-    el("location").textContent=
-      `${state.location} · Day ${state.day} · ${timeText()}`;
+  const traits=
+    Object.keys(state.traits)
+      .filter(t=>state.traits[t]>0);
 
-  }
+  traitBox.innerHTML=
+    traits.length
+      ? traits.map(t=>`
+          <div class="smallStat">
+            <b>${traitNames[t]||t}</b>
+            ${state.traits[t]} / 3
+          </div>
+        `).join("")
+      : `<div class="empty">No established traits yet.</div>`;
+
+  const relBox=el("relGrid");
+
+  relBox.innerHTML=
+    Object.keys(state.relationships)
+      .map(k=>`
+        <div class="smallStat">
+          <b>${capitalize(k)}</b>
+          ${state.relationships[k]}
+        </div>
+      `)
+      .join("");
+
+  el("lifeSummary").innerHTML=`
+    <div class="smallStat">
+      <b>Origin</b>
+      Commoner
+    </div>
+    <div class="smallStat">
+      <b>Family</b>
+      Father: ${state.family.fatherAlive?"Alive":"Dead"} ·
+      Mother: ${state.family.motherAlive?"Alive":"Dead"} ·
+      Children: ${state.family.children}
+    </div>
+    <div class="smallStat">
+      <b>Honour</b>
+      ${state.honour}
+    </div>
+    <div class="smallStat">
+      <b>Family Trust</b>
+      ${state.familyTrust}
+    </div>
+    <div class="smallStat">
+      <b>Memories</b>
+      ${state.memories.length}
+    </div>
+  `;
 
 }
 
+function closeCharacter(){
 
-/* =====================================================
-   CHRONICLE
-===================================================== */
-
-function logEvent(text){
-
-  state.history.unshift(
-    `Day ${state.day}, ${timeText()} — ${text}`
-  );
-
-  if(state.history.length>60){
-    state.history.pop();
-  }
-
-  renderChronicle();
-
-}
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetState(){
-
-  state.money=120;
-  state.health=100;
-  state.attack=12;
-  state.rep=0;
-
-  state.inventory=[
-    "Torn clothes",
-    "Rusty Uchigatana"
-  ];
-
-  state.day=1;
-  state.hour=17;
-
-  state.alive=true;
-  state.ending=false;
-
-  state.scene="opening";
-
-  state.lastAction="";
-
-  state.flags={
-    metStranger:false,
-    trustedStranger:false,
-    watchedRiders:false,
-    warnedVillage:false,
-    followedRiders:false,
-    foundEvidence:false,
-    discoveredTunnel:false,
-    discoveredTraitor:false,
-    masaruQuestioned:false,
-    searchedShrine:false,
-    explosionKnown:false,
-    villageUnderAttack:false,
-    villageSaved:false,
-    escapedVillage:false,
-    horseStolen:false,
-    gateDestroyed:false,
-    strangerAlive:true,
-    bombDisarmed:false,
-    traitorNameKnown:false,
-    elderTrust:false,
-    villagersWarned:false
-  };
-
-  state.relationships={
-    stranger:0,
-    elder:0,
-    masaru:0,
-    villagers:0
-  };
-
-  state.quests=[];
-  state.history=[];
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-function startGame(realm,year,location){
-
-  resetState();
-
-  state.realm=realm;
-  state.year=year;
-  state.location=location;
-
-  el("start").classList.add("hidden");
-  el("gameover").classList.add("hidden");
+  el("character").classList.add("hidden");
   el("game").classList.remove("hidden");
-
-  el("realm").textContent=
-    `${realm} · ${year}`;
-
-  logEvent(
-    `You arrived in ${location}.`
-  );
-
-  addQuest(
-    "Discover why armed riders are approaching Kuroda."
-  );
-
-  showScene("opening");
-
-  updateStats();
-  renderInventory();
-  renderQuests();
 
 }
 
@@ -1029,450 +1231,4061 @@ function startGame(realm,year,location){
    SCENE SYSTEM
 ===================================================== */
 
-/*
-   THIS IS THE IMPORTANT CHANGE.
-
-   The game now has one current scene.
-
-   Every action:
-   1. removes the old choices
-   2. changes state.scene
-   3. renders one new scene
-   4. generates ONLY the choices for that scene
-
-   Therefore the game cannot keep stacking old choices.
-*/
-
 const scenes={
 
-/* =====================================================
-   OPENING
-===================================================== */
+/* ---------------- BIRTH ---------------- */
 
-opening:{
-  title:"THE STRANGERS ON THE ROAD",
+birth:{
+  title:"AGE 0 — BORN IN THE RAIN",
+  text:`Rain hammers against the roof.
 
-  text:`Rain taps against the wooden roofs of Kuroda Village.
+Water runs beneath the door and pools across the wooden floor. Your mother cries out from the next room while your father waits beneath the eaves, soaked through despite the shelter.
 
-You are Shiro, fifteen years old.
+Eventually, the midwife steps outside.
 
-You have little money, a battered sword and no powerful family behind you.
+She looks at your father and smiles.
 
-It is evening.
+"A child."
 
-Near the village gate stands a stranger you have never seen before.
+Your father closes his eyes.
 
-He is watching the eastern road.
+For one brief moment, there is no war. No armies. No lords demanding loyalty.
 
-Three riders are approaching in the distance.
+Just the sound of rain.
 
-The village does not know they are coming.`,
+And a newborn child listening to the world for the first time.
 
+You.`,
   choices:[
-    ["Approach the stranger","meetStranger"],
-    ["Hide and watch the riders","watchRiders"],
-    ["Warn the village elder","warnElder"],
-    ["Head toward the eastern road","investigateRoad"]
+    ["Begin your life","age5"]
   ]
 },
 
+/* ---------------- AGE 5 ---------------- */
 
-/* =====================================================
-   STRANGER
-===================================================== */
+age5:{
+  title:"AGE 5 — THE RICE FIELDS",
+  text:`The first thing you learn about being poor is that the day begins before the sun.
 
-stranger:{
-  title:"THE STRANGER",
+Your father taps your foot.
 
-  text:`You approach the stranger.
+"Up."
 
-He studies you carefully.
+You pull the blanket over your head.
 
-"You're young."
+"I'm tired."
 
-His hand rests near his sleeve.
+He laughs. "You're five."
 
-"Those riders aren't merchants."
+Outside, the village is already moving. Smoke rises from cooking fires. Oxen pull carts through the mud. Beyond the houses, water rushes through the irrigation channels.
 
-He looks toward the eastern road.
+Your father places a small wooden hoe in your hands.
 
-"Someone inside Kuroda is helping them."
+"You'll learn."
 
-Then he looks directly at you.
+He leads you into the rice fields and points toward a patch of earth.
 
-"If you want the truth, don't trust the first person who offers it."
-
-He gives you a small black cord marked with a silver knot.`,
-
+"Start there."`,
   choices:[
-    ["Ask who he is","questionStranger"],
-    ["Offer to help him","trustStranger"],
-    ["Ask about the riders","askRiders"],
-    ["Leave him and warn the elder","warnElder"]
+    ["Help your father","age5Farm"],
+    ["Ask why your family has so little","age5Question"],
+    ["Explore the irrigation ditch","age5Mischief"],
+    ["Pretend you're sick","age5Sick"]
   ]
 },
 
+age5Farm:{
+  title:"THE FIRST LESSON",
+  text:`You grip the hoe.
 
-/* =====================================================
-   WATCH RIDERS
-===================================================== */
+The work is harder than you expected.
 
-riders:{
-  title:"THE RIDERS",
+Your hands ache. Your feet sink into the mud. Twice you almost fall.
 
-  text:`You hide behind a wooden storehouse.
+Your father doesn't help.
 
-The riders enter Kuroda.
+He watches.
 
-They do not behave like soldiers entering a battlefield.
+When you finally finish the patch, he nods.
 
-They behave like men who already know where they are going.
+"Again tomorrow."
 
-One dismounts.
+You groan.
 
-Another speaks quietly to a figure waiting near the road.
+He smiles.
 
-You cannot see the person's face.
-
-Then you hear:
-
-"The gate will be open after sunset."
-
-The riders move toward the abandoned shrine.`,
-
+"You'll get stronger."`,
   choices:[
-    ["Follow them","followRiders"],
-    ["Return and warn the elder","warnElder"],
-    ["Search where they stopped","searchRiderCamp"],
-    ["Keep watching from hiding","keepWatching"]
+    ["Accept the lesson","age6"],
+    ["Ask him to teach you better","age6Learn"]
   ]
 },
 
+age5Question:{
+  title:"THE FIRST QUESTION",
+  text:`Your father looks toward the larger fields.
 
-/* =====================================================
-   ELDER
-===================================================== */
+"Some people own land. Some people work it."
 
-elder:{
-  title:"THE VILLAGE ELDER",
+"Why?"
 
-  text:`You find the village elder inside his house.
+He thinks for a moment.
 
-You tell him about the riders.
+"Because the world isn't fair."
+
+He hands you the hoe.
+
+"Understanding that won't change the soil."
+
+Maybe he's right.
+
+Maybe it will.`,
+  choices:[
+    ["Keep working","age6"],
+    ["Ask more questions","age6Learn"]
+  ]
+},
+
+age5Mischief:{
+  title:"THE IRRIGATION DITCH",
+  text:`You abandon the field.
+
+Your father shouts after you.
+
+You run anyway.
+
+The irrigation ditch is deeper than it looked. You leap across it, slip and land in the mud.
+
+Your father catches up.
+
+He looks at you.
+
+You look at him.
+
+He tries not to laugh.
+
+He fails.`,
+  choices:[
+    ["Laugh with him","age6"],
+    ["Run again","age6Mischief"]
+  ]
+},
+
+age5Sick:{
+  title:"A TERRIBLE ACTOR",
+  text:`You collapse dramatically.
+
+"I think I'm dying."
+
+Your father stares at you.
+
+"You were running perfectly five minutes ago."
+
+You close your eyes.
+
+He starts laughing.
+
+Then he makes you work anyway.
+
+"You're terrible at lying."
+
+You remember that.`,
+  choices:[
+    ["Work anyway","age6"],
+    ["Try to get revenge later","age6Mischief"]
+  ]
+},
+
+age6:{
+  title:"AGE 6 — THE VILLAGE BOY",
+  text:`You find a boy hiding behind the storehouse.
+
+He's crying.
+
+Two older children stand over him.
+
+"Give it back."
+
+The boy shakes his head.
+
+One of them reaches for him.
+
+You step closer.
+
+You don't know what started this.
+
+But you know what happens if nobody stops it.`,
+  choices:[
+    ["Tell them to leave him alone","age6Protect"],
+    ["Push the bully into the mud","age6Fight"],
+    ["Distract them and help him escape","age6Trick"],
+    ["Get an adult","age6Adult"]
+  ]
+},
+
+age6Protect:{
+  title:"YOU STEP BETWEEN THEM",
+  text:`You step between the children.
+
+"Leave him alone."
+
+The older boy laughs.
+
+Then he sees that you're not moving.
+
+He shoves you.
+
+You stumble.
+
+But you stand again.
+
+An adult notices the commotion and sends the bullies away.
+
+The crying boy looks at you.
+
+"Thank you."`,
+  choices:[
+    ["Tell him it was nothing","age7"],
+    ["Ask his name","age6Daichi"]
+  ]
+},
+
+age6Fight:{
+  title:"THE MUD FIGHT",
+  text:`You push the bully.
+
+He falls into the mud.
+
+For one second nobody moves.
+
+Then he gets up screaming.
+
+You fight.
+
+You are smaller.
+
+You get hit twice.
+
+But you refuse to run.
+
+An adult finally pulls you apart.
+
+The bully's father is furious.
+
+The boy you defended is smiling.`,
+  choices:[
+    ["Apologise for causing trouble","age7"],
+    ["Tell the truth about why you fought","age7Honest"]
+  ]
+},
+
+age6Trick:{
+  title:"THE DISTRACTION",
+  text:`You point toward the road.
+
+"Your father's coming!"
+
+The older boys turn.
+
+You grab the crying boy and run.
+
+You don't stop until you're behind your family's house.
+
+The boy laughs through his tears.
+
+"That was clever."
+
+You grin.
+
+Maybe trouble isn't always about strength.`,
+  choices:[
+    ["Ask his name","age6Daichi"],
+    ["Teach him the trick","age7"]
+  ]
+},
+
+age6Adult:{
+  title:"THE ADULT",
+  text:`You run for help.
+
+The village elder's wife comes outside.
+
+The older children scatter.
+
+The boy looks embarrassed.
+
+But when the adult leaves, he looks at you.
+
+"Thanks."
+
+You have done the sensible thing.
+
+It feels strangely good.`,
+  choices:[
+    ["Ask his name","age6Daichi"],
+    ["Go back to work","age7"]
+  ]
+},
+
+age6Daichi:{
+  title:"DAICHI",
+  text:`The boy wipes his face.
+
+"Daichi."
+
+You tell him your name.
+
+He smiles.
+
+"I won't forget you."
+
+Neither of you knows how important that promise will become.`,
+  choices:[
+    ["Become friends","age7"],
+    ["Ask where he lives","age7"]
+  ]
+},
+
+age6Learn:{
+  title:"QUESTIONS",
+  text:`You keep asking questions.
+
+Your father answers some.
+
+Others he doesn't.
+
+You begin to notice things adults assume children won't notice.
+
+Who owes money.
+
+Who owns land.
+
+Who is afraid.
+
+Who is pretending not to be.
+
+Your curiosity is beginning to become a skill.`,
+  choices:[
+    ["Keep watching people","age7"],
+    ["Ask your mother what she knows","age7Mother"]
+  ]
+},
+
+age6Mischief:{
+  title:"MORE TROUBLE",
+  text:`You spend the afternoon finding new ways to avoid work.
+
+You hide your hoe.
+
+You send a chicken into the neighbour's garden.
+
+You even convince Daichi that the village well is haunted.
+
+Your father eventually finds you.
+
+He sighs.
+
+"One day that cleverness might get you killed."
+
+You grin.
+
+"Maybe."`,
+  choices:[
+    ["Promise to behave","age7"],
+    ["Keep being troublesome","age7Mischief"]
+  ]
+},
+
+age6Daichi2:{
+  title:"DAICHI",
+  text:`You have made a friend.
+
+Not a powerful friend.
+
+Not a wealthy friend.
+
+Just another child who knows what it means to be hungry, dirty and bored.
+
+Sometimes that's enough.`,
+  choices:[
+    ["Continue","age7"]
+  ]
+},
+
+age6MOTHER:{
+  title:"YOUR MOTHER",
+  text:`Your mother listens.
+
+Then she says something your father never does.
+
+"People are complicated."
+
+She tells you to remember that.
+
+"Someone can love you and still hurt you."
+
+You don't understand.
+
+Not yet.`,
+  choices:[
+    ["Remember her words","age7"]
+  ]
+},
+
+age7:{
+  title:"AGE 7 — THE PEACH ORCHARD",
+  text:`You hear laughter coming from the orchard.
+
+A boy is halfway up a peach tree, eating fruit that clearly isn't his.
+
+He notices you.
+
+"Want one?"
+
+You point at the peach.
+
+"Those aren't yours."
+
+He grins.
+
+"I know."
+
+"I'm Ren."
+
+You have a feeling you're going to remember him.`,
+  choices:[
+    ["Tell him to come down","renComeDown"],
+    ["Climb after him","renClimb"],
+    ["Pretend you didn't see him","renIgnore"],
+    ["Throw a stone at the tree","renStone"]
+  ]
+},
+
+renComeDown:{
+  title:"REN",
+  text:`"Come down."
+
+Ren raises an eyebrow.
+
+"Are you going to make me?"
+
+You stare at him.
+
+He laughs.
+
+"You're funny."
+
+He jumps down from the tree and hands you a peach.
+
+"Don't tell anyone."`,
+  choices:[
+    ["Accept the peach","age8"],
+    ["Tell him stealing is wrong","age8Honour"]
+  ]
+},
+
+renClimb:{
+  title:"THE TREE",
+  text:`You grab the tree.
+
+Ren starts laughing.
+
+"You're actually doing it?"
+
+You climb.
+
+You slip.
+
+He catches your arm.
+
+For a moment you're both hanging there.
+
+Then you both start laughing.
+
+Neither of you knows it yet, but this becomes one of those memories that survives almost everything.`,
+  choices:[
+    ["Share the peach","age8"],
+    ["Challenge Ren to climb higher","age8Mischief"]
+  ]
+},
+
+renIgnore:{
+  title:"THE BOY IN THE TREE",
+  text:`You walk away.
+
+Behind you, Ren laughs.
+
+"You're no fun!"
+
+You don't look back.
+
+But later that evening you find a peach sitting outside your door.
+
+No note.
+
+You know who left it.`,
+  choices:[
+    ["Eat it","age8"],
+    ["Find Ren and thank him","age8Friend"]
+  ]
+},
+
+renStone:{
+  title:"THE STONE",
+  text:`The stone hits the branch.
+
+Ren nearly falls.
+
+He grabs the trunk.
+
+Then he looks down.
+
+Instead of getting angry, he laughs.
+
+"You're strange."
+
+You shrug.
+
+"You're stealing."
+
+"Fair enough."
+
+He throws you a peach.`,
+  choices:[
+    ["Laugh with him","age8"],
+    ["Throw the peach back","age8Mischief"]
+  ]
+},
+
+age8:{
+  title:"AGE 8 — THE BAD HARVEST",
+  text:`The rice doesn't grow properly.
+
+The rain came at the wrong time.
+
+Then came the insects.
+
+Your father counts the sacks.
+
+There aren't enough.
+
+That night, your mother puts less food into everyone's bowls.
+
+Your little brother looks at her.
+
+"Will there be more tomorrow?"
+
+Your father doesn't answer.
+
+For the first time, you see fear in his eyes.
+
+The next morning he gives you a basket.
+
+On the road, you notice a merchant's cart leaving the village.
+
+It is loaded with rice.
+
+Far more rice than your family has.`,
+  choices:[
+    ["Keep walking","harvestQuiet"],
+    ["Ask the merchant where the rice came from","harvestAsk"],
+    ["Follow the cart","harvestFollow"],
+    ["Confront him","harvestConfront"]
+  ]
+},
+
+harvestQuiet:{
+  title:"YOU KEEP WALKING",
+  text:`You keep walking.
+
+It isn't your business.
+
+At least that's what you tell yourself.
+
+Years later, you will remember the cart.
+
+Sometimes the things we choose not to do stay with us longer than the things we do.`,
+  choices:[
+    ["Continue","age9"]
+  ]
+},
+
+harvestAsk:{
+  title:"THE MERCHANT",
+  text:`You stop the merchant.
+
+"Where did you get all that rice?"
+
+He smiles.
+
+"Trade."
+
+"From where?"
+
+His smile fades.
+
+"You ask too many questions."
+
+He rides away.
+
+You remember his face.`,
+  choices:[
+    ["Remember the merchant","age9"],
+    ["Tell your father","age9Father"]
+  ]
+},
+
+harvestFollow:{
+  title:"THE CART",
+  text:`You follow the cart.
+
+You stay far enough behind to avoid being seen.
+
+The merchant leaves the main road and enters a smaller settlement.
+
+There are armed men waiting there.
+
+You don't stay long.
+
+You run home.
+
+You now know something you were never supposed to see.`,
+  choices:[
+    ["Tell your father","age9Father"],
+    ["Keep it secret","age9"]
+  ]
+},
+
+harvestConfront:{
+  title:"THE CONFRONTATION",
+  text:`You point at the rice.
+
+"People here are hungry."
+
+The merchant laughs.
+
+"Then they should have grown more."
+
+Something inside you hardens.
+
+You step closer.
+
+He studies you.
+
+"Remember my face, child."
+
+You will.`,
+  choices:[
+    ["Walk away","age9"],
+    ["Tell your father what happened","age9Father"]
+  ]
+},
+
+age9:{
+  title:"AGE 9 — THE RIVER",
+  text:`Daichi dares you to jump from the old bridge.
+
+Ren is already sitting on the railing.
+
+Your mother would kill you.
+
+Which, naturally, makes it tempting.
+
+"Come on," Ren says.
+
+You look down at the river.`,
+  choices:[
+    ["Jump","riverJump"],
+    ["Refuse","riverRefuse"],
+    ["Dare Ren to jump first","riverDare"],
+    ["Explore beneath the bridge","riverExplore"]
+  ]
+},
+
+riverJump:{
+  title:"THE RIVER",
+  text:`You jump.
+
+The water hits like stone.
+
+For one terrifying second you don't know which way is up.
+
+Then Ren grabs your arm.
+
+You surface coughing.
+
+Daichi is laughing.
+
+So are you.
+
+You are alive.
+
+And stronger for it.`,
+  choices:[
+    ["Laugh it off","age10"],
+    ["Teach yourself to swim properly","age10Train"]
+  ]
+},
+
+riverRefuse:{
+  title:"CAUTION",
+  text:`You refuse.
+
+Ren calls you boring.
+
+You don't care.
+
+The river is dangerous.
+
+You know that.
+
+Years later, you will remember this decision when someone else tells you courage means never being afraid.`,
+  choices:[
+    ["Continue","age10"]
+  ]
+},
+
+riverDare:{
+  title:"A DANGEROUS GAME",
+  text:`"You first."
+
+Ren grins.
+
+"Fine."
+
+He jumps.
+
+He disappears beneath the water.
+
+You wait.
+
+One second.
+
+Two.
+
+Then he surfaces laughing.
+
+"Your turn!"
+
+You jump too.`,
+  choices:[
+    ["Continue","age10"]
+  ]
+},
+
+riverExplore:{
+  title:"UNDER THE BRIDGE",
+  text:`You climb beneath the bridge.
+
+There are old carvings in the stone.
+
+One looks like a family crest.
+
+Another has been deliberately scratched away.
+
+You don't understand what it means.
+
+But you remember it.`,
+  choices:[
+    ["Study the carving","age10Curious"],
+    ["Tell Ren","age10"]
+  ]
+},
+
+age10:{
+  title:"AGE 10 — THE RAINY NIGHT",
+  text:`You wake to voices outside.
+
+Your father isn't asleep.
+
+Neither is your mother.
+
+Through a crack in the wall, you see strangers standing beneath the eaves of the village elder's house.
+
+One wears a dark cloak.
+
+Another carries a sword.
+
+You hear fragments.
+
+"...if he is still alive..."
+
+Silence.
+
+"You shouldn't have come here."
+
+Then:
+
+"If they find him, everyone connected to him will die."
+
+You don't know who they mean.
+
+But you know they are afraid.`,
+  choices:[
+    ["Sneak closer","rainSneak"],
+    ["Wake your father","rainFather"],
+    ["Follow the strangers when they leave","rainFollow"],
+    ["Stay hidden","rainHide"]
+  ]
+},
+
+rainSneak:{
+  title:"LISTENING IN",
+  text:`You creep closer.
+
+Rain covers your footsteps.
+
+You hear one more sentence.
+
+"The boy's family knows nothing."
+
+Your heart stops.
+
+You move back before they see you.
+
+You don't know which boy they mean.
+
+But you know they were talking about Kuroda.`,
+  choices:[
+    ["Tell your father","age11"],
+    ["Keep it secret","age11Secret"]
+  ]
+},
+
+rainFather:{
+  title:"YOUR FATHER",
+  text:`You wake your father.
 
 He listens.
 
-When you mention the eastern road, his expression changes.
+When you repeat the words, his face changes.
 
-"You are certain?"
+For a moment, he looks terrified.
+
+Then he says:
+
+"You heard nothing."
+
+You have never heard him speak to you like that.
+
+He is hiding something.`,
+  choices:[
+    ["Ask him what he knows","fatherQuestion"],
+    ["Obey him","age11"]
+  ]
+},
+
+rainFollow:{
+  title:"THE STRANGERS",
+  text:`You follow them into the rain.
+
+They leave Kuroda by the eastern road.
+
+You nearly lose them.
+
+Then one man stops.
+
+He looks back.
+
+You dive into the mud.
+
+After several seconds, the footsteps continue.
+
+You have just learned how dangerous curiosity can be.`,
+  choices:[
+    ["Return home","age11"],
+    ["Keep following","rainFollowFar"]
+  ]
+},
+
+rainHide:{
+  title:"THE SECRET",
+  text:`You stay hidden.
+
+Eventually the strangers leave.
+
+You never learn who they were.
+
+But you remember their words.
+
+Years later, someone will say:
+
+"You always did have a habit of listening to conversations that weren't yours."`,
+  choices:[
+    ["Continue","age11"]
+  ]
+},
+
+fatherQuestion:{
+  title:"YOUR FATHER'S SILENCE",
+  text:`Your father sits beside you.
+
+"I don't know who they meant."
+
+You don't believe him.
+
+He sees it in your face.
+
+"Sometimes protecting your family means keeping things from them."
+
+It is not an answer.
+
+But it is the only one he gives.`,
+  choices:[
+    ["Trust him","age11"],
+    ["Decide to find the truth yourself","age11Secret"]
+  ]
+},
+
+rainFollowFar:{
+  title:"TOO FAR",
+  text:`You follow them beyond the village.
+
+One turns.
+
+You run.
+
+A blade cuts your sleeve.
+
+You escape through the forest.
+
+You have learned your first serious lesson:
+
+Curiosity can cost blood.`,
+  choices:[
+    ["Return to Kuroda","age11"],
+    ["Remember the road","age11Memory"]
+  ]
+},
+
+age11:{
+  title:"AGE 11 — THE ABANDONED SWORD",
+  text:`Bandits attack a farm outside the village.
+
+You see one of them carrying a sword.
+
+He drops it while running.
+
+The blade lands in the snow.
+
+You have never held a real weapon before.`,
+  choices:[
+    ["Take the sword and help","swordHelp"],
+    ["Give the sword to an adult","swordAdult"],
+    ["Hide the sword","swordHide"],
+    ["Chase the bandit","swordChase"]
+  ]
+},
+
+swordHelp:{
+  title:"THE FIRST BLADE",
+  text:`You take the sword.
+
+It is heavier than you expected.
+
+You run toward the farm.
+
+You do not defeat the bandits.
+
+But you distract one long enough for a farmer to escape.
+
+A man grabs you and pulls you back.
+
+"You could have been killed."
+
+You look at the sword.
+
+You are shaking.
+
+But you didn't run.`,
+  choices:[
+    ["Keep training","age12"],
+    ["Ask the farmer to teach you","age12Train"]
+  ]
+},
+
+swordAdult:{
+  title:"THE SENSIBLE CHOICE",
+  text:`You hand the sword to your father.
+
+He studies you.
+
+"You did the right thing."
+
+He keeps the blade locked away.
+
+But he begins teaching you how to defend yourself with a wooden sword.`,
+  choices:[
+    ["Train seriously","age12Train"],
+    ["Ask about the sword","age12"]
+  ]
+},
+
+swordHide:{
+  title:"THE HIDDEN BLADE",
+  text:`You hide the sword.
+
+You don't know why.
+
+Maybe you want something that belongs only to you.
+
+Maybe you are afraid of what it says about you.
+
+Either way, you now possess a weapon.
+
+And a secret.`,
+  choices:[
+    ["Train in secret","age12TrainSecret"],
+    ["Forget about it for now","age12"]
+  ]
+},
+
+swordChase:{
+  title:"THE CHASE",
+  text:`You chase the bandit.
+
+He turns.
+
+You stop.
+
+For one second you think he will kill you.
+
+Then he runs.
+
+You return breathing hard.
+
+Your father is furious.
+
+But beneath the anger, you see something else.
+
+Pride.`,
+  choices:[
+    ["Accept the lecture","age12"],
+    ["Ask to learn swordsmanship","age12Train"]
+  ]
+},
+
+age12:{
+  title:"AGE 12 — AIKO",
+  text:`At the village shrine you find a girl sitting beneath the old cedar.
+
+Her name is Aiko.
+
+You have seen her before.
+
+Today she looks sad.
+
+She notices you.
+
+"You're always getting into trouble."
+
+"So are you."
+
+She smiles.`,
+  choices:[
+    ["Sit beside her","aikoSit"],
+    ["Tell her about the rainy night","aikoSecret"],
+    ["Show off by climbing the shrine roof","aikoRoof"],
+    ["Ask about her family","aikoFamily"]
+  ]
+},
+
+aikoSit:{
+  title:"AIKO",
+  text:`You sit beside her.
+
+Neither of you speaks for a while.
+
+Then she says:
+
+"My father owes money to a merchant."
+
+You listen.
+
+She seems relieved that you didn't laugh.`,
+  choices:[
+    ["Promise to help","aikoHelp"],
+    ["Tell her you understand","aikoUnderstand"]
+  ]
+},
+
+aikoSecret:{
+  title:"A SECRET SHARED",
+  text:`You tell Aiko about the strangers.
+
+She listens carefully.
+
+When you finish, she doesn't laugh.
+
+"My father once mentioned men like that."
+
+She looks toward the forest.
+
+"Be careful."
+
+You have just shared something you have never told anyone else.`,
+  choices:[
+    ["Ask what her father knows","aikoFamily"],
+    ["Keep the secret between you","age13"]
+  ]
+},
+
+aikoRoof:{
+  title:"THE SHRINE ROOF",
+  text:`You climb.
+
+Aiko laughs.
+
+"You'll fall."
+
+"I won't."
+
+You nearly do.
+
+She catches your sleeve.
+
+You both laugh.
+
+Something changes between you.
+
+Not much.
+
+Just enough.`,
+  choices:[
+    ["Climb down","age13"],
+    ["Stay with her a little longer","aikoClose"]
+  ]
+},
+
+aikoFamily:{
+  title:"HER FAMILY",
+  text:`Aiko tells you her father owes money.
+
+The debt has been growing.
+
+She doesn't know how they will pay it.
+
+You remember the merchant from the bad harvest.
+
+The same man may be involved.`,
+  choices:[
+    ["Investigate the merchant","merchantInvestigation"],
+    ["Tell Aiko to stay away from him","age13"]
+  ]
+},
+
+aikoHelp:{
+  title:"A PROMISE",
+  text:`You promise to help.
+
+Aiko looks at you.
+
+"Don't make promises you can't keep."
+
+You don't know whether you can.
+
+But you mean it.`,
+  choices:[
+    ["Continue","age13"]
+  ]
+},
+
+aikoUnderstand:{
+  title:"A QUIET FRIENDSHIP",
+  text:`You don't try to fix everything.
+
+You simply stay.
+
+Aiko remembers that.
+
+Sometimes kindness is not an action.
+
+Sometimes it is refusing to leave.`,
+  choices:[
+    ["Continue","age13"]
+  ]
+},
+
+aikoClose:{
+  title:"CLOSER",
+  text:`You stay beneath the cedar until sunset.
+
+When you finally leave, Aiko smiles.
+
+"Come back tomorrow."
+
+You will.`,
+  choices:[
+    ["Continue","age13"]
+  ]
+},
+
+merchantInvestigation:{
+  title:"THE MERCHANT RETURNS",
+  text:`You investigate the merchant.
+
+His name is Genzaemon.
+
+He is richer than most people in Kuroda.
+
+You discover something strange.
+
+His wealth increased dramatically after the bad harvest.
+
+You also discover that he has connections outside the province.`,
+  choices:[
+    ["Follow his trade route","merchantFollow"],
+    ["Tell Aiko","age13"]
+  ]
+},
+
+age13:{
+  title:"AGE 13 — THE MARKET",
+  text:`You begin helping your mother sell vegetables and cloth.
+
+You discover something.
+
+People lie.
+
+People bargain.
+
+People exaggerate.
+
+And people reveal an enormous amount when they think nobody is listening.
+
+A merchant catches you watching him.
+
+"You have sharp eyes."
+
+He offers you work.
+
+Not honest work.
+
+Not exactly.
+
+"A few deliveries. Nobody asks questions."`,
+  choices:[
+    ["Accept","merchantAccept"],
+    ["Refuse","merchantRefuse"],
+    ["Ask what you're delivering","merchantAsk"],
+    ["Pretend to accept and report him","merchantBetray"]
+  ]
+},
+
+merchantAccept:{
+  title:"THE FIRST DEAL",
+  text:`You accept.
+
+Your first delivery is simple.
+
+Your second is not.
+
+You are carrying a sealed package when you realise you are being watched.
+
+You return without asking questions.
+
+You have earned money.
+
+And entered a world you don't understand.`,
+  choices:[
+    ["Keep working","age14"],
+    ["Investigate the package","merchantInvestigate"]
+  ]
+},
+
+merchantRefuse:{
+  title:"REFUSAL",
+  text:`You refuse.
+
+The merchant smiles.
+
+"Good."
+
+You are surprised.
+
+He leans closer.
+
+"People who refuse money are usually either very foolish or very dangerous."
+
+You walk away.
+
+He remembers you.`,
+  choices:[
+    ["Continue","age14"]
+  ]
+},
+
+merchantAsk:{
+  title:"ASKING QUESTIONS",
+  text:`"What's in the package?"
+
+The merchant smiles.
+
+"Nothing that concerns you."
+
+You don't accept the answer.
+
+You remember his name.
+
+And he remembers yours.`,
+  choices:[
+    ["Continue","age14"],
+    ["Follow him later","merchantFollow"]
+  ]
+},
+
+merchantBetray:{
+  title:"A DOUBLE GAME",
+  text:`You pretend to accept.
+
+Then you tell the village elder.
+
+The merchant escapes before he can be arrested.
+
+But now you have an enemy.
+
+He knows what you did.
+
+You have learned that doing the right thing can still make your life harder.`,
+  choices:[
+    ["Accept the consequences","age14"]
+  ]
+},
+
+merchantFollow:{
+  title:"THE TRADE ROUTE",
+  text:`You follow the merchant's route.
+
+You discover that rice, weapons and information are moving along the same roads.
+
+The merchant is not simply selling food.
+
+He is connected to people with power.`,
+  choices:[
+    ["Return home","age14"],
+    ["Keep following the network","age14Adventure"]
+  ]
+},
+
+merchantInvestigate:{
+  title:"THE PACKAGE",
+  text:`You secretly open the package.
+
+Inside is a list of names.
+
+One name is familiar.
+
+Your father's.
+
+Your stomach drops.
+
+You close the package.
+
+You now know the mystery is closer to your family than you thought.`,
+  choices:[
+    ["Tell your father","age14Father"],
+    ["Hide the evidence","age14Secret"]
+  ]
+},
+
+age14:{
+  title:"AGE 14 — THE FIRST BLOOD",
+  text:`You, Ren and Daichi are returning from the next village when three men step onto the road.
+
+One grabs Daichi.
+
+Another reaches for Ren.
+
+The third looks at you.
+
+"Walk away."
+
+You have never been more afraid.
+
+You also know that if you walk away, everything changes.`,
+  choices:[
+    ["Fight","fightRoad"],
+    ["Talk them down","talkRoad"],
+    ["Distract them and run","trickRoad"],
+    ["Let them take you instead","sacrificeRoad"]
+  ]
+},
+
+fightRoad:{
+  title:"THE FIRST REAL FIGHT",
+  text:`You draw your weapon.
+
+The first man rushes you.
+
+You step aside rather than meeting his strength directly.
+
+Your blade catches his arm.
+
+He drops back.
+
+Ren kicks the second man's knee.
+
+Daichi bites the hand holding him.
+
+The third man reaches for a knife.
+
+You strike first.
+
+He falls.
+
+Silence.
+
+Nobody celebrates.
+
+You are fourteen.
+
+And you have just learned what blood smells like.`,
+  choices:[
+    ["Check whether they are alive","fightMercy"],
+    ["Make sure they can never return","fightCruel"]
+  ]
+},
+
+fightMercy:{
+  title:"AFTER THE FIGHT",
+  text:`Two men are wounded.
+
+One is unconscious.
+
+You bind the worst wound.
+
+Ren looks at you.
+
+"You could have killed him."
+
+You look at the blood on your hands.
+
+"I know."
+
+Daichi never forgets that you chose mercy.`,
+  choices:[
+    ["Return home","age15"],
+    ["Tell the village elder","age15Report"]
+  ]
+},
+
+fightCruel:{
+  title:"THE LINE YOU CROSSED",
+  text:`You finish the fight.
+
+There is no need.
+
+You know that.
+
+Ren stares at you.
+
+Daichi looks frightened.
+
+You expected to feel safer.
+
+Instead, you feel something else.
+
+Power.
+
+That scares you more.`,
+  choices:[
+    ["Tell yourself it was necessary","age15Dark"],
+    ["Admit you went too far","age15"]
+  ]
+},
+
+talkRoad:{
+  title:"WORDS BEFORE BLOOD",
+  text:`You step forward.
+
+"Take the money."
+
+You offer everything you have.
+
+The leader looks at you.
+
+Then Ren speaks.
+
+"You're not getting anything else."
+
+You keep talking.
+
+You point out the patrol road nearby.
+
+The men hesitate.
+
+Eventually they leave.
+
+You won without drawing blood.`,
+  choices:[
+    ["Return home","age15"],
+    ["Learn to negotiate better","age15Speech"]
+  ]
+},
+
+trickRoad:{
+  title:"THE DISTRACTION",
+  text:`You throw a stone into the forest.
+
+"Soldiers!"
+
+The men turn.
+
+You shout for Ren and Daichi to run.
+
+You all disappear into the trees.
+
+It wasn't brave.
+
+It wasn't honourable.
+
+It worked.`,
+  choices:[
+    ["Return home","age15"],
+    ["Laugh about it with Ren","age15"]
+  ]
+},
+
+sacrificeRoad:{
+  title:"TAKE ME",
+  text:`You step forward.
+
+"Let them go."
+
+The leader studies you.
+
+Then he laughs.
+
+Ren refuses to leave.
+
+Daichi runs for help.
+
+The men eventually retreat when villagers appear.
+
+You are bruised.
+
+But your friends are alive.
+
+Ren never forgets that you offered yourself.`,
+  choices:[
+    ["Return home","age15"],
+    ["Ask Ren why he stayed","age15Ren"]
+  ]
+},
+
+age15:{
+  title:"AGE 15 — THE WAR COMES",
+  text:`The first army arrives before dawn.
+
+You hear drums.
+
+Then horses.
+
+Then screaming.
+
+Your village has no walls.
+
+No army.
+
+No lord standing at the gate.
+
+Your father gives you a knife.
+
+"Stay with your mother."
+
+He turns toward the road.
+
+You know what he's going to do.
+
+"Father."
+
+He stops.
+
+"Come home."
+
+He looks back.
+
+"I'll try."
+
+He leaves.
+
+Then the village burns.`,
+  choices:[
+    ["Stay and defend your family","warFamily"],
+    ["Search for your father","warFather"],
+    ["Help villagers escape","warRescue"],
+    ["Take what you can and flee","warFlee"]
+  ]
+},
+
+age15Report:{
+  title:"THE ELDER'S WARNING",
+  text:`The elder listens to your account.
+
+He looks at the blood on your clothes.
+
+"War is coming," he says.
+
+You don't know how he knows.
+
+But he is right.
+
+By morning, the village is preparing.`,
+  choices:[
+    ["Help defend Kuroda","warFamily"],
+    ["Help evacuate families","warRescue"]
+  ]
+},
+
+age15Speech:{
+  title:"WORDS",
+  text:`You realise something.
+
+Strength is not the only way to survive.
+
+Words can stop a fight before it starts.
+
+You begin studying how people think.
+
+And how they lie.`,
+  choices:[
+    ["Continue","age15"]
+  ]
+},
+
+age15Dark:{
+  title:"THE FIRST DARKNESS",
+  text:`You tell yourself it was necessary.
+
+Maybe it was.
+
+But something changed.
+
+Violence no longer frightens you as much.
+
+That can be useful.
+
+It can also become dangerous.`,
+  choices:[
+    ["Continue","age15"]
+  ]
+},
+
+age15Ren:{
+  title:"REN STAYS",
+  text:`Ren looks at you.
+
+"Because you're an idiot."
+
+You laugh.
+
+He smiles.
+
+Neither of you says what you both know.
+
+You would have done the same for him.`,
+  choices:[
+    ["Continue","age15"]
+  ]
+},
+
+warFamily:{
+  title:"THE HOUSE",
+  text:`You stay.
+
+Your mother is terrified.
+
+Your younger sibling is crying.
+
+You grab what weapons you can.
+
+The fighting reaches the village.
+
+Your father returns bleeding.
+
+He looks at you.
+
+"You stayed."
 
 You nod.
 
-He stands.
-
-"Then Kuroda has little time."
-
-He orders the gate watched and asks you one question:
-
-"Do you know who is helping them?"`,
-
+For the first time, he treats you like an adult.`,
   choices:[
-    ["Tell him about the stranger","tellElderStranger"],
-    ["Tell him about the riders","tellElderRiders"],
-    ["Say you don't know yet","keepInvestigation"],
-    ["Ask for weapons and help","askElderHelp"]
+    ["Fight beside your father","warFight"],
+    ["Get your family to safety","warFamilySafe"]
   ]
 },
 
+warFather:{
+  title:"YOUR FATHER",
+  text:`You search through smoke and bodies.
 
-/* =====================================================
-   ROAD
-===================================================== */
+You find your father near the western road.
 
-road:{
-  title:"THE EASTERN ROAD",
+He is wounded.
 
-  text:`You leave the village and follow the eastern road.
+He is still fighting.
 
-The rain has turned the earth to mud.
+"Go!"
 
-You find fresh footprints.
+You refuse.
 
-Four sets.
+Together you retreat toward the forest.
 
-Then a fifth.
+He leans on you.
 
-The fifth set is smaller.
-
-Someone from Kuroda has been meeting the riders.
-
-Near a collapsed stone wall you find a scrap of cloth marked with the same silver knot the stranger showed you.`,
-
+"You're stronger than I thought."`,
   choices:[
-    ["Follow the footprints","followFootprints"],
-    ["Search the collapsed wall","searchWall"],
-    ["Return to Kuroda","returnVillage"],
-    ["Go to the abandoned shrine","goShrine"]
+    ["Carry him to safety","fatherRescue"],
+    ["Return for others","warRescue"]
   ]
 },
 
+warRescue:{
+  title:"THE RESCUE",
+  text:`You run through the burning village.
 
-/* =====================================================
-   AFTER FIRST INVESTIGATION
-===================================================== */
+A family is trapped inside a house.
 
-villageAfterClue:{
-  title:"KURODA VILLAGE",
+The roof is beginning to collapse.
 
+You have seconds.`,
+  choices:[
+    ["Enter and pull them out","rescueHouse"],
+    ["Break the rear wall","rescueWall"],
+    ["Call for help","rescueHelp"],
+    ["Move on to find more survivors","rescueMove"]
+  ]
+},
+
+rescueHouse:{
+  title:"THROUGH THE FIRE",
+  text:`You cover your face and enter.
+
+The smoke blinds you.
+
+You find the family.
+
+The youngest child cannot walk.
+
+You carry them.
+
+The roof collapses behind you.
+
+You emerge coughing.
+
+Alive.
+
+The family will remember your name.`,
+  choices:[
+    ["Keep rescuing people","warRescue2"],
+    ["Return to your family","warAfter"]
+  ]
+},
+
+rescueWall:{
+  title:"THE WALL",
+  text:`You find a heavy beam.
+
+You strike the rear wall.
+
+Once.
+
+Twice.
+
+The wood cracks.
+
+The family crawls through.
+
+You have saved them without entering the worst of the fire.
+
+Your ingenuity becomes one of the stories told about you.`,
+  choices:[
+    ["Continue rescuing","warRescue2"],
+    ["Return home","warAfter"]
+  ]
+},
+
+rescueHelp:{
+  title:"NO ONE COMES",
+  text:`You shout.
+
+Nobody answers.
+
+The fire spreads.
+
+You have to choose.
+
+You run toward the house.
+
+You arrive too late.
+
+The family does not survive.
+
+You stand outside in the smoke.
+
+Failure has consequences.
+
+But failure is not the end.`,
+  choices:[
+    ["Search for other survivors","warRescue2"],
+    ["Return to your family","warAfter"]
+  ]
+},
+
+rescueMove:{
+  title:"KEEP MOVING",
+  text:`You keep moving.
+
+You find three injured villagers.
+
+You lead them toward the forest.
+
+One dies on the way.
+
+Two survive.
+
+You couldn't save everyone.
+
+But you saved someone.`,
+  choices:[
+    ["Continue","warRescue2"]
+  ]
+},
+
+warRescue2:{
+  title:"THE SURVIVORS",
+  text:`The forest is filling with frightened villagers.
+
+Some are injured.
+
+Some are missing family.
+
+Someone has to organise them.
+
+Nobody else is doing it.`,
+  choices:[
+    ["Take command","leadSurvivors"],
+    ["Find food","findFood"],
+    ["Find medicine","findMedicine"],
+    ["Search for your father","searchFather"]
+  ]
+},
+
+leadSurvivors:{
+  title:"LEADERSHIP",
+  text:`You start giving orders.
+
+Water there.
+
+Children here.
+
+Wounded beneath the trees.
+
+People listen.
+
+Not because you're important.
+
+Because someone has to lead.
+
+You have discovered something about yourself.`,
+  choices:[
+    ["Stay with the survivors","age16Village"],
+    ["Return to Kuroda","returnBurned"]
+  ]
+},
+
+findFood:{
+  title:"SURVIVAL",
+  text:`You search abandoned houses.
+
+You find rice.
+
+Not much.
+
+Enough.
+
+You bring it back.
+
+People eat.
+
+Your leadership begins quietly.`,
+  choices:[
+    ["Continue","age16Village"]
+  ]
+},
+
+findMedicine:{
+  title:"MEDICINE",
+  text:`You search the shrine and find herbs.
+
+You don't know enough to treat everyone.
+
+But an older woman does.
+
+Together you save several people.
+
+You begin learning from her.`,
+  choices:[
+    ["Study healing","age16Healer"],
+    ["Continue","age16Village"]
+  ]
+},
+
+searchFather:{
+  title:"YOUR FATHER",
+  text:`You search.
+
+You find his torn sleeve.
+
+No body.
+
+No blood trail.
+
+Nothing else.
+
+Your father may be alive.
+
+Or he may be dead.
+
+You don't know.
+
+That uncertainty follows you.`,
+  choices:[
+    ["Keep searching","fatherMissing"],
+    ["Return to the survivors","age16Village"]
+  ]
+},
+
+warFlee:{
+  title:"THE FLIGHT",
+  text:`You run.
+
+You take what you can carry.
+
+Behind you, Kuroda burns.
+
+You survive.
+
+But you leave people behind.
+
+Some will call it cowardice.
+
+Some will call it survival.
+
+You will decide what you call it.`,
+  choices:[
+    ["Keep travelling","wanderer16"],
+    ["Return secretly after the fighting","returnBurned"]
+  ]
+},
+
+warFamilySafe:{
+  title:"FAMILY FIRST",
+  text:`You get your mother and sibling into the forest.
+
+Your father joins you later, bleeding.
+
+You did not save the village.
+
+You saved your family.
+
+That choice will shape the rest of your life.`,
+  choices:[
+    ["Stay with your family","age16Village"],
+    ["Leave to earn money","age16Road"]
+  ]
+},
+
+fatherRescue:{
+  title:"YOUR FATHER LIVES",
+  text:`You carry him.
+
+It takes hours.
+
+He survives.
+
+The village does not.
+
+When he wakes, he looks at you.
+
+"You saved me."
+
+You realise you never thought of yourself as strong.
+
+Maybe you were wrong.`,
+  choices:[
+    ["Stay with your family","age16Village"],
+    ["Learn to fight properly","age16Warrior"]
+  ]
+},
+
+warAfter:{
+  title:"AFTER THE FIRE",
+  text:`Kuroda is damaged.
+
+Some homes are gone.
+
+Some families are gone.
+
+Your childhood is over.
+
+You are fifteen.
+
+And the world has finally shown you what it is.`,
+  choices:[
+    ["Help rebuild","age16Village"],
+    ["Leave Kuroda","age16Road"]
+  ]
+},
+
+returnBurned:{
+  title:"Kuroda After the Fire",
+  text:`You return.
+
+The village is almost unrecognisable.
+
+The orchard is burned.
+
+The storehouse is gone.
+
+The shrine still stands.
+
+Barely.
+
+You find a piece of black cord beneath the ruins.
+
+The same silver-knot cord from the rainy night.
+
+The mystery is still alive.`,
+  choices:[
+    ["Search the ruins","mysterySearch"],
+    ["Find Ren","findRen"],
+    ["Find Aiko","findAiko"],
+    ["Find your family","findFamily"]
+  ]
+},
+
+/* ---------------- AGE 16+ ---------------- */
+
+age16Village:{
+  title:"AGE 16 — THE VILLAGE REMAINS",
+  text:`You stay.
+
+Kuroda needs rebuilding.
+
+You work the fields.
+
+You repair roofs.
+
+You help families.
+
+Life becomes quieter.
+
+But quiet does not mean simple.`,
+  choices:[
+    ["Build the farm","farmerPath"],
+    ["Train with a sword","age16Warrior"],
+    ["Help the market","age16Merchant"],
+    ["Leave and explore","age16Road"]
+  ]
+},
+
+age16Healer:{
+  title:"AGE 16 — THE HEALER",
+  text:`You spend months learning herbs and wounds.
+
+You discover that saving someone can be as difficult as fighting someone.
+
+People begin coming to you.
+
+Your hands become useful in a different way.`,
+  choices:[
+    ["Continue healing","farmerPath"],
+    ["Travel to learn more","age16Road"]
+  ]
+},
+
+age16Road:{
+  title:"AGE 16 — THE ROAD",
+  text:`You leave Kuroda.
+
+For the first time nobody knows your name.
+
+You sleep beneath bridges.
+
+You work for merchants.
+
+You learn which roads are safe.
+
+The world is much larger than your village.`,
+  choices:[
+    ["Work for a merchant","adultMerchant"],
+    ["Join a travelling swordsman","adultWarrior"],
+    ["Become a scout","adultScout"],
+    ["Search for Ren","findRen"]
+  ]
+},
+
+wanderer16:{
+  title:"THE WANDERER",
+  text:`You keep walking.
+
+You have no home.
+
+No lord.
+
+No certainty.
+
+But you are alive.
+
+That is enough for now.`,
+  choices:[
+    ["Find work","adultMerchant"],
+    ["Train with soldiers","adultWarrior"],
+    ["Explore the mountains","adultExplorer"],
+    ["Find Aiko","findAiko"]
+  ]
+},
+
+age16Warrior:{
+  title:"THE SWORD",
+  text:`You begin serious training.
+
+Your hands blister.
+
+Your shoulders ache.
+
+You learn that fighting is not about being angry.
+
+It is about being ready.`,
+  choices:[
+    ["Train every day","warriorTrain"],
+    ["Learn from a veteran","warriorVeteran"],
+    ["Travel with soldiers","adultWarrior"]
+  ]
+},
+
+age16Merchant:{
+  title:"THE MARKET",
+  text:`You begin working with traders.
+
+You learn prices.
+
+Weights.
+
+Routes.
+
+People.
+
+Money.
+
+You discover that information can be worth more than rice.`,
+  choices:[
+    ["Build your own trade","adultMerchant"],
+    ["Smuggle goods","criminalPath"],
+    ["Investigate Genzaemon","merchantMystery"]
+  ]
+},
+
+farmerPath:{
+  title:"THE FARM",
+  text:`You stay close to the land.
+
+Your farm grows.
+
+Slowly.
+
+You learn which crops survive.
+
+You buy another field.
+
+For the first time, your family has more than enough.`,
+  choices:[
+    ["Expand the farm","farmerGrow"],
+    ["Sell produce in town","adultMerchant"],
+    ["Marry Aiko if possible","aikoMarriageCheck"],
+    ["Return to the mystery","mysterySearch"]
+  ]
+},
+
+farmerGrow:{
+  title:"A BETTER LIFE",
+  text:`Your harvest is good.
+
+You repair the house.
+
+You buy another ox.
+
+Your younger sibling eats well.
+
+You have not become powerful.
+
+But you have built something.`,
+  choices:[
+    ["Continue into adulthood","adultLife"],
+    ["Help poorer villagers","farmerCharity"]
+  ]
+},
+
+farmerCharity:{
+  title:"THE STOREHOUSE",
+  text:`You open part of your storehouse during a poor harvest.
+
+Some merchants call you foolish.
+
+The villagers remember.
+
+Your reputation grows.`,
+  choices:[
+    ["Continue","adultLife"]
+  ]
+},
+
+adultLife:{
+  title:"AGE 20 — ADULTHOOD",
+  text:`You are no longer a child.
+
+Your life has begun to take shape.
+
+But the choices you made when you were young still follow you.
+
+Some memories never disappear.
+
+Some people never forget.`,
+  choices:[
+    ["Focus on family","familyPath"],
+    ["Seek wealth","adultMerchant"],
+    ["Seek adventure","adultExplorer"],
+    ["Seek the truth","mysterySearch"]
+  ]
+},
+
+adultWarrior:{
+  title:"THE WARRIOR'S ROAD",
+  text:`You join a travelling band of warriors.
+
+You learn discipline.
+
+You see villages burn.
+
+You fight men who were born no differently from you.
+
+You begin to understand the cost of war.`,
+  choices:[
+    ["Serve a lord","lordService"],
+    ["Become a wandering swordsman","roninPath"],
+    ["Protect civilians","protectorPath"],
+    ["Embrace violence","darkWarrior"]
+  ]
+},
+
+warriorTrain:{
+  title:"TRAINING",
+  text:`You train until your hands stop shaking.
+
+Your skill improves.
+
+You are no longer simply holding a sword.
+
+You are learning how to use one.`,
+  choices:[
+    ["Train again","warriorTrain2"],
+    ["Test yourself in a duel","warriorDuel"]
+  ]
+},
+
+warriorTrain2:{
+  title:"DISCIPLINE",
+  text:`You train again.
+
+And again.
+
+Discipline becomes part of you.`,
+  choices:[
+    ["Continue","adultWarrior"]
+  ]
+},
+
+warriorVeteran:{
+  title:"THE VETERAN",
+  text:`An old soldier agrees to teach you.
+
+"First lesson?"
+
+You nod.
+
+"Don't fight when you don't have to."
+
+You are surprised.
+
+He laughs.
+
+"Second lesson?"
+
+"What?"
+
+"Run when you should."
+
+You begin to understand.`,
+  choices:[
+    ["Continue","adultWarrior"]
+  ]
+},
+
+warriorDuel:{
+  title:"THE DUEL",
+  text:`Your opponent is faster.
+
+You wait.
+
+He attacks.
+
+You step aside.
+
+Your blade touches his throat.
+
+He freezes.
+
+You lower the sword.
+
+You won without killing him.`,
+  choices:[
+    ["Show mercy","adultWarrior"],
+    ["Demand another fight","darkWarrior"]
+  ]
+},
+
+adultMerchant:{
+  title:"THE MERCHANT ROAD",
+  text:`You start with almost nothing.
+
+Then one cart.
+
+Then two.
+
+You learn which roads are safe.
+
+Which officials can be bribed.
+
+Which merchants can be trusted.
+
+And which cannot.`,
+  choices:[
+    ["Trade honestly","merchantPrince"],
+    ["Smuggle goods","criminalPath"],
+    ["Build political connections","powerBroker"]
+  ]
+},
+
+merchantPrince:{
+  title:"BUILDING WEALTH",
+  text:`Your business grows.
+
+You own warehouses.
+
+You employ workers.
+
+People who once ignored your family now bow when you enter the market.
+
+Money has changed your life.
+
+It has not necessarily changed you.`,
+  choices:[
+    ["Protect your family","familyPath"],
+    ["Buy political influence","powerBroker"],
+    ["Help the poor","merchantCharity"],
+    ["Seek the mystery","mysterySearch"]
+  ]
+},
+
+merchantCharity:{
+  title:"WEALTH AND RESPONSIBILITY",
+  text:`You use your wealth to keep villages supplied during famine.
+
+Some people call it generosity.
+
+Others call it investment.
+
+You know it is both.`,
+  choices:[
+    ["Continue","adultLife"]
+  ]
+},
+
+criminalPath:{
+  title:"THE SHADOW ROAD",
+  text:`You stop asking whether something is legal.
+
+You ask whether it works.
+
+Smuggling.
+
+Theft.
+
+Blackmail.
+
+Information.
+
+You become useful to dangerous people.`,
+  choices:[
+    ["Remain controlled","criminalControlled"],
+    ["Become feared","monsterPath"],
+    ["Betray the criminals","criminalBetray"]
+  ]
+},
+
+criminalControlled:{
+  title:"THE UNDERWORLD",
+  text:`You become good at surviving among criminals.
+
+You make money.
+
+You learn secrets.
+
+You keep your family separate from your work.
+
+For now.`,
+  choices:[
+    ["Build wealth","merchantPrince"],
+    ["Seek revenge","revengePath"],
+    ["Become a spy","spyPath"]
+  ]
+},
+
+criminalBetray:{
+  title:"THE BETRAYAL",
+  text:`You turn on the criminals.
+
+Some escape.
+
+Some do not.
+
+Your name spreads.
+
+The criminals want you dead.
+
+The authorities want information.
+
+You have made enemies on both sides.`,
+  choices:[
+    ["Protect your family","familyPath"],
+    ["Disappear","wandererLife"],
+    ["Use the information","spyPath"]
+  ]
+},
+
+adultScout:{
+  title:"THE SCOUT",
+  text:`You learn to travel quietly.
+
+You read tracks.
+
+Weather.
+
+Roads.
+
+People.
+
+Your greatest weapon becomes noticing things others miss.`,
+  choices:[
+    ["Explore distant provinces","adultExplorer"],
+    ["Serve a lord","lordService"],
+    ["Search for the mysterious man","mysterySearch"]
+  ]
+},
+
+adultExplorer:{
+  title:"THE OPEN ROAD",
+  text:`You travel beyond Kuroda.
+
+Mountains.
+
+Coastal towns.
+
+Fortresses.
+
+Forests.
+
+You see parts of Japan your childhood self could never imagine.`,
+  choices:[
+    ["Continue travelling","wandererLife"],
+    ["Return home","adultLife"],
+    ["Search for the mysterious man","mysterySearch"]
+  ]
+},
+
+wandererLife:{
+  title:"THE WANDERER",
+  text:`You have no permanent home.
+
+But every road teaches you something.
+
+You become difficult to control.
+
+And difficult to find.`,
+  choices:[
+    ["Keep travelling","adultExplorer"],
+    ["Return to Aiko","findAiko"],
+    ["Return to Ren","findRen"]
+  ]
+},
+
+lordService:{
+  title:"SERVICE",
+  text:`You swear loyalty to a lord.
+
+You receive armour.
+
+Food.
+
+A position.
+
+And enemies.
+
+You are no longer fighting only for yourself.`,
+  choices:[
+    ["Serve honourably","honourPath"],
+    ["Climb the ranks","powerBroker"],
+    ["Spy for yourself","spyPath"]
+  ]
+},
+
+protectorPath:{
+  title:"THE PROTECTOR",
+  text:`You refuse to let civilians become meaningless casualties.
+
+You escort families away from battles.
+
+You defend villages.
+
+You earn little.
+
+But people begin trusting you.`,
+  choices:[
+    ["Build a reputation","leaderPath"],
+    ["Return to family","familyPath"],
+    ["Keep travelling","adultExplorer"]
+  ]
+},
+
+darkWarrior:{
+  title:"THE DARK WARRIOR",
+  text:`You stop fearing violence.
+
+Then you stop regretting it.
+
+Enemies begin disappearing.
+
+People whisper your name.
+
+You tell yourself fear keeps people safe.
+
+Perhaps it does.
+
+But something inside you is changing.`,
+  choices:[
+    ["Stop before it goes further","redemptionPath"],
+    ["Embrace it","monsterPath"],
+    ["Seek revenge","revengePath"]
+  ]
+},
+
+powerBroker:{
+  title:"POWER",
+  text:`You learn that the powerful rarely do everything themselves.
+
+They use people.
+
+Money.
+
+Promises.
+
+Secrets.
+
+You become one of those people.
+
+Your influence grows.`,
+  choices:[
+    ["Use power to protect others","leaderPath"],
+    ["Use power for yourself","ambitionPath"],
+    ["Control the criminal world","monsterPath"]
+  ]
+},
+
+spyPath:{
+  title:"THE SPY",
+  text:`You become good at learning things without being noticed.
+
+Names.
+
+Routes.
+
+Secrets.
+
+You discover fragments of the old mystery.
+
+The silver knot appears again.
+
+Someone has been searching for the same man for decades.`,
+  choices:[
+    ["Follow the mystery","mysterySearch"],
+    ["Sell the information","criminalControlled"],
+    ["Protect the secret","mysteryProtect"]
+  ]
+},
+
+honourPath:{
+  title:"HONOUR",
+  text:`You serve faithfully.
+
+You refuse unnecessary cruelty.
+
+You gain respect.
+
+But honour creates enemies too.
+
+Not everyone benefits from your principles.`,
+  choices:[
+    ["Continue serving","leaderPath"],
+    ["Protect your family","familyPath"],
+    ["Leave the army","roninPath"]
+  ]
+},
+
+roninPath:{
+  title:"THE RONIN",
+  text:`You abandon your lord.
+
+No banner.
+
+No master.
+
+Only your sword and your name.
+
+Some call you a criminal.
+
+Others call you free.`,
+  choices:[
+    ["Protect villages","protectorPath"],
+    ["Seek revenge","revengePath"],
+    ["Wander","wandererLife"]
+  ]
+},
+
+leaderPath:{
+  title:"THE LEADER",
+  text:`People begin looking to you when something goes wrong.
+
+You organise farmers.
+
+Defend roads.
+
+Negotiate with officials.
+
+You began life with nothing.
+
+Now people trust you with their lives.`,
+  choices:[
+    ["Build a peaceful community","legacyLeader"],
+    ["Join the war","lordService"],
+    ["Protect your family","familyPath"]
+  ]
+},
+
+ambitionPath:{
+  title:"AMBITION",
+  text:`You want more.
+
+More wealth.
+
+More influence.
+
+More control.
+
+There is nothing inherently wrong with ambition.
+
+The danger is deciding what you are willing to sacrifice for it.`,
+  choices:[
+    ["Build honestly","merchantPrince"],
+    ["Manipulate rivals","powerBroker"],
+    ["Destroy anyone who stands in your way","monsterPath"]
+  ]
+},
+
+familyPath:{
+  title:"FAMILY",
+  text:`Your family is no longer something you simply belong to.
+
+It is something you protect.
+
+Your choices now affect people who did not make them.
+
+That is the burden of adulthood.`,
+  choices:[
+    ["Build a home","familyHome"],
+    ["Marry Aiko","aikoMarriageCheck"],
+    ["Find Ren","findRen"],
+    ["Continue your career","adultLife"]
+  ]
+},
+
+familyHome:{
+  title:"A HOME",
+  text:`You build a home.
+
+It is not grand.
+
+But it is yours.
+
+The world outside is still dangerous.
+
+Inside, there is food, warmth and someone waiting for you.`,
+  choices:[
+    ["Continue","aikoMarriageCheck"],
+    ["Focus on your children","childrenPath"]
+  ]
+},
+
+aikoMarriageCheck:{
+  title:"AIKO",
+  text:`You return to the shrine.
+
+Aiko is there.
+
+Older now.
+
+But still Aiko.
+
+She looks at you.
+
+"You took your time."`,
+  choices:[
+    ["Ask her to marry you","marryAiko"],
+    ["Tell her you cannot settle","aikoLeave"],
+    ["Tell her about the life you built","aikoTalk"]
+  ]
+},
+
+marryAiko:{
+  title:"MARRIAGE",
+  text:`Aiko is quiet for a long moment.
+
+Then she smiles.
+
+"Yes."
+
+Your lives become one.
+
+Not perfect.
+
+Not easy.
+
+But together.`,
+  choices:[
+    ["Build a family","familyChildren"],
+    ["Continue your ambitions","adultLife"]
+  ]
+},
+
+aikoLeave:{
+  title:"A CHOICE",
+  text:`Aiko looks at you.
+
+"I knew you would say that."
+
+She is hurt.
+
+But she does not hate you.
+
+You leave knowing that some choices cannot be undone.`,
+  choices:[
+    ["Continue","adultLife"]
+  ]
+},
+
+aikoTalk:{
+  title:"WHAT BECAME OF YOU",
+  text:`You tell Aiko about your life.
+
+The farm.
+
+The road.
+
+The fighting.
+
+The money.
+
+The mistakes.
+
+She listens.
+
+Then she asks:
+
+"Are you happy?"`,
+  choices:[
+    ["Yes","aikoHappy"],
+    ["No","aikoRegret"]
+  ]
+},
+
+aikoHappy:{
+  title:"A QUIET ANSWER",
+  text:`"Yes."
+
+Aiko smiles.
+
+"Good."
+
+Sometimes the biggest victory is simply having someone who wants you to be happy.`,
+  choices:[
+    ["Continue","familyChildren"]
+  ]
+},
+
+aikoRegret:{
+  title:"REGRET",
+  text:`You shake your head.
+
+Aiko doesn't judge you.
+
+"Then change something."
+
+You realise she is still the person who knew you before the world did.`,
+  choices:[
+    ["Choose family","familyChildren"],
+    ["Choose revenge","revengePath"],
+    ["Choose redemption","redemptionPath"]
+  ]
+},
+
+familyChildren:{
+  title:"THE NEXT GENERATION",
+  text:`A child is born.
+
+You hold them carefully.
+
+For a moment the wars feel far away.
+
+Your mother smiles.
+
+Your father watches silently.
+
+Then he says:
+
+"Now you understand."
+
+"Understand what?"
+
+He looks at the child.
+
+"Why I was afraid."`,
+  choices:[
+    ["Protect your family","childrenPath"],
+    ["Teach your child your skills","childrenTeach"]
+  ]
+},
+
+childrenPath:{
+  title:"YOUR CHILDREN",
+  text:`Your children grow.
+
+One wants to fight.
+
+One wants to trade.
+
+One wants to leave.
+
+You realise you cannot choose their lives for them.
+
+You can only prepare them.`,
+  choices:[
+    ["Encourage them","childrenTeach"],
+    ["Control their choices","familyConflict"]
+  ]
+},
+
+childrenTeach:{
+  title:"TEACHING",
+  text:`You teach them what you know.
+
+But you also teach them what you learned the hard way:
+
+That strength is not everything.
+
+That people remember kindness.
+
+That fear can become addictive.
+
+And that every choice has a cost.`,
+  choices:[
+    ["Continue into later life","age40"]
+  ]
+},
+
+familyConflict:{
+  title:"THE OLD MISTAKE",
+  text:`You try to control your child.
+
+They push back.
+
+"You don't understand me."
+
+The words hit harder than expected.
+
+You suddenly remember your own father.`,
+  choices:[
+    ["Listen","childrenReconcile"],
+    ["Demand obedience","childrenBreak"]
+  ]
+},
+
+childrenReconcile:{
+  title:"UNDERSTANDING",
+  text:`You listen.
+
+Your child explains what they want.
+
+You don't agree.
+
+But you let them choose.
+
+The family survives the argument.`,
+  choices:[
+    ["Continue","age40"]
+  ]
+},
+
+childrenBreak:{
+  title:"THE DISTANCE",
+  text:`Your child leaves.
+
+Years may pass before you see them again.
+
+You have won the argument.
+
+But lost something more important.`,
+  choices:[
+    ["Continue","age40"]
+  ]
+},
+
+/* ---------------- MYSTERY ---------------- */
+
+mysterySearch:{
+  title:"THE SILVER KNOT",
+  text:`The old symbol has followed you for decades.
+
+The rainy night.
+
+The abandoned sword.
+
+The hidden tunnel.
+
+The merchant.
+
+Your father's silence.
+
+They are not separate events.
+
+Someone was moving information through Kuroda.
+
+Someone powerful wanted it buried.`,
+  choices:[
+    ["Find the old merchant","mysteryMerchant"],
+    ["Question your father","mysteryFather"],
+    ["Find Ren","findRen"],
+    ["Search the old shrine","mysteryShrine"]
+  ]
+},
+
+mysteryMerchant:{
+  title:"GENZAEMON",
+  text:`Genzaemon is old now.
+
+He remembers you.
+
+"You were the child who asked too many questions."
+
+You ask about the silver knot.
+
+His smile disappears.
+
+"Leave it alone."
+
+You have heard that before.`,
+  choices:[
+    ["Threaten him","mysteryThreat"],
+    ["Offer him protection","mysteryDeal"],
+    ["Ask what happened","mysteryAsk"]
+  ]
+},
+
+mysteryFather:{
+  title:"YOUR FATHER'S TRUTH",
+  text:`Your father is older.
+
+You ask him directly.
+
+He sighs.
+
+"Yes. I knew about the man."
+
+"Who was he?"
+
+"I never knew his true name."
+
+"But you helped him?"
+
+"Once."
+
+He looks toward the window.
+
+"That was enough to put our family in danger."`,
+  choices:[
+    ["Ask where he went","mysteryLocation"],
+    ["Forgive your father","mysteryForgive"]
+  ]
+},
+
+mysteryShrine:{
+  title:"THE OLD SHRINE",
+  text:`The shrine has been rebuilt.
+
+Beneath the floor you find an old compartment.
+
+Inside is a sealed letter.
+
+The handwriting is faded.
+
+The silver knot is drawn at the bottom.`,
+  choices:[
+    ["Open it","mysteryLetter"],
+    ["Take it to Ren","findRen"]
+  ]
+},
+
+mysteryLetter:{
+  title:"THE LETTER",
+  text:`The letter names several powerful families.
+
+It describes grain manipulation, secret alliances and a man who discovered the scheme.
+
+At the bottom is a single line:
+
+"If I disappear, find the man who carries no name."`,
+  choices:[
+    ["Follow the clue","mysteryMan"],
+    ["Destroy the letter","mysteryDestroy"]
+  ]
+},
+
+mysteryMan:{
+  title:"THE MAN",
+  text:`You follow the trail for years.
+
+Old roads.
+
+Forgotten villages.
+
+Dead contacts.
+
+Eventually you find a man living alone in the mountains.
+
+He is old.
+
+Very old.
+
+He looks at the silver knot.
+
+"I wondered who would come looking."`,
+  choices:[
+    ["Ask who he is","mysteryReveal"],
+    ["Demand the truth","mysteryDemand"]
+  ]
+},
+
+mysteryReveal:{
+  title:"THE LAST SECRET",
+  text:`He tells you the truth.
+
+He was the man from the rumours.
+
+He discovered that powerful families were manipulating food, land and alliances.
+
+Your village was one small piece of the network.
+
+Your father helped him escape.
+
+The people who came to Kuroda were trying to silence everyone connected to him.`,
+  choices:[
+    ["Protect him","mysteryProtect"],
+    ["Expose everything","mysteryExpose"],
+    ["Kill him","mysteryKill"]
+  ]
+},
+
+mysteryDemand:{
+  title:"THE MAN WITHOUT A NAME",
+  text:`He looks tired.
+
+"You want justice."
+
+You nod.
+
+"Then understand this first."
+
+He tells you everything.
+
+The truth is worse than the rumours.
+
+And now you have to decide what to do with it.`,
+  choices:[
+    ["Protect the secret","mysteryProtect"],
+    ["Expose it","mysteryExpose"],
+    ["Kill him","mysteryKill"]
+  ]
+},
+
+mysteryProtect:{
+  title:"THE SECRET LIVES",
+  text:`You decide the truth would cause another war.
+
+You protect the man.
+
+The evidence disappears.
+
+The world never learns everything.
+
+But thousands of people may have been spared another conflict.`,
+  choices:[
+    ["Return home","age50"],
+    ["Keep travelling","wandererLife"]
+  ]
+},
+
+mysteryExpose:{
+  title:"THE TRUTH",
+  text:`You reveal everything.
+
+Names.
+
+Documents.
+
+Trade routes.
+
+The conspiracy becomes impossible to deny.
+
+Powerful people fall.
+
+Others come after you.
+
+You have changed history.`,
+  choices:[
+    ["Protect your family","age50"],
+    ["Disappear","wandererLife"]
+  ]
+},
+
+mysteryKill:{
+  title:"THE FINAL SECRET",
+  text:`You raise your sword.
+
+The old man does not resist.
+
+"You think killing me will end it?"
+
+You strike.
+
+The secret dies with him.
+
+So does your chance to know whether he was telling the whole truth.`,
+  choices:[
+    ["Return home","age50"],
+    ["Live with the uncertainty","age50"]
+  ]
+},
+
+mysteryThreat:{
+  title:"THREATS",
+  text:`You threaten Genzaemon.
+
+He laughs.
+
+"You became exactly what I expected."
+
+He gives you the location of an old contact.
+
+But now he fears you.
+
+You have gained information.
+
+At a cost.`,
+  choices:[
+    ["Follow the lead","mysterySearch"],
+    ["Walk away","adultLife"]
+  ]
+},
+
+mysteryDeal:{
+  title:"THE DEAL",
+  text:`You offer protection.
+
+Genzaemon agrees.
+
+In exchange, he gives you a name.
+
+A man living in the mountains.
+
+The trail continues.`,
+  choices:[
+    ["Follow it","mysteryMan"]
+  ]
+},
+
+mysteryAsk:{
+  title:"THE STORY",
+  text:`Genzaemon finally speaks.
+
+He tells you your father once carried a message.
+
+The message was never delivered.
+
+Someone else took it.
+
+That someone may still be alive.`,
+  choices:[
+    ["Find the message","mysteryLetter"],
+    ["Find the man","mysteryMan"]
+  ]
+},
+
+mysteryLocation:{
+  title:"THE MOUNTAINS",
+  text:`Your father tells you the man fled north.
+
+You now have a direction.
+
+Not an answer.
+
+But enough to continue.`,
+  choices:[
+    ["Follow the trail","mysteryMan"]
+  ]
+},
+
+mysteryForgive:{
+  title:"FORGIVENESS",
+  text:`You forgive your father.
+
+He closes his eyes.
+
+"Thank you."
+
+You realise you may never know everything he sacrificed.
+
+Some secrets belong to the dead.`,
+  choices:[
+    ["Continue","age40"]
+  ]
+},
+
+mysteryDestroy:{
+  title:"THE LETTER BURNS",
+  text:`You hold the letter over the fire.
+
+The names disappear.
+
+The mystery disappears with them.
+
+Nobody can use it against your family.
+
+You will always wonder what might have happened if you had kept it.`,
+  choices:[
+    ["Continue","age40"]
+  ]
+},
+
+/* ---------------- REN ---------------- */
+
+findRen:{
+  title:"REN RETURNS",
+  text:`You hear footsteps behind you.
+
+You turn.
+
+Ren.
+
+Older.
+
+Harder.
+
+A sword hangs at his side.
+
+He smiles.
+
+"Still getting into trouble?"`,
+  choices:[
+    ["Embrace him","renFriend"],
+    ["Ask where he has been","renAsk"],
+    ["Ask if he betrayed you","renBetrayQuestion"],
+    ["Draw your sword","renFight"]
+  ]
+},
+
+renFriend:{
+  title:"THE OLD FRIEND",
+  text:`Ren laughs.
+
+"You know, you haven't changed much."
+
+He looks at you.
+
+"Even when we were children, you couldn't leave anything alone."
+
+The peach orchard comes back to you.
+
+The river.
+
+The road.
+
+All of it.
+
+MEMORY RECOGNIZED — The Peach Orchard.`,
+  choices:[
+    ["Trust him","renTrust"],
+    ["Ask about the mystery","renMystery"]
+  ]
+},
+
+renAsk:{
+  title:"WHAT HAPPENED TO REN",
+  text:`Ren looks away.
+
+"I joined people who were fighting the same war."
+
+"Whose side?"
+
+He smiles sadly.
+
+"That's complicated."`,
+  choices:[
+    ["Trust him","renTrust"],
+    ["Press him","renPressure"]
+  ]
+},
+
+renBetrayQuestion:{
+  title:"THE QUESTION",
+  text:`Ren's face hardens.
+
+"You think I betrayed you?"
+
+You tell him what you remember.
+
+He shakes his head.
+
+"Then somebody lied to you."`,
+  choices:[
+    ["Believe him","renTrust"],
+    ["Refuse to forgive him","renEnemy"]
+  ]
+},
+
+renFight:{
+  title:"REN",
+  text:`Your hand moves toward your sword.
+
+Ren's does the same.
+
+For a moment you are fourteen again.
+
+Then neither of you draws.
+
+He laughs.
+
+"Still dramatic."`,
+  choices:[
+    ["Lower your sword","renTrust"],
+    ["Leave him","renEnemy"]
+  ]
+},
+
+renTrust:{
+  title:"BROTHERS IN EVERYTHING BUT BLOOD",
+  text:`Ren tells you what he knows.
+
+The mysterious man is alive.
+
+The silver knot belongs to an old network.
+
+And someone has been searching for your family for years.
+
+Ren offers to help.`,
+  choices:[
+    ["Work together","renAlliance"],
+    ["Ask him to stay away from your family","renProtect"]
+  ]
+},
+
+renMystery:{
+  title:"REN KNOWS SOMETHING",
+  text:`Ren's expression changes.
+
+"I've seen the symbol."
+
+"Where?"
+
+He names a mountain village.
+
+The same place your father's story pointed toward.`,
+  choices:[
+    ["Go with Ren","mysteryMan"],
+    ["Investigate alone","mysterySearch"]
+  ]
+},
+
+renPressure:{
+  title:"THE TRUTH",
+  text:`Ren finally tells you.
+
+He once worked for people connected to the mystery.
+
+He was trying to protect you.
+
+But his secrecy made you believe he had betrayed you.
+
+He looks ashamed.`,
+  choices:[
+    ["Forgive him","renTrust"],
+    ["Walk away","renEnemy"]
+  ]
+},
+
+renEnemy:{
+  title:"THE FRIEND YOU LOST",
+  text:`Ren watches you leave.
+
+Neither of you calls the other back.
+
+Some friendships survive decades.
+
+Others become memories.
+
+This one becomes both.`,
+  choices:[
+    ["Continue","age40"]
+  ]
+},
+
+renAlliance:{
+  title:"THE OLD FRIENDS",
+  text:`You and Ren travel together again.
+
+It feels like being children.
+
+For a while.
+
+Then you realise both of you have become dangerous men.
+
+The world has changed.
+
+So have you.`,
+  choices:[
+    ["Continue the mystery","mysterySearch"],
+    ["Build a life together","leaderPath"]
+  ]
+},
+
+renProtect:{
+  title:"PROTECTION",
+  text:`Ren nods.
+
+"Fine."
+
+He smiles.
+
+"You always were protective."
+
+MEMORY RECOGNIZED — The Village Boy.`,
+  choices:[
+    ["Continue","age40"]
+  ]
+},
+
+/* ---------------- REVENGE ---------------- */
+
+revengePath:{
+  title:"REVENGE",
+  text:`You remember the man who burned Kuroda.
+
+He is older now.
+
+But alive.
+
+You have spent years imagining this moment.`,
+  choices:[
+    ["Find him","revengeFind"],
+    ["Prepare carefully","revengePrepare"],
+    ["Let the anger go","redemptionPath"]
+  ]
+},
+
+revengeFind:{
+  title:"THE ENEMY",
+  text:`You find him.
+
+He is now a respected officer.
+
+He does not recognise you.
+
+You recognise him immediately.`,
+  choices:[
+    ["Challenge him openly","revengeDuel"],
+    ["Follow him and wait","revengeWait"],
+    ["Expose his crimes","revengeExpose"]
+  ]
+},
+
+revengePrepare:{
+  title:"PREPARATION",
+  text:`You spend months gathering information.
+
+You learn his habits.
+
+His guards.
+
+His routes.
+
+His weaknesses.
+
+Revenge becomes less like anger.
+
+More like a plan.`,
+  choices:[
+    ["Strike","revengeStrike"],
+    ["Abandon the plan","redemptionPath"]
+  ]
+},
+
+revengeDuel:{
+  title:"THE DUEL",
+  text:`You confront him.
+
+He finally recognises your face.
+
+"Kuroda."
+
+You raise your sword.
+
+The fight is brutal.
+
+He is older, but still skilled.`,
+  choices:[
+    ["Fight to kill","revengeKill"],
+    ["Demand he confess","revengeConfess"]
+  ]
+},
+
+revengeWait:{
+  title:"THE SHADOW",
+  text:`You follow him.
+
+One night you see him alone.
+
+No guards.
+
+No witnesses.
+
+This is the easiest moment you will ever have.
+
+You also realise it is the hardest.`,
+  choices:[
+    ["Kill him","revengeKill"],
+    ["Walk away","redemptionPath"]
+  ]
+},
+
+revengeExpose:{
+  title:"JUSTICE",
+  text:`You collect testimony from survivors.
+
+You find records.
+
+You bring the evidence before powerful people.
+
+The officer is exposed.
+
+You did not kill him.
+
+But his life is destroyed.`,
+  choices:[
+    ["Accept justice","revengeComplete"],
+    ["Kill him anyway","revengeKill"]
+  ]
+},
+
+revengeStrike:{
+  title:"THE STRIKE",
+  text:`You wait until night.
+
+You enter quietly.
+
+Two guards notice you.
+
+You fight them.
+
+One falls.
+
+The other flees.
+
+You reach the officer's room.`,
+  choices:[
+    ["Kill him","revengeKill"],
+    ["Demand the truth","revengeConfess"]
+  ]
+},
+
+revengeKill:{
+  title:"THE BLOOD DEBT",
+  text:`You kill him.
+
+For years you imagined this moment.
+
+You expected satisfaction.
+
+Instead there is silence.
+
+The man who destroyed your childhood is dead.
+
+But your childhood is still gone.
+
+Revenge cannot return it.`,
+  choices:[
+    ["Return to Aiko","findAiko"],
+    ["Continue alone","wandererLife"],
+    ["Embrace what you have become","monsterPath"]
+  ]
+},
+
+revengeConfess:{
+  title:"THE CONFESSION",
+  text:`He tells you why Kuroda was attacked.
+
+Your village had been used to move information.
+
+Your father had unknowingly helped someone escape.
+
+The attack was ordered to erase witnesses.
+
+He asks you to kill him.
+
+You don't.`,
+  choices:[
+    ["Take him to justice","revengeComplete"],
+    ["Walk away","redemptionPath"]
+  ]
+},
+
+revengeComplete:{
+  title:"REVENGE WITHOUT BLOOD",
+  text:`The man is imprisoned.
+
+You return home.
+
+The people of Kuroda know what happened.
+
+Some call it justice.
+
+Some say you should have killed him.
+
+You know you chose your own path.`,
+  choices:[
+    ["Continue","age50"]
+  ]
+},
+
+redemptionPath:{
+  title:"LETTING GO",
+  text:`You finally understand.
+
+The past cannot be repaired.
+
+Only carried.
+
+You choose not to kill.
+
+Not because your enemy deserves mercy.
+
+Because you don't want to become him.`,
+  choices:[
+    ["Return to your family","familyPath"],
+    ["Protect others","protectorPath"],
+    ["Seek peace","legacyLeader"]
+  ]
+},
+
+/* ---------------- MONSTER ---------------- */
+
+monsterPath:{
+  title:"THE MONSTER",
+  text:`You have crossed enough lines that people no longer describe you as merely dangerous.
+
+They call you cruel.
+
+Then ruthless.
+
+Then something worse.
+
+You notice that fear works.
+
+People obey.
+
+Enemies surrender.
+
+You become very good at making people afraid.`,
+  choices:[
+    ["Stop","redemptionPath"],
+    ["Take control of the criminal world","monsterKing"],
+    ["Become a feared warrior","monsterWarrior"],
+    ["Destroy your enemies","monsterRevenge"]
+  ]
+},
+
+monsterKing:{
+  title:"THE UNDERWORLD KING",
+  text:`You take control.
+
+Smugglers answer to you.
+
+Thieves pay you.
+
+Officials fear you.
+
+Your wealth grows.
+
+So does the list of people who want you dead.`,
+  choices:[
+    ["Protect your family","monsterFamily"],
+    ["Seek total control","monsterEnd"],
+    ["Walk away before it is too late","redemptionPath"]
+  ]
+},
+
+monsterWarrior:{
+  title:"THE FEARED BLADE",
+  text:`You become infamous.
+
+You stop counting the men you kill.
+
+People surrender when they hear your name.
+
+Even allies avoid standing too close.`,
+  choices:[
+    ["Continue","monsterEnd"],
+    ["Seek redemption","redemptionPath"]
+  ]
+},
+
+monsterRevenge:{
+  title:"NOTHING LEFT",
+  text:`You destroy everyone connected to your enemies.
+
+One by one.
+
+Eventually there is nobody left.
+
+You have won.
+
+There is nobody left to fight.`,
+  choices:[
+    ["Continue","monsterEnd"],
+    ["Return to your family","monsterFamily"]
+  ]
+},
+
+monsterFamily:{
+  title:"THE FAMILY SEES YOU",
+  text:`You return home.
+
+Your child looks at you.
+
+They are afraid.
+
+Not because someone told them stories.
+
+Because they have seen your face when you are angry.
+
+You suddenly understand what you became.`,
+  choices:[
+    ["Change","redemptionPath"],
+    ["Tell them fear keeps them safe","monsterEnd"]
+  ]
+},
+
+monsterEnd:{
+  title:"THE MONSTER",
+  text:`You became exactly what you once feared.
+
+People obey.
+
+People fear you.
+
+People remember you.
+
+But nobody truly knows you.
+
+When you die, people celebrate that you are gone.`,
+  choices:[
+    ["Accept your legacy","finalMonster"]
+  ]
+},
+
+finalMonster:{
+  title:"THE END",
+  text:`Your name survives.
+
+Not as a hero.
+
+Not as a protector.
+
+As a warning.
+
+You were born into poverty.
+
+You could have become almost anything.
+
+You chose this.`,
+  choices:[
+    ["Face the end","deathMonster"]
+  ]
+},
+
+/* ---------------- LATER LIFE ---------------- */
+
+age40:{
+  title:"AGE 40 — THE SECOND GENERATION",
+  text:`You are forty now.
+
+Your children are old enough to make their own decisions.
+
+One wants to become a warrior.
+
+Another wants to leave the village.
+
+Another wants to marry someone you don't trust.
+
+You remember being their age.
+
+You remember your father.`,
+  choices:[
+    ["Trust your children","childrenTeach"],
+    ["Control their lives","familyConflict"],
+    ["Return to your old mystery","mysterySearch"],
+    ["Seek your old enemy","revengePath"]
+  ]
+},
+
+age50:{
+  title:"AGE 50 — LEGACY",
+  text:`Your reputation now travels farther than you do.
+
+People tell stories about you.
+
+Some are true.
+
+Some are not.
+
+A farmer remembers you as the person who saved his family.
+
+A merchant remembers you as a thief.
+
+A soldier remembers you as a coward.
+
+Ren remembers you as something else entirely.
+
+Aiko remembers who you were before anyone else knew your name.`,
+  choices:[
+    ["Return to Kuroda","age55"],
+    ["Travel one final time","finalAdventure"],
+    ["Spend your years with family","finalFamily"],
+    ["Seek one final truth","mysterySearch"]
+  ]
+},
+
+age55:{
+  title:"AGE 55 — THE RETURN",
   text:`You return to Kuroda.
 
-The atmosphere has changed.
+The village is different.
 
-People are whispering.
+New houses stand where old ones burned.
 
-The gate guards are nervous.
+Children run through the streets.
 
-The stranger is nowhere to be seen.
+You recognise almost nothing.
 
-You now know there is an insider helping the approaching force.
+Then an old woman looks at you.
 
-But you still do not know who.`,
+She smiles.
 
+"You came back."`,
   choices:[
-    ["Find Masaru, the village messenger","findMasaru"],
-    ["Search the village storehouses","searchVillage"],
-    ["Return to the elder","returnElder"],
-    ["Investigate the shrine","goShrine"]
+    ["Stay","finalHome"],
+    ["Visit the orchard","finalOrchard"],
+    ["Visit the shrine","finalShrine"],
+    ["Leave again","finalAdventure"]
   ]
 },
 
+finalHome:{
+  title:"HOME",
+  text:`You finally stop running.
 
-/* =====================================================
-   MASARU
-===================================================== */
+The world remains dangerous.
 
-masaru:{
-  title:"MASARU THE MESSENGER",
+Wars continue.
 
-  text:`You find Masaru near the western houses.
+Lords rise and fall.
 
-He smiles when he sees you.
+But your life has become something quieter.
 
-"Can I help you?"
-
-You mention the riders.
-
-His smile disappears for half a second.
-
-Then it returns.
-
-"I know nothing."
-
-You notice mud on his sandals.
-
-The same reddish mud found near the eastern road.
-
-Masaru notices you looking.
-
-"You should stop asking questions."
-
-He walks away.`,
-
+You have built a home.`,
   choices:[
-    ["Follow Masaru","followMasaru"],
-    ["Confront him","confrontMasaru"],
-    ["Search his quarters","searchMasaru"],
-    ["Tell the elder what you discovered","accuseMasaru"]
+    ["Continue","deathOld"]
   ]
 },
 
+finalOrchard:{
+  title:"THE PEACH ORCHARD",
+  text:`The orchard has grown back.
 
-/* =====================================================
-   SHRINE
-===================================================== */
+You remember Ren.
 
-shrine:{
-  title:"THE ABANDONED SHRINE",
+A boy in a tree.
 
-  text:`The shrine has been abandoned for years.
+A stolen peach.
 
-But someone has been here recently.
+A laugh.
 
-There are footprints in the mud.
-
-Under the wooden floor you discover a hidden compartment.
-
-Inside is a bundle of supplies.
-
-Rope.
-
-Oil.
-
-And a sealed clay container.
-
-You hear voices outside.`,
-
+MEMORY RECOGNIZED — The Peach Orchard.`,
   choices:[
-    ["Hide and listen","hideShrine"],
-    ["Take the supplies","takeSupplies"],
-    ["Open the clay container","openContainer"],
-    ["Leave immediately","leaveShrine"]
+    ["Sit beneath the tree","deathOld"],
+    ["Leave a peach behind","deathOld"]
   ]
 },
 
+finalShrine:{
+  title:"THE SHRINE",
+  text:`You sit beneath the cedar.
 
-/* =====================================================
-   TUNNEL
-===================================================== */
+You remember Aiko.
 
-tunnel:{
-  title:"THE HIDDEN TUNNEL",
+Your childhood.
 
-  text:`Behind the collapsed wall you discover a narrow tunnel.
+The choices that made you.
 
-It runs beneath the eastern side of Kuroda.
-
-The walls are damp.
-
-Someone has been using it recently.
-
-You hear voices ahead.
-
-One voice is unmistakably from Kuroda.
-
-"After sunset, open the gate."
-
-A second voice answers:
-
-"And the boy?"
-
-"He knows too much."
-
-You realise they are talking about you.`,
-
+For a moment, everything feels close again.`,
   choices:[
-    ["Sneak closer","sneakTunnel"],
-    ["Run back to Kuroda","runTunnel"],
-    ["Attack the men","attackTunnel"],
-    ["Find another exit","searchTunnel"]
+    ["Rest","deathOld"]
   ]
 },
 
+finalAdventure:{
+  title:"ONE LAST JOURNEY",
+  text:`Even at your age, the road calls.
 
-/* =====================================================
-   EVIDENCE
-===================================================== */
+You travel one last time.
 
-evidence:{
-  title:"THE TRUTH BEGINS TO EMERGE",
+You see mountains.
 
-  text:`You have gathered enough clues to see the shape of the plot.
+Rivers.
 
-The riders are planning to attack Kuroda.
+Villages.
 
-Someone inside the village is helping them.
+Then you turn home.
 
-The eastern gate is part of the plan.
-
-And the attack is coming tonight.
-
-You have one chance to decide what kind of person you will be.`,
-
+You have nothing left to prove.`,
   choices:[
-    ["Warn the entire village","prepareVillage"],
-    ["Find the traitor yourself","huntTraitor"],
-    ["Find the stranger","findStranger"],
-    ["Leave Kuroda before the attack","leaveBeforeAttack"]
+    ["Return home","deathOld"]
   ]
 },
 
+finalFamily:{
+  title:"FAMILY",
+  text:`Your family gathers around you.
 
-/* =====================================================
-   PREPARATION
-===================================================== */
+Your children.
 
-preparation:{
-  title:"BEFORE SUNSET",
+Your grandchildren.
 
-  text:`The final light is disappearing over Kuroda.
+The people you protected.
 
-The villagers are frightened.
+The people who remember your mistakes.
 
-You have discovered enough to know the attack is real.
-
-But knowing an attack is coming is not the same as knowing how to stop it.
-
-You can prepare the village, hunt the traitor, or try something more dangerous.`,
-
+You are surrounded by voices.`,
   choices:[
-    ["Fortify the eastern gate","fortifyGate"],
-    ["Set a trap for the traitor","trapTraitor"],
-    ["Search for the explosive charge","findExplosive"],
-    ["Gather the villagers together","rallyVillagers"]
+    ["Stay with them","deathOld"]
   ]
 },
 
+deathOld:{
+  title:"THE LAST NIGHT",
+  text:`Your body is tired.
 
-/* =====================================================
-   NIGHT ATTACK
-===================================================== */
+The room is warm.
 
-attack:{
-  title:"THE NIGHT OF FIRE",
+Someone is sitting beside you.
 
-  text:`Night falls.
+Outside, rain begins to fall.
 
-For several minutes Kuroda is silent.
+For a moment you remember the night you were born.
 
-Then—
+Rain against the roof.
 
-A horn sounds from the eastern road.
+Your father's voice.
 
-Torches appear beyond the trees.
+Your mother's breathing.
 
-The attack has begun.
+A whole life between then and now.
 
-The eastern gate shakes under the first assault.
-
-Somebody inside Kuroda has opened the smaller side gate.`,
-
+You close your eyes.`,
   choices:[
-    ["Defend the eastern gate","defendGate"],
-    ["Search for the traitor","findTraitorDuringAttack"],
-    ["Find and disarm the explosive","disarmExplosive"],
-    ["Escape through the forest","escapeAttack"]
+    ["Let the story end","finalLife"]
   ]
 },
 
+finalLife:{
+  title:"YOUR LEGACY",
+  text:`You were born with nothing.
 
-/* =====================================================
-   FINAL DECISION
-===================================================== */
+No famous name.
 
-finalDecision:{
-  title:"THE LAST CHOICE",
+No great estate.
 
-  text:`The battle has reached the heart of Kuroda.
+No promise of greatness.
 
-Smoke covers the streets.
+You built your life through thousands of small decisions.
 
-The attackers are inside the village.
+Some kind.
 
-You have survived this long.
+Some foolish.
 
-Now you have to decide what matters more:
+Some brave.
 
-your own survival,
+Some terrible.
 
-the people of Kuroda,
-
-or the truth that brought you into this.`,
-
+But they were yours.`,
   choices:[
-    ["Save the villagers","saveVillage"],
-    ["Kill the traitor","killTraitor"],
-    ["Escape while you can","escapeFinal"],
-    ["Face the enemy commander","faceCommander"]
+    ["Finish your life","calculateEnding"]
+  ]
+},
+
+deathMonster:{
+  title:"THE END",
+  text:`Your life ends beneath the weight of everything you became.`,
+  choices:[
+    ["Finish your story","calculateEnding"]
   ]
 }
 
@@ -1480,58 +5293,191 @@ or the truth that brought you into this.`,
 
 
 /* =====================================================
-   SHOW SCENE
+   START / RESET
 ===================================================== */
 
-function showScene(sceneName){
+function resetState(){
 
-  if(!state.alive)return;
+  state.age=0;
+  state.year=1570;
+  state.season="Late autumn";
+  state.location="Kuroda Village";
+  state.scene="birth";
+  state.alive=true;
+  state.ending=false;
 
-  state.scene=sceneName;
+  state.money=0;
+  state.health=100;
+  state.reputation=0;
+  state.honour=0;
+  state.familyTrust=0;
+  state.hunger=0;
+  state.power=1;
 
-  const scene=scenes[sceneName];
+  Object.keys(state.skills).forEach(k=>{
+    state.skills[k]=0;
+  });
 
-  if(!scene){
+  state.traits={};
 
-    console.error(
-      "Unknown scene:",
-      sceneName
-    );
+  state.relationships={
+    ren:0,
+    daichi:0,
+    aiko:0,
+    mother:5,
+    father:5,
+    siblings:3,
+    villagers:0,
+    elder:0
+  };
 
+  Object.keys(state.flags).forEach(k=>{
+    state.flags[k]=false;
+  });
+
+  state.flags.finalEnemyAlive=true;
+
+  state.memories=[];
+  state.quests=[];
+  state.inventory=[];
+  state.history=[];
+  state.lastAction="";
+  state.lastMemory="";
+
+  state.family={
+    fatherAlive:true,
+    motherAlive:true,
+    siblings:1,
+    partner:null,
+    children:0
+  };
+
+  state.customCount=0;
+
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+function startGame(){
+
+  resetState();
+
+  el("start").classList.add("hidden");
+  el("character").classList.add("hidden");
+  el("gameover").classList.add("hidden");
+  el("game").classList.remove("hidden");
+
+  logEvent(
+    "You were born in Kuroda Village."
+  );
+
+  showScene("birth");
+
+  render();
+
+}
+
+
+/* =====================================================
+   AGE PROGRESSION
+===================================================== */
+
+function advanceAge(){
+
+  if(state.age>=65){
+
+    showScene("deathOld");
     return;
   }
 
-  /*
-     CLEAR EVERYTHING FIRST.
+  state.age++;
+  state.year=1570+state.age;
+  state.season=seasonForAge(state.age);
 
-     This is what fixes the old button problem.
-  */
+  if(state.age===16){
 
-  const choiceBox=el("choices");
+    state.money+=20;
 
-  if(choiceBox){
-    choiceBox.innerHTML="";
+    addSkill("survival",1);
+
   }
 
-  el("sceneTitle").textContent=
-    scene.title || "";
+  if(state.age===20){
 
-  el("reply").textContent=
-    scene.text || "";
+    addSkill("intelligence",1);
 
+  }
+
+  if(state.age===30){
+
+    state.money+=50;
+
+  }
+
+  if(state.age===40){
+
+    if(state.family.children===0)
+      state.family.children=1;
+
+  }
+
+  if(state.age===50){
+
+    state.reputation+=2;
+
+  }
+
+}
+
+
+/* =====================================================
+   SCENE DISPLAY
+===================================================== */
+
+function showScene(name){
+
+  if(!state.alive)return;
+
+  const scene=scenes[name];
+
+  if(!scene){
+
+    console.error("Missing scene:",name);
+    return;
+  }
+
+  state.scene=name;
+
+  el("sceneTitle").textContent=scene.title;
+  el("reply").textContent=scene.text;
   el("you").textContent=
     state.lastAction
       ? `You: ${state.lastAction}`
       : "";
 
-  renderChoices(
-    scene.choices || []
-  );
+  renderChoices(scene.choices||[]);
 
-  renderInventory();
-  renderQuests();
-  renderChronicle();
-  updateStats();
+  const memory=el("memoryBox");
+
+  if(state.lastMemory){
+
+    memory.innerHTML=
+      `<div class="memory">
+        MEMORY RECOGNIZED — ${state.lastMemory}
+      </div>`;
+
+    state.lastMemory="";
+
+  }else{
+
+    memory.innerHTML="";
+
+  }
+
+  render();
 
   window.scrollTo({
     top:0,
@@ -1542,54 +5488,95 @@ function showScene(sceneName){
 
 
 /* =====================================================
-   RENDER CHOICES
+   CHOICE REQUIREMENTS
 ===================================================== */
 
-function renderChoices(choiceList){
+function requirementFor(action){
+
+  const req={
+
+    marryAiko:{
+      type:"relationship",
+      person:"aiko",
+      value:5,
+      text:"Requires Aiko relationship 5+"
+    },
+
+    revengeFind:{
+      type:"flag",
+      flag:"revengeTarget",
+      text:"You need to discover your enemy first."
+    }
+
+  };
+
+  return req[action]||null;
+}
+
+function requirementMet(req){
+
+  if(!req)return true;
+
+  if(req.type==="relationship")
+    return state.relationships[req.person]>=req.value;
+
+  if(req.type==="flag")
+    return !!state.flags[req.flag];
+
+  return true;
+}
+
+
+/* =====================================================
+   CHOICE RENDERING
+===================================================== */
+
+function renderChoices(list){
 
   const box=el("choices");
 
-  if(!box)return;
-
   box.innerHTML="";
 
-  /*
-     HARD LIMIT:
-     The game will NEVER display more than four
-     prearranged choices.
-  */
+  list.slice(0,4).forEach(choice=>{
 
-  const choices=
-    choiceList.slice(0,4);
+    const label=choice[0];
+    const action=choice[1];
 
-  choices.forEach(choice=>{
+    const req=requirementFor(action);
+    const unlocked=requirementMet(req);
 
-    const button=
-      document.createElement("button");
+    const button=document.createElement("button");
 
-    button.textContent=
-      choice[0];
+    if(!unlocked)
+      button.classList.add("choiceLocked");
+
+    const main=document.createElement("span");
+    main.className="choiceMain";
+    main.textContent=label;
+
+    button.appendChild(main);
+
+    if(!unlocked){
+
+      const meta=document.createElement("span");
+      meta.className="choiceMeta";
+      meta.textContent=
+        `LOCKED — ${req.text}`;
+
+      button.appendChild(meta);
+
+      button.disabled=true;
+
+    }
 
     button.onclick=()=>{
 
-      /*
-         Disable every button immediately.
-
-         This prevents double-clicks from firing
-         two actions before the next scene loads.
-      */
-
       [...box.querySelectorAll("button")]
-        .forEach(b=>{
-          b.disabled=true;
-        });
+        .forEach(b=>b.disabled=true);
 
       box.innerHTML="";
 
-      performAction(
-        choice[1],
-        choice[0]
-      );
+      performAction(action,label);
 
     };
 
@@ -1601,7 +5588,7 @@ function renderChoices(choiceList){
 
 
 /* =====================================================
-   ACTION ENGINE
+   MAIN ACTION ENGINE
 ===================================================== */
 
 function performAction(action,label){
@@ -1610,221 +5597,17 @@ function performAction(action,label){
 
   state.lastAction=label;
 
-  advanceTime(1);
+  const fn=actions[action];
 
-  switch(action){
+  if(fn){
 
-    case"meetStranger":
-      meetStranger();
-      break;
+    fn();
 
-    case"questionStranger":
-      questionStranger();
-      break;
+  }else{
 
-    case"trustStranger":
-      trustStranger();
-      break;
+    console.warn("No action:",action);
 
-    case"askRiders":
-      askRiders();
-      break;
-
-    case"watchRiders":
-      watchRiders();
-      break;
-
-    case"followRiders":
-      followRiders();
-      break;
-
-    case"searchRiderCamp":
-      searchRiderCamp();
-      break;
-
-    case"keepWatching":
-      keepWatching();
-      break;
-
-    case"warnElder":
-      warnElder();
-      break;
-
-    case"tellElderStranger":
-      tellElderStranger();
-      break;
-
-    case"tellElderRiders":
-      tellElderRiders();
-      break;
-
-    case"keepInvestigation":
-      keepInvestigation();
-      break;
-
-    case"askElderHelp":
-      askElderHelp();
-      break;
-
-    case"investigateRoad":
-      investigateRoad();
-      break;
-
-    case"followFootprints":
-      followFootprints();
-      break;
-
-    case"searchWall":
-      searchWall();
-      break;
-
-    case"returnVillage":
-      returnVillage();
-      break;
-
-    case"goShrine":
-      goShrine();
-      break;
-
-    case"findMasaru":
-      findMasaru();
-      break;
-
-    case"searchVillage":
-      searchVillage();
-      break;
-
-    case"returnElder":
-      returnElder();
-      break;
-
-    case"followMasaru":
-      followMasaru();
-      break;
-
-    case"confrontMasaru":
-      confrontMasaru();
-      break;
-
-    case"searchMasaru":
-      searchMasaru();
-      break;
-
-    case"accuseMasaru":
-      accuseMasaru();
-      break;
-
-    case"hideShrine":
-      hideShrine();
-      break;
-
-    case"takeSupplies":
-      takeSupplies();
-      break;
-
-    case"openContainer":
-      openContainer();
-      break;
-
-    case"leaveShrine":
-      leaveShrine();
-      break;
-
-    case"sneakTunnel":
-      sneakTunnel();
-      break;
-
-    case"runTunnel":
-      runTunnel();
-      break;
-
-    case"attackTunnel":
-      attackTunnel();
-      break;
-
-    case"searchTunnel":
-      searchTunnel();
-      break;
-
-    case"prepareVillage":
-      prepareVillage();
-      break;
-
-    case"huntTraitor":
-      huntTraitor();
-      break;
-
-    case"findStranger":
-      findStranger();
-      break;
-
-    case"leaveBeforeAttack":
-      leaveBeforeAttack();
-      break;
-
-    case"fortifyGate":
-      fortifyGate();
-      break;
-
-    case"trapTraitor":
-      trapTraitor();
-      break;
-
-    case"findExplosive":
-      findExplosive();
-      break;
-
-    case"rallyVillagers":
-      rallyVillagers();
-      break;
-
-    case"defendGate":
-      defendGate();
-      break;
-
-    case"findTraitorDuringAttack":
-      findTraitorDuringAttack();
-      break;
-
-    case"disarmExplosive":
-      disarmExplosive();
-      break;
-
-    case"escapeAttack":
-      escapeAttack();
-      break;
-
-    case"saveVillage":
-      saveVillage();
-      break;
-
-    case"killTraitor":
-      killTraitor();
-      break;
-
-    case"escapeFinal":
-      escapeFinal();
-      break;
-
-    case"faceCommander":
-      faceCommander();
-      break;
-
-    default:
-      showScene("opening");
-
-  }
-
-  updateStats();
-
-  if(
-    state.alive &&
-    state.health<=0
-  ){
-
-    triggerDeath(
-      "Your injuries finally overwhelm you."
-    );
+    nextFromCurrent();
 
   }
 
@@ -1832,1208 +5615,1398 @@ function performAction(action,label){
 
 
 /* =====================================================
-   OPENING ACTIONS
+   ACTION MAP
 ===================================================== */
 
-function meetStranger(){
-
-  state.flags.metStranger=true;
-
-  state.relationships.stranger++;
-
-  addItem("Black cord");
-
-  logEvent(
-    "You approached the mysterious stranger."
-  );
-
-  showScene("stranger");
-
-}
-
-
-function questionStranger(){
-
-  state.relationships.stranger++;
-
-  addQuest(
-    "Discover who inside Kuroda is helping the riders."
-  );
-
-  logEvent(
-    "The stranger revealed that Kuroda has an insider."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function trustStranger(){
-
-  state.flags.trustedStranger=true;
-
-  state.rep+=2;
-
-  state.relationships.stranger+=3;
-
-  addQuest(
-    "Find the person carrying the silver-knot symbol."
-  );
-
-  logEvent(
-    "You chose to trust the stranger."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-function askRiders(){
-
-  addQuest(
-    "Find out why the riders are coming."
-  );
-
-  logEvent(
-    "You asked the stranger about the riders."
-  );
-
-  showScene("riders");
-
-}
+const actions={};
 
 
 /* =====================================================
-   RIDERS
+   SIMPLE SCENE TRANSITIONS
 ===================================================== */
 
-function watchRiders(){
-
-  state.flags.watchedRiders=true;
-
-  logEvent(
-    "You watched the riders enter Kuroda."
-  );
-
-  showScene("riders");
-
+function go(scene){
+  showScene(scene);
 }
 
 
-function followRiders(){
+/* Birth */
 
+actions.age5=()=>{
+  setAge(5);
+  state.season="Spring";
+  state.location="Kuroda Village";
+  showScene("age5");
+};
+
+
+/* Age 5 */
+
+actions.age5Farm=()=>{
+  addSkill("farming",1);
+  addSkill("endurance",1);
+  state.familyTrust++;
+  remember("Your first day working beside your father.");
+  showScene("age5Farm");
+};
+
+actions.age5Question=()=>{
+  addSkill("intelligence",1);
+  traitProgress("curious");
+  remember("Your first question about poverty.");
+  showScene("age5Question");
+};
+
+actions.age5Mischief=()=>{
+  addSkill("mischief",1);
+  addSkill("exploration",1);
+  traitProgress("mischievous");
+  showScene("age5Mischief");
+};
+
+actions.age5Sick=()=>{
+  addSkill("mischief",1);
+  state.familyTrust--;
+  traitProgress("mischievous");
+  showScene("age5Sick");
+};
+
+actions.age6=()=>{
+  setAge(6);
+  state.season="Summer";
+  showScene("age6");
+};
+
+actions.age6Learn=()=>{
+  addSkill("intelligence",1);
+  showScene("age6Learn");
+};
+
+actions.age6Mischief=()=>{
+  addSkill("mischief",1);
+  traitProgress("mischievous");
+  showScene("age6Mischief");
+};
+
+
+/* Age 6 */
+
+actions.age6Protect=()=>{
+  addSkill("charisma",1);
+  state.reputation++;
+  relation("daichi",2);
+  traitProgress("protective");
+  traitProgress("courageous");
+  showScene("age6Protect");
+};
+
+actions.age6Fight=()=>{
+  addSkill("strength",1);
+  state.reputation--;
+  relation("daichi",2);
+  traitProgress("courageous");
+  showScene("age6Fight");
+};
+
+actions.age6Trick=()=>{
+  addSkill("mischief",1);
+  addSkill("stealth",1);
+  relation("daichi",2);
+  showScene("age6Trick");
+};
+
+actions.age6Adult=()=>{
+  addSkill("discipline",1);
+  state.reputation++;
+  relation("daichi",2);
+  showScene("age6Adult");
+};
+
+actions.age6Daichi=()=>{
+  relation("daichi",1);
+  remember("Daichi was the first child you defended.");
+  showScene("age6Daichi");
+};
+
+
+/* Ren */
+
+actions.age7=()=>{
+  setAge(7);
+  state.season="Summer";
+  state.location="Kuroda Orchard";
+  showScene("age7");
+};
+
+actions.renComeDown=()=>{
+  addSkill("charisma",1);
+  relation("ren",2);
+  remember("The peach orchard.");
+  state.flags.orchard=true;
+  showScene("renComeDown");
+};
+
+actions.renClimb=()=>{
+  addSkill("strength",1);
+  addSkill("endurance",1);
+  relation("ren",2);
+  remember("Climbing the peach tree with Ren.");
+  state.flags.orchard=true;
+  showScene("renClimb");
+};
+
+actions.renIgnore=()=>{
+  addSkill("mischief",1);
+  relation("ren",1);
+  remember("Ren left a peach outside your door.");
+  state.flags.orchard=true;
+  showScene("renIgnore");
+};
+
+actions.renStone=()=>{
+  addSkill("mischief",1);
+  relation("ren",1);
+  state.reputation--;
+  remember("The peach orchard.");
+  state.flags.orchard=true;
+  showScene("renStone");
+};
+
+actions.age8=()=>{
+  setAge(8);
+  state.season="Autumn";
+  state.location="Kuroda Village";
+  showScene("age8");
+};
+
+actions.age8Honour=()=>{
+  addSkill("discipline",1);
+  state.honour++;
+  traitProgress("honourable");
+  showScene("age8");
+};
+
+actions.age8Mischief=()=>{
+  addSkill("mischief",1);
+  traitProgress("mischievous");
+  showScene("age8");
+};
+
+actions.age8Friend=()=>{
+  relation("ren",2);
+  showScene("age8");
+};
+
+
+/* Harvest */
+
+actions.harvestQuiet=()=>{
+  addSkill("discipline",1);
+  traitProgress("cautious");
+  state.flags.badHarvest=true;
+  remember("The merchant's cart during the bad harvest.");
+  showScene("harvestQuiet");
+};
+
+actions.harvestAsk=()=>{
+  addSkill("speech",1);
+  addSkill("intelligence",1);
+  state.flags.badHarvest=true;
+  remember("The merchant who refused to explain his rice.");
+  showScene("harvestAsk");
+};
+
+actions.harvestFollow=()=>{
+  addSkill("stealth",1);
+  addSkill("exploration",1);
+  state.flags.badHarvest=true;
+  state.flags.merchant=true;
+  remember("You followed the merchant's rice cart.");
+  showScene("harvestFollow");
+};
+
+actions.harvestConfront=()=>{
+  addSkill("charisma",1);
+  state.honour++;
+  traitProgress("protective");
+  state.flags.badHarvest=true;
+  remember("You confronted the merchant during the famine.");
+  showScene("harvestConfront");
+};
+
+actions.age9=()=>{
+  setAge(9);
+  state.season="Summer";
+  state.location="Kuroda River";
+  showScene("age9");
+};
+
+actions.age9Father=()=>{
+  state.familyTrust++;
+  showScene("age9");
+};
+
+actions.riverJump=()=>{
+  addSkill("endurance",1);
+  addSkill("strength",1);
+  traitProgress("courageous");
+  remember("The river dare.");
+  state.flags.river=true;
+  showScene("riverJump");
+};
+
+actions.riverRefuse=()=>{
+  addSkill("discipline",1);
+  traitProgress("cautious");
+  remember("You refused the river dare.");
+  showScene("riverRefuse");
+};
+
+actions.riverDare=()=>{
+  addSkill("charisma",1);
+  addSkill("mischief",1);
+  remember("The river dare.");
+  showScene("riverDare");
+};
+
+actions.riverExplore=()=>{
+  addSkill("exploration",1);
+  addSkill("intelligence",1);
+  state.flags.mysteryStarted=true;
+  remember("The scratched crest beneath the river bridge.");
+  showScene("riverExplore");
+};
+
+actions.age10=()=>{
+  setAge(10);
+  state.season="Autumn";
+  state.location="Kuroda Village";
+  showScene("age10");
+};
+
+
+/* Rainy night */
+
+actions.rainSneak=()=>{
+  addSkill("stealth",1);
+  addSkill("intelligence",1);
+  state.flags.rainyNight=true;
+  state.flags.strangerHeard=true;
+  remember("The rainy night when you heard strangers speak of a man who might still be alive.");
+  showScene("rainSneak");
+};
+
+actions.rainFather=()=>{
+  state.familyTrust++;
+  state.flags.rainyNight=true;
+  state.flags.strangerHeard=true;
+  remember("Your father refused to explain the rainy-night conversation.");
+  showScene("rainFather");
+};
+
+actions.rainFollow=()=>{
+  addSkill("stealth",1);
+  addSkill("exploration",1);
+  state.flags.rainyNight=true;
   state.flags.followedRiders=true;
-
-  state.health-=3;
-
-  logEvent(
-    "You secretly followed the riders."
-  );
-
-  showScene("shrine");
-
-}
-
-
-function searchRiderCamp(){
-
-  state.flags.foundEvidence=true;
-
-  addItem("Silver rider token");
-
-  state.rep+=1;
-
-  logEvent(
-    "You found a silver rider token."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-function keepWatching(){
-
-  state.flags.foundEvidence=true;
-
-  addItem("Silver rider token");
-
-  logEvent(
-    "You remained hidden long enough to find evidence."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-/* =====================================================
-   ELDER
-===================================================== */
-
-function warnElder(){
-
-  state.flags.warnedVillage=true;
-
-  state.flags.elderTrust=true;
-
-  state.rep+=3;
-
-  state.relationships.elder+=3;
-
-  addQuest(
-    "Prepare Kuroda for the coming attack."
-  );
-
-  logEvent(
-    "You warned the village elder."
-  );
-
-  showScene("elder");
-
-}
-
-
-function tellElderStranger(){
-
-  state.flags.warnedVillage=true;
-
-  state.rep+=2;
-
-  addQuest(
-    "Find evidence of the traitor."
-  );
-
-  logEvent(
-    "You told the elder about the stranger."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-function tellElderRiders(){
-
-  state.flags.warnedVillage=true;
-
-  state.rep+=3;
-
-  state.relationships.elder+=2;
-
-  logEvent(
-    "You told the elder everything you witnessed."
-  );
-
-  showScene("preparation");
-
-}
-
-
-function keepInvestigation(){
-
-  state.flags.warnedVillage=true;
-
-  logEvent(
-    "You decided to investigate before making accusations."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-function askElderHelp(){
-
-  state.flags.warnedVillage=true;
-
-  state.attack+=3;
-
-  state.rep+=2;
-
-  addItem("Village spear");
-
-  logEvent(
-    "The elder gave you a village spear."
-  );
-
-  showScene("preparation");
-
-}
-
-
-/* =====================================================
-   ROAD
-===================================================== */
-
-function investigateRoad(){
-
-  state.health-=2;
-
-  logEvent(
-    "You investigated the eastern road."
-  );
-
-  showScene("road");
-
-}
-
-
-function followFootprints(){
-
-  state.flags.discoveredTunnel=true;
-
-  addQuest(
-    "Explore the hidden tunnel."
-  );
-
-  logEvent(
-    "The footprints led you to a hidden tunnel."
-  );
-
-  showScene("tunnel");
-
-}
-
-
-function searchWall(){
-
-  state.flags.discoveredTunnel=true;
-
-  addItem("Old map");
-
-  addQuest(
-    "Explore the hidden tunnel."
-  );
-
-  logEvent(
-    "You found an old map and a hidden passage."
-  );
-
-  showScene("tunnel");
-
-}
-
-
-function returnVillage(){
-
-  logEvent(
-    "You returned to Kuroda."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-/* =====================================================
-   SHRINE
-===================================================== */
-
-function goShrine(){
-
-  state.flags.searchedShrine=true;
-
-  logEvent(
-    "You travelled to the abandoned shrine."
-  );
-
-  showScene("shrine");
-
-}
-
-
-function hideShrine(){
-
-  state.flags.explosionKnown=true;
-
-  addItem("Fuse");
-
-  addQuest(
-    "Stop the explosive charge before the attack."
-  );
-
-  logEvent(
-    "You overheard the attackers preparing an explosion."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function takeSupplies(){
-
-  addItem("Rope");
-  addItem("Oil");
-
-  state.rep+=1;
-
-  logEvent(
-    "You took useful supplies from the shrine."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function openContainer(){
-
-  state.flags.explosionKnown=true;
-
-  addItem("Fuse");
-
-  addQuest(
-    "Stop the explosive charge before the attack."
-  );
-
-  logEvent(
-    "You discovered an explosive charge at the shrine."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function leaveShrine(){
-
-  logEvent(
-    "You left the shrine before being discovered."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-/* =====================================================
-   VILLAGE
-===================================================== */
-
-function findMasaru(){
-
-  logEvent(
-    "You went looking for Masaru."
-  );
-
-  showScene("masaru");
-
-}
-
-
-function searchVillage(){
-
-  const roll=random(1,3);
-
-  if(roll===1){
-
-    state.money+=25;
-
-    logEvent(
-      "You found 25 coins in a storehouse."
-    );
-
-  }
-  else if(roll===2){
-
-    addItem("Bandage");
-
-    logEvent(
-      "You found a bandage in a storehouse."
-    );
-
-  }
-  else{
-
-    state.flags.foundEvidence=true;
-
-    addItem("Bloody cloth");
-
-    logEvent(
-      "You found bloody cloth marked with the silver knot."
-    );
-
-  }
-
-  showScene("evidence");
-
-}
-
-
-function returnElder(){
-
-  state.relationships.elder++;
-
-  logEvent(
-    "You returned to the elder."
-  );
-
-  showScene("preparation");
-
-}
-
-
-/* =====================================================
-   MASARU
-===================================================== */
-
-function followMasaru(){
-
-  state.flags.masaruQuestioned=true;
-
-  logEvent(
-    "You followed Masaru through the village."
-  );
-
-  showScene("tunnel");
-
-}
-
-
-function confrontMasaru(){
-
-  state.flags.discoveredTraitor=true;
-
-  state.flags.traitorNameKnown=true;
-
-  state.rep+=2;
-
-  logEvent(
-    "You confronted Masaru."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function searchMasaru(){
-
-  state.flags.discoveredTraitor=true;
-
-  state.flags.traitorNameKnown=true;
-
-  addItem("Masaru's key");
-
-  logEvent(
-    "You found evidence linking Masaru to the conspiracy."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function accuseMasaru(){
-
-  state.flags.discoveredTraitor=true;
-
-  state.flags.traitorNameKnown=true;
-
-  state.rep+=3;
-
-  state.relationships.elder+=2;
-
-  logEvent(
-    "You accused Masaru of helping the attackers."
-  );
-
-  showScene("preparation");
-
-}
-
-
-/* =====================================================
-   TUNNEL
-===================================================== */
-
-function sneakTunnel(){
-
-  state.flags.discoveredTraitor=true;
-
-  state.flags.traitorNameKnown=true;
-
-  state.rep+=2;
-
-  logEvent(
-    "You discovered that Masaru is the traitor."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function runTunnel(){
-
-  state.health-=3;
-
-  logEvent(
-    "You fled the tunnel before being discovered."
-  );
-
-  showScene("villageAfterClue");
-
-}
-
-
-function attackTunnel(){
-
-  const damage=random(8,18);
-
-  state.health-=damage;
-
-  if(state.health<=0){
-
-    triggerDeath(
-      "The men in the tunnel overpower you."
-    );
-
-    return;
-
-  }
-
-  state.attack+=3;
-
-  state.flags.discoveredTraitor=true;
-
-  state.flags.traitorNameKnown=true;
-
-  logEvent(
-    "You fought the men in the tunnel and survived."
-  );
-
-  showScene("evidence");
-
-}
-
-
-function searchTunnel(){
-
-  state.flags.explosionKnown=true;
-
-  addItem("Fuse");
-
-  logEvent(
-    "You found an explosive charge beneath Kuroda."
-  );
-
-  showScene("evidence");
-
-}
-
-
-/* =====================================================
-   EVIDENCE / PREPARATION
-===================================================== */
-
-function prepareVillage(){
-
-  state.flags.warnedVillage=true;
-  state.flags.villagersWarned=true;
-
-  state.rep+=4;
-
-  state.relationships.villagers+=3;
-
-  addQuest(
-    "Survive the coming attack."
-  );
-
-  logEvent(
-    "You warned the villagers."
-  );
-
-  showScene("preparation");
-
-}
-
-
-function huntTraitor(){
-
-  if(!state.flags.traitorNameKnown){
-
-    logEvent(
-      "You began searching for the traitor."
-    );
-
-    showScene("masaru");
-
-    return;
-
-  }
-
-  logEvent(
-    "You decided to hunt Masaru before the attack."
-  );
-
-  showScene("preparation");
-
-}
-
-
-function findStranger(){
-
-  if(state.flags.trustedStranger){
-
-    state.rep+=2;
-
-    logEvent(
-      "The stranger agreed to help defend Kuroda."
-    );
-
-    showScene("preparation");
-
-    return;
-
-  }
-
-  state.flags.metStranger=true;
-
-  logEvent(
-    "You searched for the mysterious stranger."
-  );
-
-  showScene("stranger");
-
-}
-
-
-function leaveBeforeAttack(){
-
-  state.flags.escapedVillage=true;
-
+  remember("You followed the strangers into the rain.");
+  showScene("rainFollow");
+};
+
+actions.rainHide=()=>{
+  addSkill("caution",1);
+  state.flags.rainyNight=true;
+  state.flags.strangerHeard=true;
+  remember("The rainy night and the words: if he is still alive.");
+  showScene("rainHide");
+};
+
+actions.rainFollowFar=()=>{
+  addSkill("stealth",1);
+  state.health-=5;
+  state.flags.rainyNight=true;
+  remember("You were nearly caught following the strangers.");
+  showScene("rainFollowFar");
+};
+
+actions.age11=()=>{
+  setAge(11);
+  state.season="Winter";
+  state.location="Kuroda Village";
+  showScene("age11");
+};
+
+actions.age11Secret=()=>{
+  addSkill("intelligence",1);
+  state.flags.mysteryStarted=true;
+  showScene("age11");
+};
+
+actions.age11Memory=()=>{
+  remember("The eastern road beyond Kuroda.");
+  showScene("age11");
+};
+
+
+/* Sword */
+
+actions.swordHelp=()=>{
+  addSkill("swordsmanship",1);
+  addSkill("courageous",0);
+  addSkill("strength",1);
+  state.power++;
+  remember("The first real sword you ever held.");
+  state.flags.swordFound=true;
+  showScene("swordHelp");
+};
+
+actions.swordAdult=()=>{
+  addSkill("discipline",1);
+  state.familyTrust++;
+  showScene("swordAdult");
+};
+
+actions.swordHide=()=>{
+  state.flags.swordFound=true;
+  addItem("Hidden sword");
+  addSkill("intelligence",1);
+  traitProgress("independent");
+  remember("The abandoned sword.");
+  showScene("swordHide");
+};
+
+actions.swordChase=()=>{
+  addSkill("endurance",1);
+  addSkill("courageous",0);
+  traitProgress("reckless");
+  showScene("swordChase");
+};
+
+actions.age12=()=>{
+  setAge(12);
+  state.season="Spring";
+  state.location="Kuroda Shrine";
+  showScene("age12");
+};
+
+actions.age12Train=()=>{
+  addSkill("swordsmanship",1);
+  addSkill("discipline",1);
+  state.power++;
+  showScene("age12");
+};
+
+actions.age12TrainSecret=()=>{
+  addSkill("swordsmanship",2);
+  addSkill("stealth",1);
+  state.power++;
+  traitProgress("independent");
+  showScene("age12");
+};
+
+
+/* Aiko */
+
+actions.aikoSit=()=>{
+  relation("aiko",2);
+  addSkill("charisma",1);
+  traitProgress("kind");
+  state.flags.aikoMet=true;
+  remember("The first evening you sat with Aiko beneath the cedar.");
+  showScene("aikoSit");
+};
+
+actions.aikoSecret=()=>{
+  relation("aiko",2);
+  addSkill("speech",1);
+  state.flags.mysteryStarted=true;
+  remember("You shared the rainy-night secret with Aiko.");
+  showScene("aikoSecret");
+};
+
+actions.aikoRoof=()=>{
+  relation("aiko",2);
+  addSkill("strength",1);
+  addSkill("mischief",1);
+  showScene("aikoRoof");
+};
+
+actions.aikoFamily=()=>{
+  relation("aiko",2);
+  addSkill("intelligence",1);
+  state.flags.merchant=true;
+  showScene("aikoFamily");
+};
+
+actions.aikoHelp=()=>{
+  relation("aiko",2);
+  traitProgress("protective");
+  showScene("aikoHelp");
+};
+
+actions.aikoUnderstand=()=>{
+  relation("aiko",1);
+  traitProgress("kind");
+  showScene("aikoUnderstand");
+};
+
+actions.aikoClose=()=>{
+  relation("aiko",2);
+  showScene("aikoClose");
+};
+
+actions.age13=()=>{
+  setAge(13);
+  state.season="Autumn";
+  state.location="Kuroda Market";
+  showScene("age13");
+};
+
+actions.merchantInvestigation=()=>{
+  addSkill("intelligence",1);
+  state.flags.merchant=true;
+  showScene("merchantInvestigation");
+};
+
+
+/* Merchant */
+
+actions.merchantAccept=()=>{
+  addSkill("trade",1);
+  state.money+=12;
+  state.flags.merchantContact=true;
+  state.flags.merchant=true;
+  remember("Your first secret delivery.");
+  showScene("merchantAccept");
+};
+
+actions.merchantRefuse=()=>{
+  addSkill("discipline",1);
+  state.honour++;
+  showScene("merchantRefuse");
+};
+
+actions.merchantAsk=()=>{
+  addSkill("intelligence",1);
+  addSkill("speech",1);
+  state.flags.merchantContact=true;
+  showScene("merchantAsk");
+};
+
+actions.merchantBetray=()=>{
+  addSkill("deceitful",0);
+  addSkill("speech",1);
+  state.reputation++;
+  state.flags.merchant=true;
+  traitProgress("deceitful");
+  remember("You betrayed the merchant.");
+  showScene("merchantBetray");
+};
+
+actions.merchantFollow=()=>{
+  addSkill("stealth",1);
+  addSkill("exploration",1);
+  state.flags.mysteryStarted=true;
+  showScene("merchantFollow");
+};
+
+actions.merchantInvestigate=()=>{
+  addSkill("stealth",1);
+  addSkill("intelligence",1);
+  state.flags.mysteryStarted=true;
+  state.flags.messageFound=true;
+  remember("You discovered your father's name among the merchant's secrets.");
+  showScene("merchantInvestigate");
+};
+
+actions.age14=()=>{
+  setAge(14);
+  state.season="Summer";
   state.location="Forest Road";
-
-  state.rep-=2;
-
-  logEvent(
-    "You left Kuroda before the attack."
-  );
-
-  ending(
-    "THE SURVIVOR",
-    `You leave Kuroda behind before the fighting begins.
-
-You survive the night.
-
-Days later, smoke can still be seen rising from the direction of the village.
-
-You never discover who lived.
-
-You never discover who died.
-
-Your story continues elsewhere, but Kuroda becomes a place you refuse to speak about.`,
-    "SURVIVAL ENDING"
-  );
-
-}
+  showScene("age14");
+};
 
 
-/* =====================================================
-   PREPARATION
-===================================================== */
+/* First blood */
 
-function fortifyGate(){
+actions.fightRoad=()=>{
+  addSkill("strength",1);
+  addSkill("swordsmanship",1);
+  state.power++;
+  relation("ren",2);
+  relation("daichi",2);
+  traitProgress("courageous");
+  state.health-=rand(3,10);
+  remember("The forest-road fight.");
+  showScene("fightRoad");
+};
 
-  state.attack+=4;
+actions.talkRoad=()=>{
+  addSkill("speech",1);
+  addSkill("charisma",1);
+  traitProgress("courageous");
+  relation("ren",1);
+  showScene("talkRoad");
+};
 
-  state.rep+=3;
+actions.trickRoad=()=>{
+  addSkill("mischief",1);
+  addSkill("stealth",1);
+  relation("ren",1);
+  showScene("trickRoad");
+};
 
-  addItem("Reinforced shield");
+actions.sacrificeRoad=()=>{
+  addSkill("courageous",0);
+  state.honour++;
+  relation("ren",3);
+  relation("daichi",3);
+  traitProgress("protective");
+  showScene("sacrificeRoad");
+};
 
-  logEvent(
-    "You helped reinforce the eastern gate."
-  );
+actions.fightMercy=()=>{
+  addSkill("discipline",1);
+  state.honour++;
+  traitProgress("compassionate");
+  showScene("fightMercy");
+};
 
-  showScene("attack");
+actions.fightCruel=()=>{
+  state.power++;
+  state.honour--;
+  traitProgress("violent");
+  traitProgress("ruthless");
+  state.flags.darkPath=true;
+  showScene("fightCruel");
+};
 
-}
+actions.age15=()=>{
+  setAge(15);
+  state.season="Summer";
+  state.location="Kuroda Village";
+  showScene("age15");
+};
+
+actions.age15Report=()=>{
+  state.reputation++;
+  showScene("age15");
+};
+
+actions.age15Speech=()=>{
+  addSkill("speech",1);
+  addSkill("charisma",1);
+  showScene("age15");
+};
+
+actions.age15Dark=()=>{
+  traitProgress("violent");
+  state.flags.darkPath=true;
+  showScene("age15");
+};
+
+actions.age15Ren=()=>{
+  relation("ren",2);
+  showScene("age15");
+};
 
 
-function trapTraitor(){
+/* WAR */
 
-  if(!state.flags.traitorNameKnown){
+actions.warFamily=()=>{
+  state.flags.warSeen=true;
+  state.flags.villageBurned=true;
+  state.familyTrust+=2;
+  addSkill("leadership",1);
+  showScene("warFamily");
+};
 
-    state.rep+=1;
+actions.warFather=()=>{
+  state.flags.warSeen=true;
+  state.flags.villageBurned=true;
+  showScene("warFather");
+};
 
-    logEvent(
-      "You prepared a trap without knowing exactly who the traitor was."
-    );
+actions.warRescue=()=>{
+  state.flags.warSeen=true;
+  state.flags.villageBurned=true;
+  addSkill("leadership",1);
+  traitProgress("protective");
+  showScene("warRescue");
+};
 
-    showScene("attack");
+actions.warFlee=()=>{
+  state.flags.warSeen=true;
+  state.flags.villageBurned=true;
+  state.flags.leftVillage=true;
+  traitProgress("independent");
+  showScene("warFlee");
+};
 
+actions.warFight=()=>{
+  addSkill("swordsmanship",2);
+  addSkill("strength",1);
+  state.power+=2;
+  state.health-=rand(8,18);
+  if(state.health<1){
+    showScene("warAfter");
     return;
-
   }
+  showScene("warAfter");
+};
 
-  state.rep+=4;
+actions.warFamilySafe=()=>{
+  addSkill("leadership",1);
+  state.familyTrust+=2;
+  traitProgress("protective");
+  showScene("warFamilySafe");
+};
 
-  state.flags.discoveredTraitor=true;
+actions.fatherRescue=()=>{
+  addSkill("strength",1);
+  addSkill("endurance",1);
+  state.family.fatherAlive=true;
+  state.flags.fatherWounded=true;
+  relation("father",2);
+  remember("You carried your wounded father from the war.");
+  showScene("fatherRescue");
+};
 
-  logEvent(
-    "You prepared a trap for Masaru."
-  );
+actions.rescueHouse=()=>{
+  addSkill("strength",1);
+  addSkill("courageous",0);
+  state.health-=rand(4,10);
+  state.reputation+=2;
+  traitProgress("protective");
+  showScene("rescueHouse");
+};
 
-  showScene("attack");
+actions.rescueWall=()=>{
+  addSkill("strength",1);
+  addSkill("intelligence",1);
+  state.reputation+=2;
+  showScene("rescueWall");
+};
 
-}
+actions.rescueHelp=()=>{
+  addSkill("leadership",1);
+  state.reputation--;
+  remember("You failed to save the family in the burning house.");
+  showScene("rescueHelp");
+};
+
+actions.rescueMove=()=>{
+  addSkill("endurance",1);
+  addSkill("leadership",1);
+  state.reputation++;
+  showScene("rescueMove");
+};
+
+actions.leadSurvivors=()=>{
+  addSkill("leadership",2);
+  state.reputation+=3;
+  traitProgress("protective");
+  showScene("leadSurvivors");
+};
+
+actions.findFood=()=>{
+  addSkill("survival",1);
+  addSkill("exploration",1);
+  state.reputation++;
+  showScene("findFood");
+};
+
+actions.findMedicine=()=>{
+  addSkill("intelligence",1);
+  addSkill("survival",1);
+  showScene("findMedicine");
+};
+
+actions.searchFather=()=>{
+  addSkill("exploration",1);
+  remember("You searched the burned village for your father.");
+  showScene("searchFather");
+};
+
+actions.age16Village=()=>{
+  setAge(16);
+  state.season="Spring";
+  state.location="Kuroda Village";
+  state.money+=20;
+  showScene("age16Village");
+};
+
+actions.age16Healer=()=>{
+  setAge(16);
+  addSkill("intelligence",1);
+  state.location="Kuroda Village";
+  showScene("age16Healer");
+};
+
+actions.returnBurned=()=>{
+  state.location="Kuroda Village";
+  showScene("returnBurned");
+};
+
+actions.wanderer16=()=>{
+  setAge(16);
+  state.location="Eastern Road";
+  state.flags.wanderer=true;
+  showScene("age16Road");
+};
+
+actions.age16Road=()=>{
+  setAge(16);
+  state.location="Eastern Road";
+  showScene("age16Road");
+};
 
 
-function findExplosive(){
+/* Adult */
 
-  state.flags.explosionKnown=true;
+actions.age16Warrior=()=>{
+  addSkill("swordsmanship",1);
+  addSkill("discipline",1);
+  state.power++;
+  showScene("age16Warrior");
+};
 
-  addItem("Fuse");
+actions.age16Merchant=()=>{
+  addSkill("trade",1);
+  showScene("age16Merchant");
+};
 
-  addQuest(
-    "Disarm the explosive during the attack."
-  );
-
-  logEvent(
-    "You found the explosive charge."
-  );
-
-  showScene("attack");
-
-}
-
-
-function rallyVillagers(){
-
-  state.rep+=5;
-
-  state.relationships.villagers+=4;
-
-  state.flags.villagersWarned=true;
-
-  logEvent(
-    "You rallied Kuroda's villagers."
-  );
-
-  showScene("attack");
-
-}
-
-
-/* =====================================================
-   ATTACK
-===================================================== */
-
-function defendGate(){
-
-  const strength=
-    state.attack+
-    state.rep+
-    random(-2,5);
-
-  if(strength>=18){
-
-    state.health-=random(8,20);
-
-    state.flags.villageSaved=true;
-
-    state.flags.villageUnderAttack=false;
-
-    completeQuest(
-      "Survive the coming attack."
-    );
-
-    logEvent(
-      "You held the eastern gate."
-    );
-
-    showScene("finalDecision");
-
+actions.adultLife=()=>{
+  if(state.age<20){
+    setAge(20);
+    state.season="Spring";
   }
-  else{
+  showScene("adultLife");
+};
 
-    state.health-=random(20,35);
+actions.farmerPath=()=>{
+  state.flags.farmer=true;
+  addSkill("farming",2);
+  addSkill("endurance",1);
+  state.money+=20;
+  showScene("farmerPath");
+};
 
-    state.flags.gateDestroyed=true;
+actions.farmerGrow=()=>{
+  addSkill("farming",2);
+  state.money+=35;
+  showScene("farmerGrow");
+};
 
-    logEvent(
-      "The eastern gate was overwhelmed."
-    );
+actions.farmerCharity=()=>{
+  state.money-=15;
+  state.reputation+=4;
+  traitProgress("kind");
+  showScene("farmerCharity");
+};
 
-    if(state.health<=0){
+actions.adultWarrior=()=>{
+  state.flags.soldier=true;
+  addSkill("swordsmanship",2);
+  addSkill("discipline",1);
+  state.power+=2;
+  showScene("adultWarrior");
+};
 
-      triggerDeath(
-        "The eastern gate collapses and you are buried beneath the fighting."
-      );
+actions.warriorTrain=()=>{
+  addSkill("swordsmanship",2);
+  addSkill("discipline",1);
+  state.power++;
+  showScene("warriorTrain");
+};
 
-      return;
+actions.warriorTrain2=()=>{
+  addSkill("swordsmanship",2);
+  addSkill("discipline",1);
+  state.power++;
+  showScene("warriorTrain2");
+};
 
-    }
+actions.warriorVeteran=()=>{
+  addSkill("swordsmanship",1);
+  addSkill("discipline",2);
+  showScene("warriorVeteran");
+};
 
-    showScene("finalDecision");
-
+actions.warriorDuel=()=>{
+  if(skillCheck("swordsmanship",8)){
+    addSkill("swordsmanship",1);
+    state.power++;
+    showScene("warriorDuel");
+  }else{
+    state.health-=15;
+    showScene("warriorDuel");
   }
+};
 
-}
+actions.adultMerchant=()=>{
+  state.flags.merchant=true;
+  addSkill("trade",2);
+  addSkill("speech",1);
+  state.money+=30;
+  showScene("adultMerchant");
+};
+
+actions.merchantPrince=()=>{
+  state.flags.merchant=true;
+  addSkill("trade",2);
+  state.money+=60;
+  state.reputation+=3;
+  showScene("merchantPrince");
+};
+
+actions.merchantCharity=()=>{
+  state.money-=30;
+  state.reputation+=5;
+  traitProgress("kind");
+  showScene("merchantCharity");
+};
+
+actions.criminalPath=()=>{
+  state.flags.criminal=true;
+  addSkill("stealth",1);
+  addSkill("mischief",1);
+  state.money+=30;
+  traitProgress("deceitful");
+  showScene("criminalPath");
+};
+
+actions.criminalControlled=()=>{
+  state.flags.criminal=true;
+  addSkill("stealth",1);
+  addSkill("speech",1);
+  showScene("criminalControlled");
+};
+
+actions.criminalBetray=()=>{
+  state.flags.criminal=true;
+  addSkill("deceitful",0);
+  traitProgress("deceitful");
+  state.reputation-=2;
+  showScene("criminalBetray");
+};
+
+actions.adultScout=()=>{
+  addSkill("stealth",2);
+  addSkill("exploration",1);
+  addSkill("survival",1);
+  showScene("adultScout");
+};
+
+actions.adultExplorer=()=>{
+  addSkill("exploration",2);
+  addSkill("survival",1);
+  state.flags.wanderer=true;
+  showScene("adultExplorer");
+};
+
+actions.wandererLife=()=>{
+  state.flags.wanderer=true;
+  addSkill("survival",1);
+  addSkill("exploration",1);
+  showScene("wandererLife");
+};
+
+actions.lordService=()=>{
+  state.flags.soldier=true;
+  addSkill("discipline",1);
+  addSkill("leadership",1);
+  state.honour++;
+  showScene("lordService");
+};
+
+actions.protectorPath=()=>{
+  addSkill("leadership",2);
+  addSkill("swordsmanship",1);
+  state.reputation+=4;
+  traitProgress("protective");
+  showScene("protectorPath");
+};
+
+actions.darkWarrior=()=>{
+  state.flags.darkPath=true;
+  addSkill("swordsmanship",2);
+  state.power+=2;
+  traitProgress("violent");
+  showScene("darkWarrior");
+};
+
+actions.powerBroker=()=>{
+  addSkill("speech",2);
+  addSkill("charisma",2);
+  addSkill("trade",1);
+  state.reputation+=3;
+  showScene("powerBroker");
+};
+
+actions.spyPath=()=>{
+  addSkill("stealth",2);
+  addSkill("intelligence",2);
+  state.flags.mysteryStarted=true;
+  showScene("spyPath");
+};
+
+actions.honourPath=()=>{
+  state.honour+=3;
+  addSkill("discipline",1);
+  addSkill("leadership",1);
+  traitProgress("honourable");
+  showScene("honourPath");
+};
+
+actions.roninPath=()=>{
+  state.flags.wanderer=true;
+  state.flags.soldier=false;
+  addSkill("swordsmanship",1);
+  traitProgress("independent");
+  showScene("roninPath");
+};
+
+actions.leaderPath=()=>{
+  state.flags.leader=true;
+  addSkill("leadership",2);
+  state.reputation+=5;
+  showScene("leaderPath");
+};
+
+actions.ambitionPath=()=>{
+  addSkill("charisma",1);
+  addSkill("trade",1);
+  traitProgress("ambitious");
+  showScene("ambitionPath");
+};
 
 
-function findTraitorDuringAttack(){
+/* Family */
 
-  if(state.flags.traitorNameKnown){
+actions.familyPath=()=>{
+  showScene("familyPath");
+};
 
-    state.rep+=4;
+actions.familyHome=()=>{
+  state.money=Math.max(0,state.money-20);
+  state.reputation++;
+  showScene("familyHome");
+};
 
-    logEvent(
-      "You found Masaru during the attack."
-    );
+actions.aikoMarriageCheck=()=>{
+  showScene("aikoMarriageCheck");
+};
 
-    showScene("finalDecision");
-
+actions.marryAiko=()=>{
+  if(state.relationships.aiko<5){
+    showScene("aikoMarriageCheck");
     return;
-
   }
 
-  state.flags.traitorNameKnown=true;
+  state.flags.married=true;
+  state.family.partner="Aiko";
+  relation("aiko",3);
+  remember("You married Aiko.");
+  showScene("marryAiko");
+};
 
-  state.flags.discoveredTraitor=true;
+actions.aikoLeave=()=>{
+  relation("aiko",-3);
+  showScene("aikoLeave");
+};
 
-  state.rep+=2;
+actions.aikoTalk=()=>{
+  showScene("aikoTalk");
+};
 
-  logEvent(
-    "You discovered the traitor during the chaos."
-  );
+actions.aikoHappy=()=>{
+  relation("aiko",1);
+  showScene("aikoHappy");
+};
 
-  showScene("finalDecision");
+actions.aikoRegret=()=>{
+  relation("aiko",1);
+  showScene("aikoRegret");
+};
 
-}
+actions.familyChildren=()=>{
+  state.family.children++;
+  state.flags.childBorn=true;
+  remember("Your first child was born.");
+  showScene("familyChildren");
+};
+
+actions.childrenPath=()=>{
+  showScene("childrenPath");
+};
+
+actions.childrenTeach=()=>{
+  addSkill("leadership",1);
+  state.familyTrust++;
+  showScene("childrenTeach");
+};
+
+actions.familyConflict=()=>{
+  relation("aiko",-1);
+  showScene("familyConflict");
+};
+
+actions.childrenReconcile=()=>{
+  relation("aiko",1);
+  state.familyTrust++;
+  showScene("childrenReconcile");
+};
+
+actions.childrenBreak=()=>{
+  state.familyTrust-=2;
+  showScene("childrenBreak");
+};
 
 
-function disarmExplosive(){
+/* Mystery */
 
-  if(!state.flags.explosionKnown){
+actions.mysterySearch=()=>{
+  state.flags.mysteryStarted=true;
+  addSkill("intelligence",1);
+  addQuest("Discover the truth behind the silver knot.");
+  showScene("mysterySearch");
+};
 
-    state.health-=5;
+actions.mysteryMerchant=()=>{
+  showScene("mysteryMerchant");
+};
 
-    logEvent(
-      "You searched for an explosive but found nothing."
-    );
+actions.mysteryFather=()=>{
+  showScene("mysteryFather");
+};
 
-    showScene("finalDecision");
+actions.mysteryShrine=()=>{
+  addSkill("exploration",1);
+  showScene("mysteryShrine");
+};
 
-    return;
+actions.mysteryThreat=()=>{
+  state.reputation-=2;
+  traitProgress("ruthless");
+  showScene("mysteryThreat");
+};
 
+actions.mysteryDeal=()=>{
+  addSkill("charisma",1);
+  showScene("mysteryDeal");
+};
+
+actions.mysteryAsk=()=>{
+  addSkill("speech",1);
+  showScene("mysteryAsk");
+};
+
+actions.mysteryLocation=()=>{
+  addSkill("intelligence",1);
+  showScene("mysteryLocation");
+};
+
+actions.mysteryForgive=()=>{
+  state.familyTrust++;
+  traitProgress("compassionate");
+  showScene("mysteryForgive");
+};
+
+actions.mysteryLetter=()=>{
+  state.flags.messageFound=true;
+  state.flags.mysteryStarted=true;
+  addSkill("intelligence",1);
+  remember("The letter bearing the silver knot.");
+  showScene("mysteryLetter");
+};
+
+actions.mysteryMan=()=>{
+  addSkill("exploration",2);
+  state.flags.mysteryStarted=true;
+  showScene("mysteryMan");
+};
+
+actions.mysteryProtect=()=>{
+  state.flags.mysterySolved=true;
+  state.honour++;
+  completeQuest("Discover the truth behind the silver knot.");
+  showScene("mysteryProtect");
+};
+
+actions.mysteryExpose=()=>{
+  state.flags.mysterySolved=true;
+  state.reputation+=7;
+  completeQuest("Discover the truth behind the silver knot.");
+  showScene("mysteryExpose");
+};
+
+actions.mysteryKill=()=>{
+  state.flags.mysterySolved=true;
+  state.power++;
+  traitProgress("ruthless");
+  completeQuest("Discover the truth behind the silver knot.");
+  showScene("mysteryKill");
+};
+
+
+/* Ren */
+
+actions.findRen=()=>{
+  if(state.flags.renReturned)
+    state.lastMemory="Ren";
+  else
+    state.flags.renReturned=true;
+
+  showScene("findRen");
+};
+
+actions.renFriend=()=>{
+  relation("ren",3);
+  if(recognizeMemory("The peach orchard.")){
+    state.lastMemory="The Peach Orchard";
   }
+  showScene("renFriend");
+};
 
-  if(hasItem("Fuse")){
+actions.renAsk=()=>{
+  relation("ren",1);
+  showScene("renAsk");
+};
 
-    removeItem("Fuse");
+actions.renBetrayQuestion=()=>{
+  showScene("renBetrayQuestion");
+};
 
-    state.flags.bombDisarmed=true;
-
-    state.flags.villageSaved=true;
-
-    state.rep+=6;
-
-    logEvent(
-      "You disarmed the explosive beneath the gate."
-    );
-
-    showScene("finalDecision");
-
-    return;
-
+actions.renFight=()=>{
+  if(skillCheck("swordsmanship",12)){
+    state.health-=rand(5,12);
+    relation("ren",-1);
+    showScene("renFight");
+  }else{
+    state.health-=rand(15,25);
+    relation("ren",-3);
+    showScene("renFight");
   }
-
-  state.health-=8;
-
-  logEvent(
-    "You found the explosive but cannot disarm it yet."
-  );
-
-  showScene("finalDecision");
-
-}
-
-
-function escapeAttack(){
-
-  state.flags.escapedVillage=true;
-
-  state.location="Forest Road";
-
-  state.rep-=2;
-
-  logEvent(
-    "You escaped Kuroda while the village burned."
-  );
-
-  ending(
-    "THE ESCAPE",
-    `You run into the forest.
-
-Behind you, Kuroda disappears beneath fire and smoke.
-
-You survive.
-
-But the people you left behind will remember your name differently.
-
-Some will call you a coward.
-
-Others will say you were wise enough to survive.
-
-History rarely agrees with itself.`,
-    "SURVIVAL ENDING"
-  );
-
-}
-
-
-/* =====================================================
-   FINAL DECISIONS
-===================================================== */
-
-function saveVillage(){
-
-  if(
-    state.flags.bombDisarmed ||
-    state.flags.villageSaved ||
-    state.rep>=8
-  ){
-
-    state.rep+=5;
-
-    ending(
-      "THE SAVIOUR OF KURODA",
-      `You refuse to abandon the village.
-
-You gather the remaining defenders.
-
-The attackers expected panic.
-
-Instead, they meet resistance.
-
-The eastern gate holds.
-
-The explosive never detonates.
-
-The traitor is exposed.
-
-By dawn, the surviving attackers have fled into the mountains.
-
-Kuroda is badly damaged, but it still stands.
-
-The elder finds you among the smoke.
-
-"You saved us."
-
-For the first time in your life, people know your name.
-
-Your story has become part of Kuroda's history.`,
-      "GOOD ENDING"
-    );
-
-    return;
-
-  }
-
-  state.health-=20;
-
-  if(state.health<=0){
-
-    triggerDeath(
-      "You fight to save Kuroda, but the attackers overwhelm you."
-    );
-
-    return;
-
-  }
-
-  ending(
-    "THE WOUNDED DEFENDER",
-    `You fight until you can fight no more.
-
-Kuroda survives the night, but barely.
-
-The village remembers the young warrior who refused to run.
-
-You survive your wounds, though the scars remain for the rest of your life.
-
-You did not change the whole war.
-
-You changed one village.
-
-Sometimes that is enough.`,
-    "BITTERSWEET ENDING"
-  );
-
-}
-
-
-function killTraitor(){
-
-  if(!state.flags.traitorNameKnown){
-
-    state.flags.traitorNameKnown=true;
-
-    logEvent(
-      "You found the traitor in the chaos."
-    );
-
-  }
-
-  state.attack+=3;
-
-  state.rep+=3;
-
-  ending(
-    "THE BLOOD DEBT",
-    `You find Masaru near the eastern gate.
-
-He turns when he sees you.
-
-For a moment neither of you speaks.
-
-"You should have stayed out of this," he says.
-
-You draw your sword.
-
-The fight is short.
-
-When it ends, the traitor is dead.
-
-But the attackers are still outside.
-
-Kuroda survives the night, though much of the village burns.
-
-You killed the man responsible.
-
-Whether that makes you a hero is another question.`,
-    "DARK ENDING"
-  );
-
-}
-
-
-function escapeFinal(){
-
-  state.location="Forest Road";
-
-  state.rep-=3;
-
-  ending(
-    "THE WANDERER",
-    `You turn your back on Kuroda.
-
-The sounds of battle fade behind you.
-
-You have no idea who won.
-
-You have no idea whether the village survived.
-
-But you are alive.
-
-You take the eastern road and disappear into the wider world.
-
-Your story is not over.
-
-It has simply left Kuroda behind.`,
-    "SURVIVAL ENDING"
-  );
-
-}
-
-
-function faceCommander(){
-
-  const strength=
-    state.attack+
-    state.rep+
-    random(-3,6);
-
-  if(strength>=20){
-
-    state.health-=random(15,30);
-
-    if(state.health<=0){
-
-      triggerDeath(
-        "You defeat the enemy commander, but your wounds prove fatal."
-      );
-
-      return;
-
-    }
-
-    state.rep+=8;
-
-    ending(
-      "THE WARRIOR",
-      `You walk through the smoke toward the enemy commander.
-
-He laughs when he sees you.
-
-Then he sees the sword in your hand.
-
-The duel is brutal.
-
-You are wounded.
-
-So is he.
-
-In the end, you remain standing.
-
-The attackers see their commander fall and retreat.
-
-Kuroda survives.
-
-The elder later tells the story differently:
-
-He says a fifteen-year-old warrior stood against an army.
-
-You know the truth.
-
-You were simply too stubborn to run.`,
-      "HEROIC ENDING"
-    );
-
-  }
-  else{
-
-    state.health-=35;
-
-    if(state.health<=0){
-
-      triggerDeath(
-        "The enemy commander proves too powerful."
-      );
-
-      return;
-
-    }
-
-    ending(
-      "THE BROKEN SWORD",
-      `You face the enemy commander.
-
-You fight bravely.
-
-But bravery is not always enough.
-
-You are thrown aside and left wounded in the mud.
-
-By morning, the attackers have withdrawn.
-
-Kuroda survives, but your name is barely remembered.
-
-You survived.
-
-Sometimes that is the only victory available.`,
-      "BITTERSWEET ENDING"
-    );
-
-  }
-
-}
+};
+
+actions.renTrust=()=>{
+  relation("ren",3);
+  state.flags.mysteryStarted=true;
+  showScene("renTrust");
+};
+
+actions.renMystery=()=>{
+  state.flags.mysteryStarted=true;
+  showScene("renMystery");
+};
+
+actions.renPressure=()=>{
+  addSkill("speech",1);
+  showScene("renPressure");
+};
+
+actions.renEnemy=()=>{
+  relation("ren",-5);
+  state.reputation--;
+  showScene("renEnemy");
+};
+
+actions.renAlliance=()=>{
+  relation("ren",2);
+  addSkill("leadership",1);
+  showScene("renAlliance");
+};
+
+actions.renProtect=()=>{
+  relation("ren",2);
+  traitProgress("protective");
+  showScene("renProtect");
+};
+
+
+/* Revenge */
+
+actions.revengePath=()=>{
+  state.flags.revengeTarget=true;
+  traitProgress("ambitious");
+  showScene("revengePath");
+};
+
+actions.revengeFind=()=>{
+  state.flags.revengeTarget=true;
+  showScene("revengeFind");
+};
+
+actions.revengePrepare=()=>{
+  state.flags.revengeTarget=true;
+  addSkill("intelligence",1);
+  addSkill("stealth",1);
+  showScene("revengePrepare");
+};
+
+actions.revengeDuel=()=>{
+  showScene("revengeDuel");
+};
+
+actions.revengeWait=()=>{
+  addSkill("stealth",1);
+  showScene("revengeWait");
+};
+
+actions.revengeExpose=()=>{
+  addSkill("speech",2);
+  addSkill("intelligence",1);
+  state.reputation+=4;
+  showScene("revengeExpose");
+};
+
+actions.revengeStrike=()=>{
+  addSkill("stealth",1);
+  showScene("revengeStrike");
+};
+
+actions.revengeKill=()=>{
+  state.flags.revengeComplete=true;
+  state.flags.revengeTarget=false;
+  state.flags.darkPath=true;
+  traitProgress("ruthless");
+  state.power++;
+  showScene("revengeKill");
+};
+
+actions.revengeConfess=()=>{
+  state.honour++;
+  showScene("revengeConfess");
+};
+
+actions.revengeComplete=()=>{
+  state.flags.revengeComplete=true;
+  state.reputation+=5;
+  state.honour+=2;
+  showScene("revengeComplete");
+};
+
+actions.redemptionPath=()=>{
+  state.flags.darkPath=false;
+  state.honour+=2;
+  traitProgress("compassionate");
+  showScene("redemptionPath");
+};
+
+
+/* Monster */
+
+actions.monsterPath=()=>{
+  state.flags.monster=true;
+  state.flags.darkPath=true;
+  traitProgress("violent");
+  traitProgress("ruthless");
+  showScene("monsterPath");
+};
+
+actions.monsterKing=()=>{
+  state.flags.monster=true;
+  state.money+=100;
+  state.reputation-=5;
+  traitProgress("ruthless");
+  showScene("monsterKing");
+};
+
+actions.monsterWarrior=()=>{
+  state.flags.monster=true;
+  state.power+=3;
+  state.reputation-=5;
+  traitProgress("violent");
+  showScene("monsterWarrior");
+};
+
+actions.monsterRevenge=()=>{
+  state.flags.monster=true;
+  state.reputation-=6;
+  traitProgress("cruel");
+  showScene("monsterRevenge");
+};
+
+actions.monsterFamily=()=>{
+  state.familyTrust-=5;
+  showScene("monsterFamily");
+};
+
+actions.monsterEnd=()=>{
+  state.flags.monster=true;
+  showScene("monsterEnd");
+};
+
+actions.finalMonster=()=>{
+  showScene("finalMonster");
+};
+
+actions.deathMonster=()=>{
+  calculateEnding();
+};
+
+
+/* Later */
+
+actions.age40=()=>{
+  setAge(40);
+  state.season="Autumn";
+  state.location="Kuroda Province";
+  showScene("age40");
+};
+
+actions.age50=()=>{
+  setAge(50);
+  state.season="Spring";
+  state.location="Kuroda Province";
+  showScene("age50");
+};
+
+actions.age55=()=>{
+  setAge(55);
+  state.season="Autumn";
+  state.location="Kuroda Village";
+  showScene("age55");
+};
+
+actions.finalHome=()=>{
+  state.location="Kuroda Village";
+  showScene("finalHome");
+};
+
+actions.finalOrchard=()=>{
+  state.location="Kuroda Orchard";
+  if(recognizeMemory("The peach orchard."))
+    state.lastMemory="The Peach Orchard";
+  showScene("finalOrchard");
+};
+
+actions.finalShrine=()=>{
+  state.location="Kuroda Shrine";
+  showScene("finalShrine");
+};
+
+actions.finalAdventure=()=>{
+  addSkill("exploration",1);
+  showScene("finalAdventure");
+};
+
+actions.finalFamily=()=>{
+  showScene("finalFamily");
+};
+
+actions.deathOld=()=>{
+  showScene("deathOld");
+};
+
+actions.finalLife=()=>{
+  showScene("finalLife");
+};
+
+actions.calculateEnding=()=>{
+  calculateEnding();
+};
 
 
 /* =====================================================
@@ -3044,25 +7017,17 @@ function customAction(){
 
   if(!state.alive)return;
 
-  const box=el("custom");
-
-  if(!box)return;
-
-  const raw=box.value.trim();
+  const input=el("custom");
+  const raw=input.value.trim();
 
   if(!raw)return;
 
-  box.value="";
+  input.value="";
 
   state.lastAction=raw;
+  state.customCount++;
 
-  advanceTime(1);
-
-  logEvent(
-    `You attempted: "${raw}"`
-  );
-
-  interpretCustomAction(raw);
+  interpretCustom(raw);
 
 }
 
@@ -3071,319 +7036,532 @@ function customAction(){
    CUSTOM ACTION INTERPRETER
 ===================================================== */
 
-function interpretCustomAction(raw){
+function interpretCustom(raw){
 
-  const text=
-    raw.toLowerCase();
+  const t=raw.toLowerCase();
 
+  /*
+     Custom actions are intentionally broad.
 
-  /* RUN / ESCAPE */
+     They don't replace the authored story.
+     They let the player attempt things such as:
+       - attack
+       - rescue
+       - search
+       - persuade
+       - hide
+       - steal
+       - run
+       - investigate
 
-  if(
-    /(run away|escape|flee|leave)/.test(text)
-  ){
+     Failure creates consequences instead of ending the game.
+  */
 
-    escapeAttack();
+  if(/rescue|save|help/.test(t)){
 
-    return;
+    const success=
+      skillCheck("leadership",8) ||
+      skillCheck("strength",8) ||
+      skillCheck("survival",8);
 
-  }
+    if(success){
 
+      addSkill("leadership",1);
+      state.reputation+=2;
+      traitProgress("protective");
 
-  /* FIGHT */
-
-  if(
-    /(fight|attack|stab|strike|hit|sword|kill)/.test(text)
-  ){
-
-    state.health-=random(8,18);
-    state.attack+=1;
-
-    logEvent(
-      "Your custom action turned violent."
-    );
-
-    if(state.health<=0){
-
-      triggerDeath(
-        "Your custom action leaves you badly wounded."
+      logEvent(
+        "Your custom rescue succeeds."
       );
 
-      return;
+      showResult(
+        "THE RESCUE",
+        `You act quickly.
+
+You pull people away from danger and get them somewhere safer.
+
+It isn't perfect.
+
+You cannot save everyone.
+
+But several people survive because you acted.`
+      );
+
+    }else{
+
+      state.health-=rand(5,15);
+
+      logEvent(
+        "Your rescue attempt fails, but you survive."
+      );
+
+      showResult(
+        "THE FAILED RESCUE",
+        `You try to help.
+
+The situation is worse than you expected.
+
+You are forced back.
+
+Someone is left behind.
+
+Failure hurts.
+
+But the story does not end here.
+
+There may still be another way to rescue them.`
+      );
 
     }
 
-    showScene(
-      state.scene==="attack"
-        ?"finalDecision"
-        :"evidence"
+    return;
+  }
+
+
+  if(/fight|attack|kill|stab|strike|punch/.test(t)){
+
+    const success=
+      skillCheck("swordsmanship",8) ||
+      skillCheck("strength",8);
+
+    if(success){
+
+      addSkill("swordsmanship",1);
+      state.power++;
+      state.health-=rand(2,10);
+
+      if(/kill|murder/.test(t)){
+        traitProgress("violent");
+        state.flags.darkPath=true;
+      }
+
+      showResult(
+        "THE FIGHT",
+        `You commit to the attack.
+
+You don't simply win because the game says you do.
+
+You find an opening.
+
+You strike.
+
+One opponent falls.
+
+Another retreats.
+
+The last man decides he has no reason to die here and runs.
+
+You are breathing hard.
+
+Your hands are shaking.
+
+You survived the fight.`
+      );
+
+    }else{
+
+      state.health-=rand(10,25);
+
+      showResult(
+        "THE FIGHT GOES BADLY",
+        `You attack.
+
+For a moment you think you have the advantage.
+
+Then everything goes wrong.
+
+You are struck and forced backward.
+
+You escape before you are overwhelmed.
+
+You did not win.
+
+But you are alive.
+
+The people you were trying to protect may still need you.`
+      );
+
+    }
+
+    return;
+  }
+
+
+  if(/steal|pickpocket|take/.test(t)){
+
+    if(skillCheck("stealth",7)){
+
+      addSkill("stealth",1);
+      state.money+=rand(5,20);
+      traitProgress("deceitful");
+
+      showResult(
+        "LIGHT FINGERS",
+        `You wait for the right moment.
+
+A hand moves.
+
+A purse disappears.
+
+Nobody notices.
+
+Not yet.`
+      );
+
+    }else{
+
+      state.reputation-=2;
+
+      showResult(
+        "CAUGHT",
+        `Your hand is noticed.
+
+Someone grabs your wrist.
+
+You pull free and run.
+
+You escape, but people saw your face.
+
+The village will remember.`
+      );
+
+    }
+
+    return;
+  }
+
+
+  if(/persuade|convince|talk|negotiate|lie/.test(t)){
+
+    if(skillCheck("speech",7) || skillCheck("charisma",7)){
+
+      addSkill("speech",1);
+      addSkill("charisma",1);
+      state.reputation++;
+
+      showResult(
+        "WORDS WORK",
+        `You slow the conversation down.
+
+You ask the right question.
+
+You give the other person a reason to agree.
+
+Eventually, they do.
+
+You leave without drawing a weapon.`
+      );
+
+    }else{
+
+      state.reputation--;
+
+      showResult(
+        "THEY DON'T BELIEVE YOU",
+        `You try to talk your way through it.
+
+The other person watches you carefully.
+
+They don't believe you.
+
+You have not lost everything.
+
+But you have made the next conversation harder.`
+      );
+
+    }
+
+    return;
+  }
+
+
+  if(/hide|sneak|follow|spy/.test(t)){
+
+    if(skillCheck("stealth",8)){
+
+      addSkill("stealth",1);
+
+      showResult(
+        "UNSEEN",
+        `You move carefully.
+
+You wait when you need to wait.
+
+You move when nobody is looking.
+
+You learn something useful without being noticed.`
+      );
+
+    }else{
+
+      state.health-=rand(2,8);
+
+      showResult(
+        "NOT QUITE UNSEEN",
+        `You are almost caught.
+
+You escape before anyone gets a proper look at you.
+
+You learned something.
+
+But someone may now suspect you were there.`
+      );
+
+    }
+
+    return;
+  }
+
+
+  if(/search|investigate|look|examine|explore/.test(t)){
+
+    addSkill("intelligence",1);
+    addSkill("exploration",1);
+
+    showResult(
+      "YOU SEARCH",
+      `You take your time.
+
+You examine what other people ignored.
+
+You don't find everything.
+
+But you notice something you might have missed before.`
     );
 
     return;
-
   }
 
 
-  /* SEARCH */
+  if(/run|escape|flee/.test(t)){
 
-  if(
-    /(search|investigate|inspect|examine|look|explore)/.test(text)
-  ){
+    addSkill("endurance",1);
+    addSkill("survival",1);
 
-    if(
-      /shrine/.test(text)
-    ){
+    showResult(
+      "ESCAPE",
+      `You run.
 
-      goShrine();
-      return;
+You don't look back.
 
-    }
+Whatever is behind you will still be there tomorrow.
 
-    if(
-      /tunnel|passage/.test(text)
-    ){
-
-      state.flags.discoveredTunnel=true;
-      showScene("tunnel");
-      return;
-
-    }
-
-    if(
-      /masaru|messenger/.test(text)
-    ){
-
-      findMasaru();
-      return;
-
-    }
-
-    searchVillage();
-    return;
-
-  }
-
-
-  /* TALK */
-
-  if(
-    /(talk|speak|ask|question|confront)/.test(text)
-  ){
-
-    if(/stranger/.test(text)){
-
-      meetStranger();
-      return;
-
-    }
-
-    if(/elder|leader/.test(text)){
-
-      warnElder();
-      return;
-
-    }
-
-    if(/masaru|messenger/.test(text)){
-
-      findMasaru();
-      return;
-
-    }
-
-    showScene("evidence");
-
-    return;
-
-  }
-
-
-  /* FOLLOW */
-
-  if(
-    /(follow|tail|track|chase)/.test(text)
-  ){
-
-    followRiders();
-    return;
-
-  }
-
-
-  /* WAIT */
-
-  if(
-    /(wait|rest|sleep|stay)/.test(text)
-  ){
-
-    advanceTime(3);
-
-    logEvent(
-      "You waited as the situation developed."
+You survived today.`
     );
 
-    if(
-      state.scene==="preparation"
-    ){
-
-      showScene("attack");
-
-    }
-    else{
-
-      showScene("evidence");
-
-    }
-
     return;
-
   }
 
 
   /*
-     Anything else gets a small consequence.
-
-     It does NOT restart the story.
+     Unknown actions still matter.
   */
 
-  const roll=random(1,3);
+  if(Math.random()<.5){
 
-  if(roll===1){
+    addSkill("intelligence",1);
 
-    state.rep+=1;
+    showResult(
+      "AN UNEXPECTED RESULT",
+      `Your idea is unusual.
 
-    logEvent(
-      "Your unusual idea gave you a small advantage."
+Nobody expected you to try it.
+
+It doesn't go exactly as planned, but you notice something useful in the process.`
+    );
+
+  }else{
+
+    state.health-=rand(1,5);
+
+    showResult(
+      "THAT DIDN'T GO AS PLANNED",
+      `Your idea seemed better in your head.
+
+Reality disagrees.
+
+You take a small setback.
+
+Nothing is over.
+
+You'll have another chance.`
     );
 
   }
-  else if(roll===2){
 
-    state.money+=10;
+}
 
-    logEvent(
-      "Your improvisation earned you a few coins."
+
+/* =====================================================
+   CUSTOM RESULT
+===================================================== */
+
+function showResult(title,text){
+
+  el("sceneTitle").textContent=title;
+  el("reply").textContent=text;
+  el("you").textContent=
+    `You: ${state.lastAction}`;
+
+  el("memoryBox").innerHTML="";
+
+  /*
+     Keep the authored scene available by giving the player
+     a compact continuation button.
+  */
+
+  const box=el("choices");
+
+  box.innerHTML="";
+
+  const b=document.createElement("button");
+
+  b.innerHTML=
+    `<span class="choiceMain">Continue</span>
+     <span class="choiceMeta">Return to your current path.</span>`;
+
+  b.onclick=()=>{
+
+    box.innerHTML="";
+
+    showScene(state.scene);
+
+  };
+
+  box.appendChild(b);
+
+  render();
+
+}
+
+
+/* =====================================================
+   SAVE SYSTEM
+===================================================== */
+
+function serialiseState(){
+
+  return JSON.stringify(state);
+}
+
+function saveGame(){
+
+  try{
+
+    localStorage.setItem(
+      SAVE_KEY,
+      serialiseState()
+    );
+
+    showSaveNotice(
+      "PROGRESS SAVED",
+      "Your current life has been saved in this browser."
+    );
+
+    logEvent("Progress saved.");
+
+  }catch(error){
+
+    showSaveNotice(
+      "SAVE FAILED",
+      "The browser would not allow REALMS to save this game."
     );
 
   }
-  else{
 
-    state.health-=4;
+}
 
-    logEvent(
-      "Your improvisation went badly."
-    );
+function loadGame(){
 
-  }
+  const raw=
+    localStorage.getItem(SAVE_KEY);
 
-  if(state.health<=0){
+  if(!raw){
 
-    triggerDeath(
-      "Your improvised action proves fatal."
+    showSaveNotice(
+      "NO SAVE FOUND",
+      "There is no saved Commoner life in this browser."
     );
 
     return;
+  }
+
+  try{
+
+    const saved=JSON.parse(raw);
+
+    Object.keys(state).forEach(key=>{
+
+      if(saved[key]!==undefined)
+        state[key]=saved[key];
+
+    });
+
+    el("start").classList.add("hidden");
+    el("character").classList.add("hidden");
+    el("gameover").classList.add("hidden");
+    el("game").classList.remove("hidden");
+
+    showScene(state.scene);
+
+    showSaveNotice(
+      "PROGRESS LOADED",
+      `Returned to age ${state.age}, ${state.year}.`
+    );
+
+  }catch(error){
+
+    showSaveNotice(
+      "LOAD FAILED",
+      "The saved game could not be read."
+    );
 
   }
 
-  showScene(
-    state.scene
-  );
-
 }
 
-
-/* =====================================================
-   ENDINGS
-===================================================== */
-
-function ending(title,text,tag){
+function openSaveMenu(){
 
   if(!state.alive)return;
 
-  state.alive=false;
-  state.ending=true;
+  const box=el("saveNotice");
 
-  state.quests=[];
+  box.classList.remove("hidden");
 
-  updateStats();
-
-  el("game").classList.add("hidden");
-
-  el("gameover").classList.remove("hidden");
-
-  el("endingTitle").textContent=
-    title;
-
-  el("deathText").textContent=
-    text;
-
-  el("endingTag").textContent=
-    tag;
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  box.innerHTML=`
+    <div class="label">Progress</div>
+    <b>Save your current life?</b>
+    <p class="sub">
+      This saves skills, traits, memories, relationships,
+      family, money, story position and consequences.
+    </p>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <button class="saveButton" onclick="saveGame()">SAVE CURRENT PROGRESS</button>
+      <button class="menuButton" onclick="closeSaveNotice()">Cancel</button>
+    </div>
+  `;
 
 }
 
+function showSaveNotice(title,text){
 
-/* =====================================================
-   DEATH
-===================================================== */
+  const box=el("saveNotice");
 
-function triggerDeath(reason){
+  box.classList.remove("hidden");
 
-  if(!state.alive)return;
+  box.innerHTML=`
+    <div class="label">${title}</div>
+    <div>${text}</div>
+  `;
 
-  state.health=0;
-
-  state.alive=false;
-  state.ending=true;
-
-  state.quests=[];
-
-  updateStats();
-
-  el("game").classList.add("hidden");
-
-  el("gameover").classList.remove("hidden");
-
-  el("endingTitle").textContent=
-    "YOUR STORY ENDS";
-
-  el("deathText").textContent=
-    `${reason} Your story ended on Day ${state.day} in ${state.location}.`;
-
-  el("endingTag").textContent=
-    "DEATH";
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  setTimeout(()=>{
+    box.classList.add("hidden");
+  },3000);
 
 }
 
-
-/* =====================================================
-   MAIN MENU
-===================================================== */
-
-function returnToMenu(){
-
-  state.alive=false;
-
-  el("game").classList.add("hidden");
-  el("gameover").classList.add("hidden");
-  el("start").classList.remove("hidden");
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
+function closeSaveNotice(){
+  el("saveNotice").classList.add("hidden");
 }
 
 
@@ -3393,34 +7571,346 @@ function returnToMenu(){
 
 function restartGame(){
 
-  const realm=state.realm;
-  const year=state.year;
-  const location=state.location;
+  const yes=
+    confirm(
+      "Restart your life?\n\nUnsaved progress will be lost.\n\nYour existing saved game will remain."
+    );
 
-  if(!realm){
+  if(!yes)return;
 
-    returnToMenu();
-
-    return;
-
-  }
-
-  startGame(
-    realm,
-    year,
-    location
-  );
+  startGame();
 
 }
 
 
 /* =====================================================
-   INITIAL
+   MENU
 ===================================================== */
 
-renderInventory();
-renderQuests();
-updateStats();
+function returnToMenu(){
+
+  const yes=
+    state.alive
+      ? confirm(
+          "Return to the main menu?\n\nUse SAVE first if you want to keep this life."
+        )
+      : true;
+
+  if(!yes)return;
+
+  el("game").classList.add("hidden");
+  el("character").classList.add("hidden");
+  el("gameover").classList.add("hidden");
+  el("start").classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   ENDING CALCULATOR
+===================================================== */
+
+function calculateEnding(){
+
+  if(!state.alive)
+    return;
+
+  let title="A LIFE WELL LIVED";
+  let tag="LEGACY";
+  let text="";
+
+  if(state.flags.monster){
+
+    title="THE MONSTER";
+    tag="DARK ENDING";
+
+    text=
+`You were born with nothing.
+
+You became powerful.
+
+You became feared.
+
+You crossed enough lines that people stopped asking whether you were good or evil.
+
+They simply wanted you gone.
+
+Your name survives as a warning.
+
+When you die, people are relieved.
+
+You changed the world.
+
+Just not in the way you once imagined.`;
+
+  }else if(
+    state.flags.revengeComplete &&
+    state.flags.darkPath
+  ){
+
+    title="THE PRICE OF REVENGE";
+    tag="REVENGE ENDING";
+
+    text=
+`You found the person responsible for destroying your childhood.
+
+You faced him.
+
+You survived.
+
+But revenge never returned the people you lost.
+
+You spent years chasing a moment that lasted seconds.
+
+The blood debt was paid.
+
+The past remained.`;
+
+  }else if(
+    state.flags.mysterySolved &&
+    state.honour>=5
+  ){
+
+    title="THE KEEPER OF TRUTH";
+    tag="HIDDEN ENDING";
+
+    text=
+`You discovered the truth behind the silver knot.
+
+You had the power to use it.
+
+Instead, you chose what you believed would protect the people you loved.
+
+History may never know the whole story.
+
+You will.
+
+And sometimes that is enough.`;
+
+  }else if(
+    state.flags.merchant &&
+    state.money>=100
+  ){
+
+    title="THE MERCHANT PRINCE";
+    tag="WEALTH ENDING";
+
+    text=
+`You were born into poverty.
+
+You died wealthy.
+
+Warehouses carried your name.
+
+Merchants sought your approval.
+
+Officials listened when you spoke.
+
+You learned that power does not always wear armour.
+
+Sometimes it counts coins.`;
+
+  }else if(
+    state.flags.leader &&
+    state.reputation>=8
+  ){
+
+    title="THE PROTECTOR";
+    tag="LEADERSHIP ENDING";
+
+    text=
+`You began with one family.
+
+Eventually hundreds trusted you.
+
+You protected villages.
+
+Organised farmers.
+
+Stopped fights.
+
+Saved people during war.
+
+Your name never became famous across Japan.
+
+But the people who knew you remembered.`;
+
+  }else if(
+    state.flags.farmer &&
+    state.family.children>0
+  ){
+
+    title="THE FARMER";
+    tag="FAMILY ENDING";
+
+    text=
+`You stayed close to the land.
+
+You built a home.
+
+You raised children.
+
+You survived wars and bad harvests.
+
+You were never a lord.
+
+Never a general.
+
+Never a legend.
+
+But your family ate.
+
+Your children survived.
+
+And the land remained yours.
+
+That was enough.`;
+
+  }else if(
+    state.flags.wanderer
+  ){
+
+    title="THE WANDERER";
+    tag="ADVENTURE ENDING";
+
+    text=
+`You never belonged to one place.
+
+You travelled roads.
+
+Crossed mountains.
+
+Met strangers.
+
+Fought enemies.
+
+Made friends.
+
+You saw more of Japan than the child born in Kuroda ever could have imagined.
+
+When you died, nobody could say you lived a small life.`;
+
+  }else if(
+    state.flags.married &&
+    state.family.children>0
+  ){
+
+    title="TOGETHER";
+    tag="LOVE ENDING";
+
+    text=
+`You found someone who remembered you before the world changed you.
+
+Aiko stayed.
+
+You built a family.
+
+You argued.
+
+You struggled.
+
+You forgave.
+
+You grew old together.
+
+When the end came, you were not alone.`;
+
+  }else if(
+    state.honour>=8 &&
+    state.reputation>=5
+  ){
+
+    title="THE HONOURABLE";
+    tag="HONOUR ENDING";
+
+    text=
+`You could have chosen easier roads.
+
+You often didn't.
+
+You protected people.
+
+Kept promises.
+
+Refused unnecessary cruelty.
+
+Your life was not perfect.
+
+But when people remembered your name, they spoke it with respect.`;
+
+  }else{
+
+    title="A LIFE OF YOUR OWN";
+    tag="LIFE ENDING";
+
+    text=
+`You were born with nothing.
+
+No famous name.
+
+No great estate.
+
+No promise of greatness.
+
+Your life became a mixture of good choices, bad choices, love, loss, mistakes, victories and memories.
+
+Nobody else lived exactly the life you did.
+
+That is what made it yours.`;
+
+  }
+
+  finish(title,text,tag);
+
+}
+
+
+/* =====================================================
+   FINAL END SCREEN
+===================================================== */
+
+function finish(title,text,tag){
+
+  state.alive=false;
+  state.ending=true;
+
+  el("game").classList.add("hidden");
+  el("character").classList.add("hidden");
+  el("gameover").classList.remove("hidden");
+
+  el("endingTitle").textContent=title;
+  el("deathText").textContent=
+    `${text}\n\nBorn: 1570 · Died: ${state.year} · Final age: ${state.age}`;
+  el("endingTag").textContent=tag;
+
+  /*
+     The save remains available.
+
+     That means the player can restart without losing
+     their previous life, or load it later.
+  */
+
+}
+
+
+/* =====================================================
+   CHARACTER / UTILITY
+===================================================== */
+
+function capitalize(text){
+  return text.charAt(0).toUpperCase()+text.slice(1);
+}
+
+function nextFromCurrent(){
+  showScene(state.scene);
+}
+
+
+/* =====================================================
+   INITIAL UI
+===================================================== */
+
+render();
 
 </script>
 
