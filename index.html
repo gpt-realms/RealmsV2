@@ -21,8 +21,630 @@
 </main></div>
 <script>
 const REALMS_BACKEND = "https://old-meadow-9cfc.horrorhowell.workers.dev";
+ const state = {
+  money: 120,
+  health: 100,
+  attack: 12,
+  rep: 0,
+  location: 'Kuroda Village',
+  year: '1570',
+  realm: 'Sengoku Japan',
+  inventory: ['Torn clothes', 'Rusty Uchigatana'],
+  events: [],
+  turn: 0,
+  flags: {},
+  npcs: {
+    stranger: 0,
+    elder: 0,
+    masaru: 0
+  }
+};
 
-const state={money:120,health:100,attack:12,rep:0,location:'Kuroda Village',year:'1570',realm:'Sengoku Japan',inventory:['Torn clothes','Rusty Uchigatana'],events:[],turn:0,flags:{}}
-const scenes={intro:{text:'Rain taps against the wooden roofs of Kuroda. You are Shiro, fifteen years old. A stranger stands near the village gate, watching the road instead of the houses. Nobody else seems to have noticed him.',choices:[['Approach the stranger','approach'],['Keep your distance and watch him','watch'],['Ask a villager who he is','ask'] ]},approach:{text:'You walk toward him. He notices immediately. His hand moves close to his sleeve, but he does not draw. “You should not be standing here when the riders arrive,” he says quietly.',choices:[['Ask what riders he means','riders'],['Ask who he works for','loyalty'],['Threaten him','threaten']]},watch:{text:'You stay behind a storehouse and watch. The stranger keeps checking the eastern road. After a few minutes, you spot three distant riders. Their armour is hidden beneath travel cloaks.',choices:[['Follow the stranger','follow'],['Warn the village elder','warn'],['Keep watching','watch2']]},ask:{text:'An old farmer glances toward the gate before answering. “That man? Never seen him before. And that is exactly what worries me.” He lowers his voice. “Three riders were seen on the eastern road.”',choices:[['Go to the stranger','approach'],['Warn the elder','warn'],['Investigate the eastern road','road']]},riders:{text:'The stranger looks toward the hills. “Three men. Armed. They are not here to trade.” He studies your face. “Someone inside Kuroda told them when the patrol would be weakest.”',choices:[['Ask who betrayed Kuroda','traitor'],['Warn the village','warn'],['Follow the stranger secretly','follow']]},loyalty:{text:'He gives a humourless smile. “Names are expensive.” He reaches inside his coat and produces a black cord marked with a tiny silver knot. “If you understand that symbol, you understand who I work for.”',choices:[['Take the cord','takecord'],['Ask where the riders are going','riders'],['Back away','back']]},threaten:{text:'Your hand moves toward your sword. The stranger freezes. “Careful.” For a heartbeat the village feels silent. He slowly raises both hands. “If I wanted you dead, you would already be dead.”',choices:[['Lower your sword','back'],['Draw your sword','fight'],['Demand answers','riders']]},warn:{text:'You hurry to the elder’s house. He listens, then orders the village gate closed. The mood changes instantly. People begin hiding valuables and moving children indoors. Whatever happens next, Kuroda is no longer unaware.',choices:[['Help prepare the village','prepare'],['Return to the gate','approach'],['Search for the traitor','traitor']]},follow:{text:'You shadow the stranger beyond the last houses. He stops beneath an old cedar. A second figure is waiting there. You cannot hear everything, but one sentence reaches you: “The explosion happens after sunset.”',choices:[['Get closer','closer'],['Return and warn Kuroda','warn'],['Stay hidden and listen','listen']]},traitor:{text:'You begin asking careful questions. One name keeps appearing: Masaru, a local messenger trusted by the elder. It is not proof. But now you have a lead.',choices:[['Confront Masaru','masaru'],['Follow Masaru','followmasaru'],['Tell the elder what you learned','telltraitor']]},fight:{text:'The stranger draws. The clash is brief. You take a cut across the arm but land a hard strike. He retreats into the rain, leaving blood on the mud.',choices:[['Search the ground','loot'],['Chase him','chase'],['Return to the village','warn']]}}
-function startGame(realm,year,locat
-```
+const scenes = {
+
+intro: {
+  text: 'Rain taps against the wooden roofs of Kuroda. You are Shiro, fifteen years old. A stranger stands near the village gate, watching the road instead of the houses. Nobody else seems to have noticed him.',
+  choices: [
+    ['Approach the stranger', 'approach'],
+    ['Keep your distance and watch him', 'watch'],
+    ['Ask a villager who he is', 'ask'],
+    ['Explore the village', 'explore']
+  ]
+},
+
+approach: {
+  text: 'You walk toward him. He notices immediately. His hand moves close to his sleeve, but he does not draw. “You should not be standing here when the riders arrive,” he says quietly.',
+  choices: [
+    ['Ask what riders he means', 'riders'],
+    ['Ask who he works for', 'loyalty'],
+    ['Threaten him', 'threaten'],
+    ['Pretend you believe him', 'pretend']
+  ]
+},
+
+watch: {
+  text: 'You stay behind a storehouse and watch. The stranger keeps checking the eastern road. After a few minutes, you spot three distant riders. Their armour is hidden beneath travel cloaks.',
+  choices: [
+    ['Follow the stranger', 'follow'],
+    ['Warn the village elder', 'warn'],
+    ['Keep watching', 'watch2'],
+    ['Sneak toward the riders', 'scoutriders']
+  ]
+},
+
+ask: {
+  text: 'An old farmer glances toward the gate before answering. “That man? Never seen him before. And that is exactly what worries me.” He lowers his voice. “Three riders were seen on the eastern road.”',
+  choices: [
+    ['Go to the stranger', 'approach'],
+    ['Warn the elder', 'warn'],
+    ['Investigate the eastern road', 'road'],
+    ['Ask about Masaru the messenger', 'masaruinfo']
+  ]
+},
+
+riders: {
+  text: 'The stranger looks toward the hills. “Three men. Armed. They are not here to trade.” He studies your face. “Someone inside Kuroda told them when the patrol would be weakest.”',
+  choices: [
+    ['Ask who betrayed Kuroda', 'traitor'],
+    ['Warn the village', 'warn'],
+    ['Follow the stranger secretly', 'follow'],
+    ['Ask what happens after sunset', 'sunset']
+  ]
+},
+
+loyalty: {
+  text: 'He gives a humourless smile. “Names are expensive.” He reaches inside his coat and produces a black cord marked with a tiny silver knot. “If you understand that symbol, you understand who I work for.”',
+  choices: [
+    ['Take the cord', 'takecord'],
+    ['Ask where the riders are going', 'riders'],
+    ['Back away', 'back'],
+    ['Ask what the symbol means', 'symbol']
+  ]
+},
+
+threaten: {
+  text: 'Your hand moves toward your sword. The stranger freezes. “Careful.” For a heartbeat the village feels silent. He slowly raises both hands. “If I wanted you dead, you would already be dead.”',
+  choices: [
+    ['Lower your sword', 'back'],
+    ['Draw your sword', 'fight'],
+    ['Demand answers', 'riders'],
+    ['Search him', 'searchstranger']
+  ]
+},
+
+warn: {
+  text: 'You hurry to the elder’s house. He listens, then orders the village gate closed. The mood changes instantly. People begin hiding valuables and moving children indoors.',
+  choices: [
+    ['Help prepare the village', 'prepare'],
+    ['Return to the gate', 'approach'],
+    ['Search for the traitor', 'traitor'],
+    ['Check the storehouses', 'storehouses']
+  ]
+},
+
+follow: {
+  text: 'You shadow the stranger beyond the last houses. He stops beneath an old cedar. A second figure is waiting there. You cannot hear everything, but one sentence reaches you: “The explosion happens after sunset.”',
+  choices: [
+    ['Get closer', 'closer'],
+    ['Return and warn Kuroda', 'warn'],
+    ['Stay hidden and listen', 'listen'],
+    ['Follow the second figure', 'followsecond']
+  ]
+},
+
+traitor: {
+  text: 'You begin asking careful questions. One name keeps appearing: Masaru, a local messenger trusted by the elder. It is not proof. But now you have a lead.',
+  choices: [
+    ['Confront Masaru', 'masaru'],
+    ['Follow Masaru', 'followmasaru'],
+    ['Tell the elder what you learned', 'telltraitor'],
+    ['Secretly search Masaru’s room', 'searchmasaru']
+  ]
+},
+
+fight: {
+  text: 'The stranger draws. The clash is brief. You take a cut across the arm but land a hard strike. He retreats into the rain, leaving blood on the mud.',
+  choices: [
+    ['Search the ground', 'loot'],
+    ['Chase him', 'chase'],
+    ['Return to the village', 'warn'],
+    ['Examine your wound', 'healcheck']
+  ]
+},
+
+explore: {
+  text: 'You walk through Kuroda while the rain begins to weaken. The village is small, but several places catch your attention: the market, the shrine, the blacksmith and the old watchtower.',
+  choices: [
+    ['Visit the market', 'market'],
+    ['Visit the shrine', 'shrine'],
+    ['Visit the blacksmith', 'blacksmith'],
+    ['Climb the watchtower', 'tower']
+  ]
+},
+
+market: {
+  text: 'The market is unusually quiet. A travelling merchant notices your sword and gives you a suspicious look.',
+  choices: [
+    ['Ask about the riders', 'marketinfo'],
+    ['Buy supplies', 'buyfood'],
+    ['Ask about work', 'work'],
+    ['Leave', 'intro']
+  ]
+},
+
+shrine: {
+  text: 'The village shrine is almost empty. An old woman is sweeping rainwater from the stone steps. She looks at you for a long moment before saying, “Something bad is coming.”',
+  choices: [
+    ['Ask what she knows', 'shrineinfo'],
+    ['Offer a prayer', 'pray'],
+    ['Search around the shrine', 'searchshrine'],
+    ['Return to the village', 'intro']
+  ]
+},
+
+blacksmith: {
+  text: 'The blacksmith is working beside a smoking furnace. He glances at your rusty uchigatana.',
+  choices: [
+    ['Ask him to repair your sword', 'repair'],
+    ['Ask about the stranger', 'smithinfo'],
+    ['Ask if he has seen suspicious riders', 'smithriders'],
+    ['Leave', 'intro']
+  ]
+},
+
+tower: {
+  text: 'From the top of the old watchtower you can see the eastern road. Smoke rises in the distance.',
+  choices: [
+    ['Investigate the smoke', 'smoke'],
+    ['Watch the road', 'watchroad'],
+    ['Return to the village', 'intro']
+  ]
+},
+
+pretend: {
+  text: 'You relax your posture and pretend you believe everything he says. The stranger seems to lower his guard.',
+  choices: [
+    ['Ask him to trust you', 'trust'],
+    ['Ask where he is going', 'riders'],
+    ['Secretly follow him', 'follow']
+  ]
+},
+
+symbol: {
+  text: 'The silver knot is an old symbol used by a covert network of messengers and spies. The stranger watches your reaction carefully.',
+  choices: [
+    ['Take the cord', 'takecord'],
+    ['Ask why he showed you', 'trust'],
+    ['Walk away', 'back']
+  ]
+},
+
+scoutriders: {
+  text: 'You creep toward the eastern road. The riders are closer now. Their horses carry sealed wooden boxes.',
+  choices: [
+    ['Follow them', 'followriders'],
+    ['Hide and listen', 'listenriders'],
+    ['Return to Kuroda', 'warn']
+  ]
+},
+
+road: {
+  text: 'The eastern road is muddy and deserted. You find fresh horse tracks heading toward the hills.',
+  choices: [
+    ['Follow the tracks', 'followriders'],
+    ['Search the roadside', 'roadsearch'],
+    ['Return to Kuroda', 'intro']
+  ]
+},
+
+sunset: {
+  text: 'The stranger looks toward the darkening sky. “When the sun disappears, everyone will be looking at the wrong place.”',
+  choices: [
+    ['Ask what he means', 'riders'],
+    ['Warn the elder', 'warn'],
+    ['Follow him', 'follow']
+  ]
+},
+
+back: {
+  text: 'You step away. The stranger watches you for a moment before disappearing into the rain.',
+  choices: [
+    ['Return to the village', 'intro'],
+    ['Follow him from a distance', 'follow'],
+    ['Explore the village', 'explore']
+  ]
+},
+
+prepare: {
+  text: 'You help villagers move supplies and barricade the gate. Your reputation in Kuroda improves.',
+  choices: [
+    ['Return to the gate', 'approach'],
+    ['Search for the traitor', 'traitor'],
+    ['Check the watchtower', 'tower']
+  ]
+},
+
+closer: {
+  text: 'You move closer. A branch snaps beneath your foot. Both figures turn toward you.',
+  choices: [
+    ['Run', 'run'],
+    ['Fight', 'fight'],
+    ['Pretend you are lost', 'lost']
+  ]
+},
+
+listen: {
+  text: 'You remain perfectly still. The two figures discuss a hidden entrance beneath the eastern storehouse.',
+  choices: [
+    ['Return to Kuroda', 'warn'],
+    ['Investigate the storehouse', 'storehouses'],
+    ['Keep listening', 'listenmore']
+  ]
+},
+
+loot: {
+  text: 'In the mud you find a silver-stamped dagger and several coins.',
+  choices: [
+    ['Take them', 'takeLoot'],
+    ['Leave them', 'intro']
+  ]
+},
+
+chase: {
+  text: 'You chase the stranger into the rain, but he disappears among the trees. You find a torn piece of black cloth caught on a branch.',
+  choices: [
+    ['Take the cloth', 'takecloth'],
+    ['Return to Kuroda', 'warn']
+  ]
+},
+
+masaru: {
+  text: 'Masaru looks genuinely frightened when you confront him. “You have no idea what you are accusing me of.”',
+  choices: [
+    ['Believe him', 'believemasaru'],
+    ['Threaten him', 'threatenmasaru'],
+    ['Search his belongings', 'searchmasaru']
+  ]
+},
+
+telltraitor: {
+  text: 'The elder listens carefully. He does not accuse Masaru yet, but orders two guards to watch him.',
+  choices: [
+    ['Help the guards', 'followmasaru'],
+    ['Return to the gate', 'approach'],
+    ['Explore the village', 'explore']
+  ]
+},
+
+followmasaru: {
+  text: 'You secretly follow Masaru. Instead of leaving the village, he enters the old storehouse.',
+  choices: [
+    ['Follow him inside', 'storehouses'],
+    ['Get the elder', 'warn'],
+    ['Keep watching', 'watchmasaru']
+  ]
+},
+
+storehouses: {
+  text: 'The storehouse smells of grain and damp wood. Behind several barrels you discover a concealed trapdoor.',
+  choices: [
+    ['Open the trapdoor', 'trapdoor'],
+    ['Search the barrels', 'searchstore'],
+    ['Tell the elder', 'warn']
+  ]
+},
+
+trapdoor: {
+  text: 'Beneath the storehouse is a narrow tunnel leading outside the village walls. Someone has been using it recently.',
+  choices: [
+    ['Enter the tunnel', 'tunnel'],
+    ['Wait for someone to return', 'waittunnel'],
+    ['Report it', 'warn']
+  ]
+},
+
+tunnel: {
+  text: 'The tunnel leads toward the eastern road. You hear footsteps ahead.',
+  choices: [
+    ['Follow the footsteps', 'tunnelfollow'],
+    ['Hide', 'tunnelhide'],
+    ['Return to Kuroda', 'warn']
+  ]
+},
+
+marketinfo: {
+  text: 'The merchant whispers that armed men have been buying rope, oil and horses for several days.',
+  choices: [
+    ['Ask who is paying them', 'merchantpay'],
+    ['Warn the elder', 'warn'],
+    ['Return to the market', 'market']
+  ]
+},
+
+buyfood: {
+  text: 'You buy enough food to survive several days.',
+  choices: [
+    ['Return to the village', 'intro'],
+    ['Explore somewhere else', 'explore']
+  ]
+},
+
+work: {
+  text: 'The merchant offers you a small job delivering a sealed letter to the western road.',
+  choices: [
+    ['Accept', 'delivery'],
+    ['Refuse', 'market']
+  ]
+},
+
+pray: {
+  text: 'You kneel at the shrine. When you rise, you notice a small wooden token hidden beneath the offering box.',
+  choices: [
+    ['Take the token', 'taketoken'],
+    ['Leave it alone', 'intro']
+  ]
+},
+
+searchshrine: {
+  text: 'Behind the shrine you discover fresh footprints in the mud.',
+  choices: [
+    ['Follow them', 'shrinefootprints'],
+    ['Return to the village', 'intro']
+  ]
+},
+
+repair: {
+  text: 'The blacksmith repairs your uchigatana. It is still old, but the edge is much sharper.',
+  choices: [
+    ['Thank him', 'intro'],
+    ['Ask about the stranger', 'smithinfo']
+  ]
+},
+
+smithinfo: {
+  text: 'The blacksmith says the stranger visited yesterday and paid with a silver coin bearing a strange knot.',
+  choices: [
+    ['Ask where he went', 'riders'],
+    ['Show him the black cord', 'symbol'],
+    ['Leave', 'intro']
+  ]
+},
+
+smithriders: {
+  text: 'The blacksmith says three riders passed before dawn. Their horses were carrying military saddles.',
+  choices: [
+    ['Ask where they went', 'road'],
+    ['Warn the elder', 'warn']
+  ]
+},
+
+smoke: {
+  text: 'The smoke is coming from a small farm outside the village. You cannot tell whether it is an accident or something worse.',
+  choices: [
+    ['Investigate', 'farm'],
+    ['Warn Kuroda', 'warn'],
+    ['Keep watching', 'watchroad']
+  ]
+},
+
+watchroad: {
+  text: 'You watch the eastern road from the tower. A lone rider approaches Kuroda.',
+  choices: [
+    ['Signal the guards', 'signal'],
+    ['Wait and observe', 'watchrider'],
+    ['Climb down', 'intro']
+  ]
+}
+
+};
+
+function startGame(realm, year, location) {
+  state.realm = realm;
+  state.year = year;
+  state.location = location;
+
+  document.getElementById('start').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+
+  document.getElementById('realm').textContent =
+    `${realm} · ${year} · ${location}`;
+
+  renderInventory();
+  render('intro', '');
+  updateStats();
+}
+
+function render(key, you) {
+  const s = scenes[key] || {
+    text: 'The world reacts to your choice. Your actions become part of its history.',
+    choices: [['Continue', 'intro']]
+  };
+
+  document.getElementById('you').textContent =
+    you ? `You: ${you}` : '';
+
+  document.getElementById('reply').textContent = s.text;
+
+  document.getElementById('choices').innerHTML =
+    s.choices.map(([label, next]) =>
+      `<button onclick="act('${next}','${label.replaceAll("'", "\\'")}')">${label}</button>`
+    ).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function act(next, label) {
+  state.turn++;
+
+  apply(next);
+  randomEvent();
+  addEvent(label);
+  render(next, label);
+  updateStats();
+  renderInventory();
+}
+
+function apply(next) {
+
+  if (next === 'takecord') {
+    state.inventory.push('Black cord — unknown faction');
+    state.rep += 2;
+    state.npcs.stranger += 1;
+  }
+
+  if (next === 'fight') {
+    state.health = Math.max(1, state.health - 14);
+    state.attack += 2;
+    state.rep += 3;
+  }
+
+  if (next === 'takeLoot') {
+    state.money += 45;
+    state.inventory.push('Silver-stamped dagger');
+  }
+
+  if (next === 'takecloth') {
+    state.inventory.push('Torn black cloth');
+  }
+
+  if (next === 'prepare') {
+    state.rep += 3;
+    state.npcs.elder += 1;
+  }
+
+  if (next === 'closer') {
+    state.health = Math.max(1, state.health - 4);
+  }
+
+  if (next === 'telltraitor') {
+    state.rep += 4;
+    state.npcs.elder += 1;
+  }
+
+  if (next === 'masaru') {
+    state.rep -= 1;
+    state.npcs.masaru -= 1;
+  }
+
+  if (next === 'repair') {
+    if (state.money >= 20) {
+      state.money -= 20;
+      state.attack += 3;
+    }
+  }
+
+  if (next === 'buyfood') {
+    if (state.money >= 10) {
+      state.money -= 10;
+      state.inventory.push('Travel rations');
+    }
+  }
+
+  if (next === 'delivery') {
+    state.money += 25;
+    state.rep += 2;
+  }
+
+  if (next === 'taketoken') {
+    state.inventory.push('Wooden shrine token');
+    state.rep += 1;
+  }
+
+  if (next === 'threatenmasaru') {
+    state.rep -= 2;
+    state.npcs.masaru -= 2;
+  }
+}
+
+function randomEvent() {
+
+  if (state.turn < 2) return;
+
+  const chance = Math.random();
+
+  if (chance > 0.82) {
+
+    const events = [
+      'A sudden gust tears a roof tile loose. Villagers scatter as it crashes into the street.',
+      'You notice a hooded figure watching you from across the village.',
+      'A travelling monk passes through Kuroda and mentions seeing armed men on the eastern road.',
+      'A horse breaks loose near the market, causing panic for several minutes.',
+      'You find fresh footprints outside the village gate.',
+      'Someone has left a sealed note beside your belongings.'
+    ];
+
+    const event = events[Math.floor(Math.random() * events.length)];
+
+    state.events.unshift(
+      `Year ${state.year} · ${state.location}: ${event}`
+    );
+  }
+}
+
+function customAction() {
+
+  const box = document.getElementById('custom');
+  const raw = box.value.trim();
+
+  if (!raw) return;
+
+  const low = raw.toLowerCase();
+
+  let next = 'intro';
+
+  if (/explore|look around|wander|village|market|shop/.test(low))
+    next = 'explore';
+
+  else if (/ask|what|who|why|where/.test(low))
+    next = 'riders';
+
+  else if (/threat|intimid|draw.*sword|attack|kill/.test(low))
+    next = 'threaten';
+
+  else if (/follow|tail|shadow/.test(low))
+    next = 'follow';
+
+  else if (/warn|elder|village/.test(low))
+    next = 'warn';
+
+  else if (/watch|hide|wait|observe/.test(low))
+    next = 'watch';
+
+  else if (/search|loot|take/.test(low))
+    next = 'loot';
+
+  else if (/run|leave|back away|escape/.test(low))
+    next = 'back';
+
+  act(next, raw);
+
+  box.value = '';
+}
+
+function addEvent(text) {
+
+  state.events.unshift(
+    `Year ${state.year} · ${state.location}: ${text}`
+  );
+
+  document.getElementById('chron').innerHTML =
+    state.events.map(e =>
+      `<div class="event">${e}</div>`
+    ).join('');
+}
+
+function updateStats() {
+
+  ['money', 'health', 'attack', 'rep'].forEach(k => {
+    document.getElementById(k).textContent = state[k];
+  });
+}
+
+function renderInventory() {
+
+  document.getElementById('inventory').innerHTML =
+    state.inventory.map(x =>
+      `<div class="item">${x}</div>`
+    ).join('');
+} 
+</script>
