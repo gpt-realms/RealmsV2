@@ -499,6 +499,59 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opac
 @media(max-width:900px){#game .app{width:calc(100% - 16px)}#game>.app>.brand{padding:15px 18px!important}#game>.app>.brand:after{display:none}#game .topButtons{position:static!important;padding:8px 10px;background:#080a0c;border-bottom:1px solid #33291c}#game .gameShell{grid-template-columns:1fr!important}#game .gameSidebar{position:static!important;min-height:0;border-right:0!important;border-bottom:1px solid #715631!important}#game .stats{grid-template-columns:repeat(4,1fr)!important}#game .sceneArt{aspect-ratio:16/9!important}}
 @media(max-width:560px){#game .stats{grid-template-columns:repeat(2,1fr)!important}#game .response{padding:18px!important}#game>.app>.brand h1{font-size:27px!important;letter-spacing:8px!important}}
 
+
+/* BUILD 3.11 — MOBILE-FIRST CLEAN UI */
+#game .topButtons button{font-family:Georgia,serif!important;letter-spacing:.45px!important;min-width:72px}
+#game .topButtons button.danger{color:#c99f91!important}
+#game .sceneArt{max-height:390px!important;aspect-ratio:16/6.2!important}
+#game .response{padding:18px 24px 19px!important}
+#game .reply{font-size:15px!important;line-height:1.5!important}
+#game .gameMain>.card:not(.response):not(#saveNotice){padding:11px 14px!important}
+#game .choices button{min-height:88px!important}
+#game .choiceThumb{min-height:86px!important;width:78px!important}
+#game .choices button{grid-template-columns:78px 1fr!important}
+#game .choiceMain{font-size:13px!important;padding-top:8px!important}
+#game .choiceMeta{font-size:9px!important;padding-bottom:8px!important}
+@media(max-width:900px){
+  #game{padding:0!important}
+  #game .app{width:100%!important;border-left:0!important;border-right:0!important;border-radius:0!important}
+  #game>.app>.brand{min-height:58px!important;padding:10px 12px!important;display:flex!important;align-items:center!important}
+  #game>.app>.brand h1{font-size:23px!important;letter-spacing:7px!important;margin:0!important}
+  #game>.app>.brand .sub{font-size:8px!important}
+  #game #location{font-size:9px!important;margin-top:3px!important}
+  #game .topButtons{display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:1px!important;padding:0!important;background:#392d1e!important;border-bottom:1px solid #5d482a!important}
+  #game .topButtons button{min-width:0!important;border:0!important;border-radius:0!important;padding:9px 2px!important;font-size:10px!important;background:#090b0e!important}
+  #game .gameSidebar{padding:0!important;display:block!important}
+  #game .gameSidebar:before,#game .gameSidebar .card:not(.stats){display:none!important}
+  #game .stats{grid-template-columns:repeat(4,1fr)!important;border-bottom:0!important}
+  #game .stat{padding:6px 3px!important;text-align:center!important;border-right:1px solid #241f18!important;border-bottom:0!important}
+  #game .stat:last-child{border-right:0!important}
+  #game .stat b{font-size:16px!important;display:block!important}
+  #game .stat span{font-size:7px!important}
+  #game .sceneArt{aspect-ratio:16/7.6!important;max-height:none!important}
+  #game .sceneArtMeta{left:8px!important;bottom:6px!important;gap:3px!important}
+  #game .sceneArtMeta span{font-size:7px!important;padding:3px 5px!important}
+  #game .response{padding:12px 14px 13px!important}
+  #game .response:before{font-size:7px!important;letter-spacing:2.5px!important;margin-bottom:5px!important}
+  #game .sceneTitle{font-size:16px!important;margin-bottom:7px!important}
+  #game .reply{font-size:14px!important;line-height:1.43!important}
+  #game .you{font-size:9px!important;margin-bottom:5px!important}
+  #game .gameMain>.card:not(.response):not(#saveNotice){padding:8px 9px!important}
+  #game .gameMain>.card:not(.response):not(#saveNotice)>.label{font-size:8px!important;margin-bottom:6px!important;letter-spacing:2px!important}
+  #game .choices{grid-template-columns:1fr!important;gap:5px!important}
+  #game .choices button{min-height:58px!important;grid-template-columns:54px 1fr!important;border-radius:3px!important}
+  #game .choiceThumb{width:54px!important;min-height:56px!important;height:100%!important}
+  #game .choiceMain{font-size:12px!important;padding:7px 8px 1px!important;align-self:center!important}
+  #game .choiceMeta{font-size:8px!important;padding:0 8px 6px!important;line-height:1.2!important}
+  #game .memory{font-size:9px!important;padding:7px!important;margin-top:7px!important}
+}
+@media(max-width:430px){
+ #game>.app>.brand h1{font-size:20px!important;letter-spacing:6px!important}
+ #game .topButtons button{font-size:9px!important;padding:8px 1px!important}
+ #game .sceneArt{aspect-ratio:16/7.2!important}
+ #game .reply{font-size:13.5px!important}
+}
+
 </style>
 </head>
 
@@ -516,7 +569,7 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opac
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
-      <div class="sub">JAPAN · BUILD 3.10</div>
+      <div class="sub">JAPAN · BUILD 3.11</div>
     </div>
 
     <h2>Choose where your story begins.</h2>
@@ -6444,6 +6497,60 @@ A floorboard creaks beneath your foot.`,
   }
 });
 
+Object.assign(scenes,{
+renInvestigationTrail:{
+ title:"REN'S FIND",
+ text:`Ren leads you beyond the last vegetable plots to a drainage ditch beneath the eastern road. Hidden under reeds is a lacquered document tube, cracked at one end and smeared with mud.\n\nIt is too fine to belong to anyone in Kuroda. A faded crest has been deliberately scraped from the cap.\n\nRen's grin disappears.\n\n\"I thought it was money.\"\n\nInside is a strip of paper marked with three village names. Kuroda is one of them. Beside it, someone has written a single character: child.`,
+ choices:[
+  ["Take the paper before Ren can lose it","renInvestigationKeep","+ Intelligence · mystery evidence · Ren remembers"],
+  ["Follow the ditch and search for whoever dropped it","renInvestigationFollow","+ Exploration · + Stealth · risk"],
+  ["Show it to Daichi and compare what you know","renInvestigationDaichi","+ Daichi · + Ren · shared mystery"],
+  ["Put it back exactly where Ren found it","renInvestigationReplace","Cautious · creates a future lead"]
+ ]
+},
+renInvestigationFollowScene:{
+ title:"TRACKS UNDER THE CEDARS",
+ text:`You and Ren follow disturbed grass away from the road. The trail ends beneath cedar trees where a horse was tethered recently. One hoofprint is unusually narrow, and a length of red thread clings to the bark.\n\nThen voices drift from the road.\n\nRen reaches for the thread. You catch his wrist before he exposes you both. Whoever lost the tube may still be nearby.`,
+ choices:[
+  ["Take the red thread and retreat unseen","age10","Evidence kept · + Stealth"],
+  ["Stay hidden and listen to the riders","rainFollowFar","Danger · may connect to the rainy-night mystery"],
+  ["Lead Ren home by the stream","age10","+ Ren · safe withdrawal"],
+  ["Mark the tree so you can return later","age10","+ Exploration · future memory"]
+ ]
+},
+renRaceScene:{
+ title:"THE WOODS ABOVE KURODA",
+ text:`You refuse to spend the afternoon poking at somebody else's secrets. Ren calls you a coward, so you challenge him to prove he can catch you.\n\nThe race carries you beyond the familiar footpaths. At the ridge you both stop, breathless. Below, the eastern road cuts through the valley—and a mounted stranger is watching Kuroda from a distance.\n\nRen notices him too.\n\n\"Still think running was the boring choice?\"`,
+ choices:[
+  ["Watch the stranger from the ridge","renInvestigationFollow","+ Exploration · mystery lead"],
+  ["Tell Ren not to draw attention and head home","age10","+ Ren · Cautious progress"],
+  ["Circle down and see where the rider goes","rainFollowFar","Risk · + Stealth"],
+  ["Tell Daichi what you saw","childhoodDaichiPath","Shared information · + Daichi"]
+ ]
+},
+daichiHelpScene:{
+ title:"WORK THAT ISN'T YOURS",
+ text:`You arrive before Daichi can object and spend the morning carrying water, repairing a fence and turning wet soil beside his family's house.\n\nHis mother watches from the doorway, pale but smiling. Daichi says almost nothing until the work is done.\n\n\"Don't tell anyone I needed help.\"\n\nYou can hear the gratitude underneath the pride.`,
+ choices:[
+  ["Promise him you won't","age10","+ Daichi · Loyal progress"],
+  ["Tell him friends are allowed to need help","age10","+ Speech · + Daichi"],
+  ["Ask what his family can do for yours someday","childhoodFamilyPath","Family connection"],
+  ["Ask Daichi about the strangers seen near the road","renInvestigationDaichi","Mystery discussion"]
+ ]
+},
+daichiExploreScene:{
+ title:"BEYOND THE FIELDS",
+ text:`You drag Daichi away from his chores for one afternoon and follow a hunter's path into the hills. He complains for the first half-mile. By the second, he is the one choosing the route.\n\nFrom a rocky shelf you discover a view of the eastern road that cannot be seen from Kuroda. Fresh horse tracks cut across an older footpath. Someone has been using the hills to approach the village unseen.`,
+ choices:[
+  ["Memorise the hidden path","age10","+ Exploration · useful route remembered"],
+  ["Follow the fresh tracks with Daichi","renInvestigationFollow","Mystery lead · + Daichi"],
+  ["Return before your families notice","age10","Cautious withdrawal"],
+  ["Show the path to Ren tomorrow","childhoodRenPath","Opens Ren thread with new context"]
+ ]
+}
+
+});
+
 /* =====================================================
    SCENE DISPLAY
 ===================================================== */
@@ -7346,23 +7453,27 @@ actions.familyLearnMother=()=>{
   showScene("familyThread");
 };
 actions.renExtraScheme=()=>{
-  addSkill("mischief",1); addSkill("stealth",1); relation("ren",2); traitProgress("mischievous");
-  remember("You joined one of Ren's childhood schemes instead of walking away.");
-  showScene("renThread");
+  addSkill("mischief",1); addSkill("stealth",1); relation("ren",2); traitProgress("curious");
+  remember("Ren showed you a stolen-looking document tube naming Kuroda and an unknown child.");
+  showScene("renInvestigationTrail");
 };
 actions.renExtraTrain=()=>{
-  addSkill("endurance",1); addSkill("strength",1); relation("ren",1);
-  showScene("renThread");
+  addSkill("endurance",1); relation("ren",1);
+  showScene("renRaceScene");
 };
 actions.daichiExtraHelp=()=>{
   relation("daichi",2); state.reputation+=1; traitProgress("protective"); addSkill("farming",1);
   remember("You helped Daichi's family when his mother was ill.");
-  showScene("daichiThread");
+  showScene("daichiHelpScene");
 };
 actions.daichiExtraExplore=()=>{
   relation("daichi",1); addSkill("exploration",1); traitProgress("kind");
-  showScene("daichiThread");
+  showScene("daichiExploreScene");
 };
+actions.renInvestigationKeep=()=>{ addSkill("intelligence",1); relation("ren",1); state.flags.renDocument=true; remember("You kept a damaged document naming Kuroda and an unknown child."); showScene("age10"); };
+actions.renInvestigationFollow=()=>{ addSkill("exploration",1); addSkill("stealth",1); relation("ren",1); showScene("renInvestigationFollowScene"); };
+actions.renInvestigationDaichi=()=>{ relation("ren",1); relation("daichi",1); addSkill("intelligence",1); state.flags.sharedChildClue=true; remember("You, Ren and Daichi compared clues about strangers watching Kuroda."); showScene("age10"); };
+actions.renInvestigationReplace=()=>{ traitProgress("cautious"); state.flags.replacedDocument=true; remember("You returned the mysterious document tube and waited to see who would retrieve it."); showScene("age10"); };
 actions.ambitionWoodenSword=()=>{
   addSkill("swordsmanship",1); addSkill("discipline",1); traitProgress("ambitious");
   remember("Before anyone agreed to teach you, you made a wooden sword and taught yourself.");
