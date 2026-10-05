@@ -392,7 +392,7 @@ button,input,textarea{font:inherit}
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
-      <div class="sub">JAPAN · BUILD 3.1</div>
+      <div class="sub">JAPAN · BUILD 3.2</div>
     </div>
 
     <h2>Choose where your story begins.</h2>
@@ -584,7 +584,7 @@ button,input,textarea{font:inherit}
    Local save system.
 ===================================================== */
 
-const SAVE_KEY="REALMS_COMMONER_SAVE_V3";
+const SAVE_KEY="REALMS_COMMONER_SAVE_V3_2";
 
 const state={
 
@@ -5877,20 +5877,24 @@ function performAction(action,label){
 
   state.lastAction=label;
 
-  const fn=actions[action];
-
-  if(fn){
-
-    fn();
-
-  }else{
-
-    console.warn("No action:",action);
-
-    nextFromCurrent();
-
+  // Critical story routes are resolved explicitly so a missing/future
+  // action-map edit can never leave the player on a dead choice screen.
+  if(action==="age7Honest"){
+    resolveBullyTruth();
+    return;
   }
 
+  const fn=actions[action];
+
+  if(typeof fn==="function"){
+    fn();
+    return;
+  }
+
+  console.error("REALMS broken choice route:",action);
+  el("sceneTitle").textContent="BROKEN CHOICE";
+  el("reply").textContent=`The choice “${label}” is missing its story route (${action}).\n\nYour game has not advanced. This is a build error, not a failed action.`;
+  renderChoices([["Return to the current scene","__returnCurrent"]]);
 }
 
 
@@ -5900,15 +5904,19 @@ function performAction(action,label){
 
 const actions={};
 
-// Build 3.1 actions: fixes the bully truth branch and gives age eleven room to breathe.
-actions.age7Honest=()=>{
+function resolveBullyTruth(){
   state.reputation+=1;
   state.honour+=1;
   relation("daichi",2);
   traitProgress("honourable");
   remember("Age 6 — You told the truth about why you fought for Daichi.");
+  logEvent("You told the truth about the fight and defended Daichi with your words.");
   showScene("age7Honest");
-};
+}
+
+// Build 3.2 actions: bully truth is also handled directly by performAction.
+actions.age7Honest=resolveBullyTruth;
+actions.__returnCurrent=()=>showScene(state.scene);
 
 actions.age7AfterTruth=()=>{
   traitProgress("courageous");
