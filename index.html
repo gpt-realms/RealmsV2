@@ -392,7 +392,7 @@ button,input,textarea{font:inherit}
         <h1>REALMS</h1>
         <div class="sub">EVERY STORY BECOMES HISTORY.</div>
       </div>
-      <div class="sub">JAPAN · BUILD 3</div>
+      <div class="sub">JAPAN · BUILD 3.1</div>
     </div>
 
     <h2>Choose where your story begins.</h2>
@@ -5434,6 +5434,264 @@ function advanceAge(){
 
 
 /* =====================================================
+   BUILD 3.1 — CHILDHOOD PACING PATCH
+   Age is no longer automatically consumed by training.
+===================================================== */
+
+Object.assign(scenes,{
+
+  age7Honest:{
+    title:"THE TRUTH ABOUT THE FIGHT",
+    text:`The bully's father demands an explanation.
+
+You could apologise and make the trouble disappear.
+
+Instead, you tell him exactly what happened.
+
+"He was hurting Daichi. I told him to stop. He didn't."
+
+The older boy immediately protests.
+
+Daichi, still muddy and shaken, speaks from behind you.
+
+"It's true."
+
+The adults fall quiet.
+
+The bully glares at you. You have made an enemy.
+
+Daichi looks at you differently.
+
+You told the truth even when a lie would have been easier.`,
+    choices:[
+      ["Stand by what you said","age7AfterTruth"],
+      ["Check that Daichi is all right","age7TruthDaichi"]
+    ]
+  },
+
+  age11:{
+    title:"AGE 11 — THE ABANDONED SWORD",
+    text:`Bandits attack a farm outside the village.
+
+You see one of them carrying a sword.
+
+He drops it while running.
+
+The blade lands in the snow.
+
+You have never held a real weapon before.
+
+For the first time, another life seems possible beyond the fields of Kuroda.`,
+    choices:[
+      ["Take the sword and help","swordHelp"],
+      ["Give the sword to an adult","swordAdult"],
+      ["Hide the sword","swordHide"],
+      ["Chase the bandit","swordChase"]
+    ]
+  },
+
+  age11Life:{
+    title:"AGE 11 — YOUR LIFE IS YOURS",
+    text:`Winter settles over Kuroda.
+
+The fields still need tending. Your family still needs you.
+
+But the sword has changed something.
+
+You do not have to decide your entire life today.
+
+You can train. Work. Search for a teacher. Or try to leave home and chase a warrior's life.
+
+Time will pass because of what you choose — not because the story tells you to grow up.`,
+    choices:[
+      ["Keep training with the sword","age11TrainAgain"],
+      ["Stay home and work with your family","age11WorkHome"],
+      ["Search for a samurai willing to teach you","age11SeekSamurai"],
+      ["Tell your family you want to leave home","age11AskLeave"]
+    ]
+  },
+
+  age11Training:{
+    title:"AGE 11 — TRAINING",
+    text:`You train until your palms burn.
+
+At first the sword controls you. Its weight pulls your shoulders forward and ruins your footing.
+
+So you start again.
+
+Step. Breathe. Cut. Recover.
+
+Again.
+
+Weeks pass, but you are still eleven. There is more childhood left to live — and more than one road out of Kuroda.`,
+    choices:[
+      ["Train again","age11TrainAgain"],
+      ["Look for a real teacher","age11SeekSamurai"],
+      ["Spend time with your family","age11WorkHome"],
+      ["Return to your other choices","age11Life"]
+    ]
+  },
+
+  age11Home:{
+    title:"AGE 11 — HOME",
+    text:`You stay in Kuroda and work beside your family.
+
+There is strength in ordinary work too: carrying water, repairing fences, cutting wood and helping in the fields.
+
+Your father notices that you came back willingly.
+
+"A sword won't feed a family," he says.
+
+Then, after a moment:
+
+"But I suppose a field won't stop an army either."
+
+He understands more than he says.`,
+    choices:[
+      ["Ask your father about becoming a warrior","age11AskLeave"],
+      ["Train after the work is finished","age11TrainAgain"],
+      ["Keep learning the land","age11FarmMore"],
+      ["Return to your other choices","age11Life"]
+    ]
+  },
+
+  age11SamuraiSearch:{
+    title:"AGE 11 — THE ROAD TO A SWORDMASTER",
+    text:`You begin asking careful questions.
+
+A commoner's child cannot simply announce that they wish to become samurai. Birth, service, patronage and luck stand in the way.
+
+But warriors still need attendants. Temples need guards. Retainers sometimes take promising youths into service.
+
+An old charcoal seller tells you of a wounded retainer named Saburo living two villages east.
+
+"He won't make you samurai," the man warns.
+
+"But he might teach you how not to die holding a sword."`,
+    choices:[
+      ["Travel east and find Saburo","age11MeetSaburo"],
+      ["Ask your father before going","age11AskLeave"],
+      ["Train more before approaching him","age11TrainAgain"],
+      ["Stay in Kuroda for now","age11Life"]
+    ]
+  },
+
+  age11Saburo:{
+    title:"AGE 11 — SABURO",
+    text:`Saburo lives behind a roadside shrine in a house that leans with the wind.
+
+He watches you demonstrate what little you know.
+
+Then he takes the wooden practice sword from your hands.
+
+"Bad feet. Bad grip. Too much anger in the shoulders."
+
+You stare at him.
+
+"Can you teach me?"
+
+"I can teach you to sweep my floor. If you are still here tomorrow, perhaps I'll teach you where to put your feet."
+
+It is not the heroic beginning you imagined.
+
+It is a beginning.`,
+    choices:[
+      ["Accept and begin training under Saburo","age11SaburoTrain"],
+      ["Ask what service as a warrior really costs","age11SaburoTalk"],
+      ["Return home and think about it","age11Life"]
+    ]
+  },
+
+  age11Leave:{
+    title:"AGE 11 — ASKING TO LEAVE HOME",
+    text:`Your father does not answer immediately.
+
+"You're eleven."
+
+"I know."
+
+"No. You know the number. You don't know what the road does to people."
+
+Your mother watches from beside the fire.
+
+This is not a yes-or-no choice made by a menu. What happens depends on the trust you have built with them — and on what you say now.`,
+    choices:[
+      ["Promise you will return","age11LeavePromise"],
+      ["Explain that you want to protect the family","age11LeaveProtect"],
+      ["Say you are leaving with or without permission","age11LeaveDefy"],
+      ["Decide you are not ready yet","age11Life"]
+    ]
+  },
+
+  age11Permission:{
+    title:"AGE 11 — THE EASTERN ROAD",
+    text:`Before dawn, your mother packs rice into cloth.
+
+Your father gives you no grand speech.
+
+At the edge of the village he places a hand on your shoulder.
+
+"Learn everything. Believe half of it. Come home alive."
+
+Kuroda disappears behind you.
+
+You are still eleven years old.
+
+For the first time in your life, home is somewhere behind you.`,
+    choices:[
+      ["Go to Saburo and begin as his pupil","age11SaburoTrain"],
+      ["Follow the road and look for opportunity","age11RoadLife"]
+    ]
+  },
+
+  age11Refused:{
+    title:"AGE 11 — NOT YET",
+    text:`Your father refuses.
+
+Not forever.
+
+Not even angrily.
+
+Just: "Not yet."
+
+You can obey, earn more trust, train in secret, or eventually leave without permission.
+
+A closed door is not the end of a life. It is another decision.`,
+    choices:[
+      ["Earn their trust by helping at home","age11WorkHome"],
+      ["Train anyway","age11TrainAgain"],
+      ["Seek Saburo without leaving permanently","age11MeetSaburo"],
+      ["Return to your choices","age11Life"]
+    ]
+  },
+
+  age11Road:{
+    title:"AGE 11 — BEYOND KURODA",
+    text:`You walk until the roofs of Kuroda vanish behind the hills.
+
+The road is larger than your village and far less interested in keeping you alive.
+
+Pilgrims pass you. Porters curse beneath heavy loads. Two ashigaru march north with dried blood on one sleeve.
+
+You wanted another life.
+
+Now you have to build it.`,
+    choices:[
+      ["Seek warrior service","age11MeetSaburo"],
+      ["Find work and earn food","age11RoadWork"],
+      ["Turn back before nightfall","age11Life"]
+    ]
+  }
+});
+
+// The sword incident now opens life choices at eleven instead of forcing age twelve.
+["swordHelp","swordAdult","swordHide","swordChase"].forEach(key=>{
+  if(scenes[key]){
+    scenes[key].choices=(scenes[key].choices||[]).map(c=>[c[0],"age11Life"]);
+  }
+});
+
+/* =====================================================
    SCENE DISPLAY
 ===================================================== */
 
@@ -5545,6 +5803,21 @@ function renderChoices(list){
     const req=requirementFor(action);
     const unlocked=requirementMet(req);
 
+    const previews={
+      age6Fight:"+ Strength · + Courage · − Reputation",
+      age7Honest:"+ Honour · + Reputation · + Daichi relationship",
+      age11TrainAgain:"+ Swordsmanship · + Discipline · time passes by weeks, not years",
+      age11WorkHome:"+ Farming · + Strength · + Family Trust",
+      age11FarmMore:"+ Farming · + Endurance · + Family Trust",
+      age11SeekSamurai:"+ Intelligence · + Exploration · Ambitious progress",
+      age11LeavePromise:"Speech may help · outcome depends on Family Trust",
+      age11LeaveProtect:"+ Honour · Protective progress · outcome depends on your history",
+      age11LeaveDefy:"Rebellious progress · − Family Trust · leave home immediately",
+      age11MeetSaburo:"Travel east · possible sword teacher",
+      age11SaburoTrain:"+ Swordsmanship · + Discipline · begin a warrior path",
+      age11RoadWork:"+ Money · + Endurance · + Trade"
+    };
+
     const button=document.createElement("button");
 
     if(!unlocked)
@@ -5555,6 +5828,13 @@ function renderChoices(list){
     main.textContent=label;
 
     button.appendChild(main);
+
+    if(unlocked && previews[action]){
+      const meta=document.createElement("span");
+      meta.className="choiceMeta";
+      meta.textContent=previews[action];
+      button.appendChild(meta);
+    }
 
     if(!unlocked){
 
@@ -5619,6 +5899,134 @@ function performAction(action,label){
 ===================================================== */
 
 const actions={};
+
+// Build 3.1 actions: fixes the bully truth branch and gives age eleven room to breathe.
+actions.age7Honest=()=>{
+  state.reputation+=1;
+  state.honour+=1;
+  relation("daichi",2);
+  traitProgress("honourable");
+  remember("Age 6 — You told the truth about why you fought for Daichi.");
+  showScene("age7Honest");
+};
+
+actions.age7AfterTruth=()=>{
+  traitProgress("courageous");
+  showScene("age7");
+};
+
+actions.age7TruthDaichi=()=>{
+  relation("daichi",1);
+  traitProgress("kind");
+  showScene("age7");
+};
+
+actions.age11Life=()=>showScene("age11Life");
+
+actions.age11TrainAgain=()=>{
+  state.age11TrainingSessions=(state.age11TrainingSessions||0)+1;
+  addSkill("swordsmanship",1);
+  addSkill("discipline",1);
+  if(state.age11TrainingSessions%2===0) addSkill("endurance",1);
+  state.power=Math.max(state.power,1+Math.floor(skillLevel("swordsmanship")/3));
+  logEvent(`You spent several weeks training at age 11. Training sessions: ${state.age11TrainingSessions}.`);
+  showScene("age11Training");
+};
+
+actions.age11WorkHome=()=>{
+  addSkill("farming",1);
+  addSkill("strength",1);
+  state.familyTrust+=1;
+  relation("father",1);
+  showScene("age11Home");
+};
+
+actions.age11FarmMore=()=>{
+  addSkill("farming",1);
+  addSkill("endurance",1);
+  state.familyTrust+=1;
+  showScene("age11Home");
+};
+
+actions.age11SeekSamurai=()=>{
+  addSkill("intelligence",1);
+  addSkill("exploration",1);
+  traitProgress("ambitious");
+  showScene("age11SamuraiSearch");
+};
+
+actions.age11MeetSaburo=()=>{
+  state.location="Roadside Shrine, East of Kuroda";
+  remember("Age 11 — You found the wounded retainer Saburo and asked him to teach you.");
+  showScene("age11Saburo");
+};
+
+actions.age11SaburoTrain=()=>{
+  state.flags.leftVillage=true;
+  state.flags.soldier=true;
+  addSkill("swordsmanship",2);
+  addSkill("discipline",1);
+  traitProgress("ambitious");
+  state.location="Saburo's Shrine House";
+  remember("Age 11 — You entered Saburo's service to learn the sword.");
+  showScene("age11Training");
+};
+
+actions.age11SaburoTalk=()=>{
+  addSkill("intelligence",1);
+  addSkill("speech",1);
+  showScene("age11Saburo");
+};
+
+actions.age11AskLeave=()=>showScene("age11Leave");
+
+actions.age11LeavePromise=()=>{
+  addSkill("speech",1);
+  traitProgress("loyal");
+  if(state.familyTrust>=2){
+    state.familyTrust+=1;
+    showScene("age11Permission");
+  }else{
+    showScene("age11Refused");
+  }
+};
+
+actions.age11LeaveProtect=()=>{
+  traitProgress("protective");
+  state.honour+=1;
+  if(state.familyTrust>=1 || hasTrait("protective")){
+    state.familyTrust+=1;
+    showScene("age11Permission");
+  }else{
+    showScene("age11Refused");
+  }
+};
+
+actions.age11LeaveDefy=()=>{
+  traitProgress("rebellious");
+  traitProgress("independent");
+  state.familyTrust-=2;
+  state.flags.leftVillage=true;
+  state.location="Eastern Road";
+  remember("Age 11 — You left Kuroda without your family's blessing.");
+  showScene("age11Road");
+};
+
+actions.age11RoadLife=()=>{
+  state.flags.leftVillage=true;
+  state.location="Eastern Road";
+  addSkill("survival",1);
+  addSkill("exploration",1);
+  showScene("age11Road");
+};
+
+actions.age11RoadWork=()=>{
+  state.money+=5;
+  addSkill("endurance",1);
+  addSkill("trade",1);
+  showScene("age11Road");
+};
+
 
 
 /* =====================================================
